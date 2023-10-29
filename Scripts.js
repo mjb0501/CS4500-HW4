@@ -21,7 +21,7 @@ const experimentTwoParameters = {
     dependentVar:"0"
 };
 
-const indepenendentVarValues = [];
+const independentVarValues = [];
 
 const results = {
     totalDrops:0,

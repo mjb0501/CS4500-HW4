@@ -1,13 +1,4 @@
-const experimentOneParameters = {
-    x:0,
-    y:0,
-    c1:"0",
-    c2:"0",
-    c3:"0",
-    stoppingCriteria:0
-};
-
-const experimentTwoParameters = {
+const experimentParameters = {
     xVal:0,
     yVal:0,
     dVal:0,
@@ -18,7 +9,8 @@ const experimentTwoParameters = {
     stoppingCriteria:0,
     independentVar:"0",
     independentVarQuantity:0,
-    dependentVar:"0"
+    dependentVar:"0",
+    gridSize:function(){return this.x * this.y;}
 };
 
 const independentVarValues = [];
@@ -32,9 +24,49 @@ const results = {
     averageDrops:0,
 };
 
-const allResults = [];
-function PAINT_ONCE(x, y, c1, c2, c3, stoppingCriteria){
 
+const stoppingCriteria = {
+    //isFull should be sent as 0.
+    isFull: function()
+    {
+        let isFull = false;
+        for(let i = 0; i < experimentParameters.gridSize(); i++) {
+            if (!square[i]) //insert proper call to tell if square has been colored.
+                return isFull = true;
+        }
+        return isFull;
+    },
+
+    //isDoubleDropped should be sent as 1
+    isDoubleDropped:function(){
+        let isDoubleDropped = false;
+        for(let i = 0; i < experimentParameters.gridSize(); i++) {
+            if(square[i].drops > 1) //insert proper check for number of drops
+                return isDoubleDropped = true;
+        }
+        return isDoubleDropped;
+    },
+}
+
+const allResults = [];
+function PAINT_ONCE(x, y, c1, c2, c3, stoppingCriteriaChoice){
+    switch(stoppingCriteriaChoice) {
+        case 0:
+            while (!stoppingCriteria.isFull()) {
+                let randomCoord = Math.floor(Math.random() * experimentParameters.gridSize());
+                let color = Math.floor(Math.random() /*times however we quantify colors*/)
+                // Insert logic that initiates paint animation
+                grid[randomCoord].color++;
+            }
+            break;
+        case 1:
+            while (!stoppingCriteria.isDoubleDropped()){
+                let randomCoord = Math.floor(Math.random() * experimentParameters.gridSize());
+                let color = Math.floor(Math.random() /*times however we quantify colors*/)
+                // Insert logic that initiates paint animation
+                grid[randomCoord].color++;
+            }
+    }
 }
 
 function PAINT_MANY(x, y, c1, c2, c3, stoppingCriteria, reps){

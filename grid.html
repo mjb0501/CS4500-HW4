@@ -23,31 +23,37 @@
         <div class="grid">
             <h1>put grid here</h1>
         </div>
-            <div class ="labels">
-                <label for="gridSize">Dimensions:</label><br>
-                <label for="colors">Colors:</label>
-            </div>
-            <div class ="input">
-                <form>
-                    <input type="text" id="gridSize" name="gridSize"><br>
-                    <select id = "colors" name ="color1" >
-                        <option value="blue">blue</option>
-                        <option value="red">red</option>
-                        <option value="green">green</option>
-                        <option value="purple">purple</option>
-                    </select>
-                    <select id = "colors2" name ="color2">
-                        <option value="blue">blue</option>
-                        <option value="red">red</option>
-                        <option value="green">green</option>
-                        <option value="purple">purple</option>
-                    </select>
-                    <select id = "colors3" name ="color3">
-                        <option value="blue">blue</option>
-                        <option value="red">red</option>
-                        <option value="green">green</option>
-                        <option value="purple">purple</option>
-                    </select> <br>
+
+            <div class ="userInput">
+                <form action = "">
+                    <h1>Settings</h1>
+
+                    <div class = inputBox>
+                        <input type="text" placeholder="Dimensions" required>
+                    </div>
+
+                    <div class = inputBox>
+                        <label for="colors">Colors:</label>
+                        <select id = "colors" name ="color1" >
+                            <option value="blue">blue</option>
+                            <option value="red">red</option>
+                            <option value="green">green</option>
+                            <option value="purple">purple</option>
+                        </select>
+                        <select id = "colors2" name ="color2">
+                            <option value="blue">blue</option>
+                            <option value="red">red</option>
+                            <option value="green">green</option>
+                            <option value="purple">purple</option>
+                        </select>
+                        <select id = "colors3" name ="color3">
+                            <option value="blue">blue</option>
+                            <option value="red">red</option>
+                            <option value="green">green</option>
+                            <option value="purple">purple</option>
+                        </select> <br>
+                    </div>
+
                     <button type="submit">Submit</button>
                 </form>
 

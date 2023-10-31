@@ -29,10 +29,10 @@ const stoppingCriteria = {
     //isFull should be sent as 0.
     isFull: function()
     {
-        let isFull = false;
+        let isFull = true;
         for(let i = 0; i < experimentParameters.gridSize(); i++) {
             if (!square[i]) //insert proper call to tell if square has been colored.
-                return isFull = true;
+                return isFull = false;
         }
         return isFull;
     },

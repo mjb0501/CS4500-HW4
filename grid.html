@@ -37,34 +37,29 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <div class ="userInput">
-                        <form action = "">
+                        <form onsubmit="return validateForm()">
                             <h3>Input Settings</h3>
-                            <label>X Dimension</label>
-                            <input id="xDim" class="inputBoxSmall" type="text" required />
-                            <label>Y Dimension</label>
-                            <input id="yDim" class="inputBoxSmall" type="text" required />
+                            <label for="xDim">X Dimension</label>
+                            <input id="xDim" class="inputBoxSmall" type="number" required />
                             <br>
-                            <label>Colors:</label>
-                            <select id="colors1" name ="color1" >
-                                <option value="blue">blue</option>
-                                <option value="red">red</option>
-                                <option value="green">green</option>
-                                <option value="purple">purple</option>
-                            </select>
-                            <select id="colors2" name ="color2">
-                                <option value="blue">blue</option>
-                                <option value="red">red</option>
-                                <option value="green">green</option>
-                                <option value="purple">purple</option>
-                            </select>
-                            <select id="colors3" name ="color3">
-                                <option value="blue">blue</option>
-                                <option value="red">red</option>
-                                <option value="green">green</option>
-                                <option value="purple">purple</option>
-                            </select>
+                            <label for="yDim">Y Dimension</label>
+                            <input id="yDim" class="inputBoxSmall" type="number" required />
                             <br>
-                            <button type="submit">Submit</button>
+                            <label for="colors1">Color Choice 1:</label>
+                            <select id="colors1" name ="color1" required></select>
+                            <br>
+                            <label for="colors2">Color Choice 2:</label>
+                            <select id="colors2" name ="color2" required></select>
+                            <br>
+                            <label for="colors3">Color Choice 3:</label>
+                            <select id="colors3" name ="color3" required></select>
+                            <br>
+                            <label for="stoppingC">Stopping Criteria</label>
+                            <select id="stoppingC" name="stoppingC" required></select>
+                            <br>
+                            <button class="button" type="submit">Submit</button>
+                            <br>
+                            <span id="inputError" class="errorMessage"></span>
                         </form>
                     </div>
                 </div>
@@ -72,5 +67,6 @@
             </div>
         </div>
     </div>
+    <script src="InputsAndValidation.js"></script>
 </body>
 </html>

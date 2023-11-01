@@ -85,13 +85,27 @@ video {
     color: white;
 }
 .userInput{
-    background-color: grey;
+    background-color: #80F6FF;
     border: 3px solid black;
     padding: 30px;
     display: block;
-    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
     border-radius: 20px;
 }
 .inputBoxSmall {
-    width: 30px;
+    width: 75px;
+}
+.errorMessage {
+    color: red;
+    font-weight: 700;
+}
+.button {
+    background-color: grey;
+    border-radius: 20px;
+    border: 2px solid black;
+    padding: 10px 50px 10px 50px;
+    color: white;
+    font-weight: 700;
 }

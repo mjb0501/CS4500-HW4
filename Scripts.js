@@ -48,8 +48,31 @@ const stoppingCriteria = {
     },
 }
 
+function DrawGrid(x, y) {
+    let theGrid = document.getElementById("theGrid");
+    theGrid.innerHTML = "";
+    var innerHTML = "";
+    for(var i = 0; i < y; i++){
+        innerHTML += "<tr>";
+        for(var j = 0; j < x; j++){
+            innerHTML += "<td>X</td>";
+        }
+        innerHTML += "</tr>";
+    }
+    theGrid.innerHTML = innerHTML;
+}
+
 const allResults = [];
 function PAINT_ONCE(x, y, c1, c2, c3, stoppingCriteriaChoice){
+    alert("JUST CONFIRMING WHAT IS BEING SENT!\n" +
+            "X: " + x + "\n" +
+            "Y: " + y + "\n" +
+            "Color1: " + c1 + "\n" +
+            "Color2: " + c2 + "\n" +
+            "Color3: " + c3 + "\n" +
+            "Stopping Criteria: " + stoppingCriteriaChoice + "\n");
+
+    DrawGrid(x, y);
     switch(stoppingCriteriaChoice) {
         case 0:
             while (!stoppingCriteria.isFull()) {

@@ -22,22 +22,23 @@
         </nav>
         <div class="row placeholder"></div>
         <div class="row">
-            <div class="col-md-6">
+            <div id="mainGrid" class="col-md-6">
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8 text-center">
                         <div class="grid">
-                            <h1>put grid here</h1>
+                            <h1 id="oldGridHeading">put grid here</h1>
+                            <table id="theGrid" class="center"></table>
                         </div>
                     </div>
                     <div class="col-md-2"></div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div id="inputBoxFirst" class="col-md-6">
             <div class="row">
                 <div class="col-md-12 text-center">
                     <div class ="userInput">
-                        <form onsubmit="return validateForm()">
+                        <form id="inputFormIntro" onsubmit="return validateForm()">
                             <h3>Input Settings</h3>
                             <label for="xDim">X Dimension</label>
                             <input id="xDim" class="inputBoxSmall" type="number" required />
@@ -67,6 +68,7 @@
             </div>
         </div>
     </div>
+    <script src="Scripts.js"></script>
     <script src="InputsAndValidation.js"></script>
 </body>
 </html>

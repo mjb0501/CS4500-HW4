@@ -109,3 +109,21 @@ video {
     color: white;
     font-weight: 700;
 }
+.errorBox {
+    border:2px solid red;
+}
+label {
+    padding-bottom: 5px;
+}
+tr {
+    padding: 5px;
+    border: 2px solid white;
+}
+td {
+    padding: 5px;
+    border: 2px solid white;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}

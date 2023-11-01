@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name = "viewport" content =" width=device-width, initial-scale=1.0">
+    <meta name="viewport" content =" width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Homework 4</title>
 </head>
 <body>
-    <div class ="main">
-        <video autoplay loop muted playsinline class="bg-video">
+    <div class="container-fluid">
+        <video autoplay loop muted playsinline>
             <source src="Images/background2.mp4" type="video/mp4">
         </video>
         <nav>
@@ -19,46 +20,57 @@
                 <li><a href="index.html">HOME</a></li>
             </ul>
         </nav>
-
-        <div class="grid">
-            <h1>put grid here</h1>
-        </div>
-
-            <div class ="userInput">
-                <form action = "">
-                    <h1>Settings</h1>
-
-                    <div class = inputBox>
-                        <input type="text" placeholder="Dimensions" required>
+        <div class="row placeholder"></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 text-center">
+                        <div class="grid">
+                            <h1>put grid here</h1>
+                        </div>
                     </div>
-
-                    <div class = inputBox>
-                        <label for="colors">Colors:</label>
-                        <select id = "colors" name ="color1" >
-                            <option value="blue">blue</option>
-                            <option value="red">red</option>
-                            <option value="green">green</option>
-                            <option value="purple">purple</option>
-                        </select>
-                        <select id = "colors2" name ="color2">
-                            <option value="blue">blue</option>
-                            <option value="red">red</option>
-                            <option value="green">green</option>
-                            <option value="purple">purple</option>
-                        </select>
-                        <select id = "colors3" name ="color3">
-                            <option value="blue">blue</option>
-                            <option value="red">red</option>
-                            <option value="green">green</option>
-                            <option value="purple">purple</option>
-                        </select> <br>
-                    </div>
-
-                    <button type="submit">Submit</button>
-                </form>
-
+                    <div class="col-md-2"></div>
+                </div>
             </div>
+            <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class ="userInput">
+                        <form action = "">
+                            <h3>Input Settings</h3>
+                            <label>X Dimension</label>
+                            <input id="xDim" class="inputBoxSmall" type="text" required />
+                            <label>Y Dimension</label>
+                            <input id="yDim" class="inputBoxSmall" type="text" required />
+                            <br>
+                            <label>Colors:</label>
+                            <select id="colors1" name ="color1" >
+                                <option value="blue">blue</option>
+                                <option value="red">red</option>
+                                <option value="green">green</option>
+                                <option value="purple">purple</option>
+                            </select>
+                            <select id="colors2" name ="color2">
+                                <option value="blue">blue</option>
+                                <option value="red">red</option>
+                                <option value="green">green</option>
+                                <option value="purple">purple</option>
+                            </select>
+                            <select id="colors3" name ="color3">
+                                <option value="blue">blue</option>
+                                <option value="red">red</option>
+                                <option value="green">green</option>
+                                <option value="purple">purple</option>
+                            </select>
+                            <br>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
-
 </body>
 </html>

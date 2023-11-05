@@ -1,42 +1,52 @@
+//global elements
+let color1Dropdown, color2Dropdown, color3Dropdown, stoppingCDropdown;
+let theGrid, mainGridDiv, oldGridHeading, form;
+let inputError, theInputBox;
+let yDimBox, xDimBox, placeholderBox;
+const colorOptions = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "grey"];
+const colorValues = ["FF0000", "FF7700", "FFED00", "00B500", "0047AB", "8024AB", "FF80D5", "808080"];
+
+//sets all the global elements
+function getGlobalElements() {
+    color1Dropdown = document.getElementById("colors1");
+    color2Dropdown = document.getElementById("colors2");
+    color3Dropdown = document.getElementById("colors3");
+    inputError = document.getElementById("inputError");
+    stoppingCDropdown = document.getElementById("stoppingC");
+    xDimBox = document.getElementById("xDim");
+    yDimBox = document.getElementById("yDim");
+    theInputBox = document.getElementById("inputBoxFirst");
+    mainGridDiv = document.getElementById("mainGrid");
+    oldGridHeading = document.getElementById("oldGridHeading");
+    placeholderBox = document.getElementById("placeholder");
+    form = document.getElementById("inputFormIntro");
+}
+
+//populates the color dropdown
+function populateColorDropdown(dropdown) {
+    for (let i = 0; i < colorOptions.length; i++) {
+        const opt = colorOptions[i];
+        const el = document.createElement("option");
+        el.textContent = opt;
+        el.value = colorValues[i];
+        dropdown.appendChild(el);
+    }
+}
+
 //on page load, lets do some tasks
 window.addEventListener("load", (event) => {
+    getGlobalElements();
     //hide the errorValidation box
-    var inputError = document.getElementById("inputError");
     inputError.hidden = true;
-    let theGrid = document.getElementById("theGrid");
+    theGrid = document.getElementById("theGrid");
     theGrid.hidden;
 
     //let's add the colors to the dropdowns
-    var color1Dropdown = document.getElementById("colors1");
-    var color2Dropdown = document.getElementById("colors2");
-    var color3Dropdown = document.getElementById("colors3");
-    var coloroptions = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "grey"];
-    var colorvalues = ["FF0000", "FF7700", "FFED00", "00B500", "0047AB", "8024AB", "FF80D5", "808080"];
-
-    for(var i = 0; i < coloroptions.length; i++) {
-        var opt = coloroptions[i];
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = colorvalues[i];
-        color1Dropdown.appendChild(el);
-    }
-    for(i = 0; i < coloroptions.length; i++) {
-        opt = coloroptions[i];
-        el = document.createElement("option");
-        el.textContent = opt;
-        el.value = colorvalues[i];
-        color2Dropdown.appendChild(el);
-    }
-    for(i = 0; i < coloroptions.length; i++) {
-        opt = coloroptions[i];
-        el = document.createElement("option");
-        el.textContent = opt;
-        el.value = colorvalues[i];
-        color3Dropdown.appendChild(el);
-    }
+    populateColorDropdown(color1Dropdown);
+    populateColorDropdown(color2Dropdown);
+    populateColorDropdown(color3Dropdown);
 
     //let's add the stopping criteria
-    var stoppingCriteriaDropdown = document.getElementById("stoppingC");
     var stoppingOptions = ["Every square is full", "A single square was double dropped on"];
 
     for(i = 0; i < stoppingOptions.length; i++) {
@@ -44,50 +54,37 @@ window.addEventListener("load", (event) => {
         el = document.createElement("option");
         el.textContent = opt;
         el.value = i;
-        stoppingCriteriaDropdown.appendChild(el);
+        stoppingCDropdown.appendChild(el);
     }
 
     //do not let the form refresh the page, this is all done in JS
-    var form = document.getElementById("inputFormIntro");
     function handleForm(event) { event.preventDefault(); }
     form.addEventListener('submit', handleForm);
 });
 
 function validateForm() {
-    var inputError = document.getElementById("inputError");
-    var color1Dropdown = document.getElementById("colors1");
-    var color2Dropdown = document.getElementById("colors2");
-    var color3Dropdown = document.getElementById("colors3");
-    var stoppingCDropdown = document.getElementById("stoppingC");
-    var xDimBox = document.getElementById("xDim");
-    var yDimBox = document.getElementById("yDim");
     inputError.hidden = true;
     inputError.innerHTML = "";
     xDimBox.style.border = "";
     yDimBox.style.border = "";
     let returnVal = true;
 
-    if (xDimBox.value > 100 || xDimBox.value < 1) {
+    if (xDimBox.value > 50 || xDimBox.value < 1) {
         xDimBox.style.border ="3px solid red";
-        inputError.innerHTML = "Your X dimension value must be between 1 and 100";
+        inputError.innerHTML = "Your X dimension value must be between 1 and 50";
         returnVal = false;
     }
-    if (yDimBox.value > 100 || yDimBox.value < 1) {
+    if (yDimBox.value > 50 || yDimBox.value < 1) {
         yDimBox.style.border ="3px solid red";
-        inputError.innerHTML += inputError.innerHTML !== "" ? "<br>Your Y dimension value must be between 1 and 100" : "Your Y dimension value must be between 1 and 100";
+        inputError.innerHTML += inputError.innerHTML !== "" ? "<br>Your Y dimension value must be between 1 and 100" : "Your Y dimension value must be between 1 and 50";
         returnVal = false;
     }
 
     if (!returnVal) {
         inputError.hidden = false;
-    }
-
-    if (returnVal) {
+    } else {
         //let's hide this box and make the grid front and center of everything
-        let theInputBox = document.getElementById("inputBoxFirst");
-        let mainGridDiv = document.getElementById("mainGrid");
-        let theGrid = document.getElementById("theGrid");
-        let oldGridHeading = document.getElementById("oldGridHeading");
+        placeholderBox.style.height = "100px";
         theGrid.hidden = false;
         theInputBox.hidden = true;
         oldGridHeading.hidden = true;

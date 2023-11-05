@@ -47,8 +47,8 @@ const stoppingCriteria = {
         return isDoubleDropped;
     },
 }
-
-function DrawGrid(x, y) {
+/* old draw grid*/
+/*function DrawGrid(x, y) {
     let theGrid = document.getElementById("theGrid");
     theGrid.innerHTML = "";
     var innerHTML = "";
@@ -60,6 +60,25 @@ function DrawGrid(x, y) {
         innerHTML += "</tr>";
     }
     theGrid.innerHTML = innerHTML;
+}*/
+    /* New draw grid that has unique cell id; the id is the class name which increments by 1*/
+function DrawGrid(rows, columns) {
+    var grid = document.getElementById("theGrid");
+
+    for (var i = 0; i < rows; i++) {
+        var row = grid.insertRow(i);
+
+        for (var j = 0; j < columns; j++) {
+            var cell = row.insertCell(j);
+            cell.textContent = "cell-" + (i * columns + j + 1); // text to see number, can remove later
+            cell.className = "cell-" + (i * columns + j + 1); // Assign a unique class to each cell
+        }
+    }
+}
+
+function changeCellColor(cellNumber, hexColorString ) {
+    var cellToChange = document.querySelector(".cell-" + cellNumber);
+    cellToChange.style.backgroundColor = hexColorString; // Change the background color of the cell
 }
 
 const allResults = [];

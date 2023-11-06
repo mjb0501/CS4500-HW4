@@ -70,7 +70,7 @@ function DrawGrid(rows, columns) {
 
         for (var j = 0; j < columns; j++) {
             var cell = row.insertCell(j);
-            cell.textContent = "cell-" + (i * columns + j + 1); // text to see number, can remove later
+            cell.textContent = "cell-" + (i * columns + j + 1); // text to see number,can remove later
             cell.className = "cell-" + (i * columns + j + 1); // Assign a unique class to each cell
         }
     }

@@ -24,7 +24,6 @@ const results = {
     averageDrops:0,
 };
 
-
 const stoppingCriteria = {
     //isFull should be sent as 0.
     isFull: function()
@@ -70,15 +69,32 @@ function DrawGrid(rows, columns) {
 
         for (var j = 0; j < columns; j++) {
             var cell = row.insertCell(j);
-            cell.textContent = "cell-" + (i * columns + j + 1); // text to see number,can remove later
-            cell.className = "cell-" + (i * columns + j + 1); // Assign a unique class to each cell
+           // cell.textContent = "cell-" + (i * columns + j + 1); // text to see number,can remove later
+            cell.className = "cell-" + (i * columns + j + 1); // Assign a unique class to each cel
         }
     }
+// test animation coloring
+    applyAnimationToCell(1, "green");
+    applyAnimationToCell(2, "blue" );
+    applyAnimationToCell(7, "red");
+    applyAnimationToCell(50, "purple");
 }
 
-function changeCellColor(cellNumber, hexColorString ) {
-    var cellToChange = document.querySelector(".cell-" + cellNumber);
-    cellToChange.style.backgroundColor = hexColorString; // Change the background color of the cell
+function applyAnimationToCell(cellNumber, AnimationColor) {
+    // Create a unique animation for each cell
+    var animationName = "paintDrop-" + cellNumber;
+    var styleSheet = document.styleSheets[0];
+    styleSheet.insertRule(`@keyframes ${animationName} {
+                          0% { top: -100vh; opacity: 0; }
+                          100% { top: 0; opacity: 1; background-color: ${AnimationColor}; }
+                        }`, styleSheet.cssRules.length);
+
+
+    // Apply the unique animation to the specific cell
+    var cellClassName = "cell-" + cellNumber;
+    var cells = document.getElementsByClassName(cellClassName);
+    cells[0].style.animation = `${animationName} 3s linear forwards`;
+
 }
 
 const allResults = [];

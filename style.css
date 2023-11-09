@@ -129,3 +129,19 @@ td {
     margin-right: auto;
 }
 
+/* Styles for the paint drop */
+.paint-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+}
+
+/*animation needs this css*/
+[class^="cell-"]{
+    position: relative;
+    width: 20px;
+    height: 20px;
+    clip-path: circle(30% at 50% 50%);
+
+}

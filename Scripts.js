@@ -78,22 +78,27 @@ function DrawGrid(rows, columns) {
     applyAnimationToCell(2, "blue" );
     applyAnimationToCell(7, "red");
     applyAnimationToCell(50, "purple");
+    applyAnimationToCell(1, "blue");
 }
 
 function applyAnimationToCell(cellNumber, AnimationColor) {
     // Create a unique animation for each cell
     var animationName = "paintDrop-" + cellNumber;
     var styleSheet = document.styleSheets[0];
-    styleSheet.insertRule(`@keyframes ${animationName} {
-                          0% { top: -100vh; opacity: 0; }
-                          100% { top: 0; opacity: 1; background-color: ${AnimationColor}; }
-                        }`, styleSheet.cssRules.length);
-
 
     // Apply the unique animation to the specific cell
     var cellClassName = "cell-" + cellNumber;
     var cells = document.getElementsByClassName(cellClassName);
-    cells[0].style.animation = `${animationName} 3s linear forwards`;
+    var style = window.getComputedStyle(cells[0]);
+    styleSheet.insertRule(`@keyframes ${animationName} {
+                          0% { top: -100vh; opacity: 0; }
+                          50% { top: 0; opacity: 1; background-color: ${AnimationColor}; clip-path: circle(30%); }
+                          100% { background-color: color-mix(in srgb, ${AnimationColor}, ${style.getPropertyValue('background-color')}); clip-path: circle(100%); }
+                        }`, styleSheet.cssRules.length);
+
+    cells[0].style.animation = `${animationName} 10s linear forwards`;
+    //cells[0].style.backgroundColor = 'blue';//`color-mix(in srgb, ${AnimationColor}, ${style.getPropertyValue('background-color')}`;
+
 
 }
 

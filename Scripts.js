@@ -73,16 +73,16 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     var styleSheet = document.styleSheets[0];
 
     // Apply the unique animation to the specific cell
-    var cellClassName = "cell-" + cellNumber;
-    var cells = document.getElementsByClassName(cellClassName);
-    var style = window.getComputedStyle(cells[0]);
+    var cellID = cellNumber;
+    var theCell = document.getElementById(cellID);
+    var style = window.getComputedStyle(theCell);
     styleSheet.insertRule(`@keyframes ${animationName} {
                           0% { top: -100vh; opacity: 0; }
                           50% { top: 0; opacity: 1; background-color: ${AnimationColor}; clip-path: circle(30%); }
                           100% { background-color: color-mix(in srgb, ${AnimationColor}, ${style.getPropertyValue('background-color')}); clip-path: circle(100%); }
                         }`, styleSheet.cssRules.length);
 
-    cells[0].style.animation = `${animationName} 10s linear forwards`;
+    theCell.style.animation = `${animationName} 10s linear forwards`;
     //cells[0].style.backgroundColor = 'blue';//`color-mix(in srgb, ${AnimationColor}, ${style.getPropertyValue('background-color')}`;
 
 

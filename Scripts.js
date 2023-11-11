@@ -3,9 +3,6 @@ const experimentParameters = {
     yVal:0,
     dVal:0,
     reps:0,
-    c1:"0",
-    c2:"0",
-    c3:"0",
     stoppingCriteria:0,
     independentVar:"0",
     independentVarQuantity:0,
@@ -13,10 +10,11 @@ const experimentParameters = {
     gridSize:function(){return this.xVal * this.yVal;}
 };
 
+
 const independentVarValues = [];
 
 const results = {
-    totalDrops:0,
+    totalDrops:function(){return this.c1Drops + this.c2Drops + this.c3Drops},
     c1Drops:0,
     c2Drops:0,
     c3Drops:0,
@@ -57,15 +55,11 @@ function DrawGrid(rows, columns) {
 
         for (var j = 0; j < columns; j++) {
             var cell = row.insertCell(j);
-            cell.id = (i * columns + j + 1).toString(); // Assign a unique class to each cel
+            cell.id = (i * columns + j + 1).toString(); // Assign a unique id to each cel
         }
     }
 // test animation coloring
-    applyAnimationToCell(1, "green");
-    applyAnimationToCell(2, "blue" );
-    applyAnimationToCell(7, "red");
-    applyAnimationToCell(50, "purple");
-    applyAnimationToCell(1, "blue");
+
 }
 
 function applyAnimationToCell(cellNumber, AnimationColor) {
@@ -91,21 +85,23 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
 }
 
 const allResults = [];
-function PAINT_ONCE(x, y, c1, c2, c3, stoppingCriteriaChoice){
+function PAINT_ONCE(x, y, colors, stoppingCriteriaChoice){
     DrawGrid(x, y);
     experimentParameters.xVal = x;
     experimentParameters.yVal = y;
-    experimentParameters.c1 = c1;
-    experimentParameters.c2 = c2;
-    experimentParameters.c3 = c3;
     experimentParameters.stoppingCriteria = stoppingCriteriaChoice;
     switch(stoppingCriteriaChoice) {
         case 0:
             while (!stoppingCriteria.isFull()) {
                 let randomCoord = Math.floor(Math.random() * experimentParameters.gridSize());
-                let color = Math.floor(Math.random() /*times however we quantify colors*/)
-                // Insert logic that initiates paint animation
-                grid[randomCoord].color++;
+                let color = Math.floor(Math.random()*3);
+                applyAnimationToCell(randomCoord, colors[color]);
+                if(color === 0)
+                    results.c1Drops++;
+                if(color === 1)
+                    results.c2Drops++;
+                if(color === 2)
+                    results.c3Drops++;
             }
             break;
         case 1:

@@ -10,7 +10,7 @@ const experimentParameters = {
     independentVar:"0",
     independentVarQuantity:0,
     dependentVar:"0",
-    gridSize:function(){return this.x * this.y;}
+    gridSize:function(){return this.xVal * this.yVal;}
 };
 
 const independentVarValues = [];
@@ -30,8 +30,9 @@ const stoppingCriteria = {
     {
         let isFull = true;
         for(let i = 0; i < experimentParameters.gridSize(); i++) {
-            let currentCell = document.getElementById(i.toString());
-            if (window.getComputedStyle(currentCell).getPropertyValue('background-color') === "white") //insert proper call to tell if square has been colored.
+            let currentCell = document.getElementById((i+1).toString());
+            let currentColor = window.getComputedStyle(currentCell).getPropertyValue('background-color');
+            if (currentColor === "") //insert proper call to tell if square has been colored.
                 return isFull = false;
         }
         return isFull;
@@ -51,7 +52,6 @@ const stoppingCriteria = {
 // New and improved draw grid, using Sean's rewritten method and josh's ID
 function DrawGrid(rows, columns) {
     var grid = document.getElementById("theGrid");
-
     for (var i = 0; i < rows; i++) {
         var row = grid.insertRow(i);
 
@@ -93,6 +93,12 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
 const allResults = [];
 function PAINT_ONCE(x, y, c1, c2, c3, stoppingCriteriaChoice){
     DrawGrid(x, y);
+    experimentParameters.xVal = x;
+    experimentParameters.yVal = y;
+    experimentParameters.c1 = c1;
+    experimentParameters.c2 = c2;
+    experimentParameters.c3 = c3;
+    experimentParameters.stoppingCriteria = stoppingCriteriaChoice;
     switch(stoppingCriteriaChoice) {
         case 0:
             while (!stoppingCriteria.isFull()) {

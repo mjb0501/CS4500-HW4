@@ -89,7 +89,7 @@ function validateForm() {
         theInputBox.hidden = true;
         oldGridHeading.hidden = true;
         mainGridDiv.className = "col-md-12";
-        PAINT_ONCE(xDimBox.value, yDimBox.value, color1Dropdown.value, color2Dropdown.value, color3Dropdown.value, stoppingCDropdown.value);
+        PAINT_ONCE(xDimBox.value, yDimBox.value, color1Dropdown.value, color2Dropdown.value, color3Dropdown.value, parseInt(stoppingCDropdown.value));
     }
     return returnVal;
 }

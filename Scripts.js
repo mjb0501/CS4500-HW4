@@ -30,7 +30,8 @@ const stoppingCriteria = {
     {
         let isFull = true;
         for(let i = 0; i < experimentParameters.gridSize(); i++) {
-            if (!square[i]) //insert proper call to tell if square has been colored.
+            let currentCell = document.getElementById(i.toString());
+            if (window.getComputedStyle(currentCell).getPropertyValue('background-color') === "white") //insert proper call to tell if square has been colored.
                 return isFull = false;
         }
         return isFull;

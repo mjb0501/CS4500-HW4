@@ -46,21 +46,8 @@ const stoppingCriteria = {
         return isDoubleDropped;
     },
 }
-/* old draw grid*/
-/*function DrawGrid(x, y) {
-    let theGrid = document.getElementById("theGrid");
-    theGrid.innerHTML = "";
-    var innerHTML = "";
-    for(var i = 0; i < y; i++) {
-        innerHTML += "<tr>";
-        for(var j = 0; j < x; j++){
-            innerHTML += "<td id=\"" + (j + 1) + "-" + (y - i) + "\"></td>";
-        }
-        innerHTML += "</tr>";
-    }
-    theGrid.innerHTML = innerHTML;
-}*/
-    /* New draw grid that has unique cell id; the id is the class name which increments by 1*/
+
+// New and improved draw grid, using Sean's rewritten method and josh's ID
 function DrawGrid(rows, columns) {
     var grid = document.getElementById("theGrid");
 
@@ -69,8 +56,7 @@ function DrawGrid(rows, columns) {
 
         for (var j = 0; j < columns; j++) {
             var cell = row.insertCell(j);
-           // cell.textContent = "cell-" + (i * columns + j + 1); // text to see number,can remove later
-            cell.className = "cell-" + (i * columns + j + 1); // Assign a unique class to each cel
+            cell.id = (i * columns + j + 1).toString(); // Assign a unique class to each cel
         }
     }
 // test animation coloring

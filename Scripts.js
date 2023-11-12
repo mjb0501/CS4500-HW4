@@ -60,29 +60,69 @@ function DrawGrid(rows, columns) {
         }
     }
 // test animation coloring
-
+    applyAnimationToCell(1, "red");
+    applyAnimationToCell(2, "blue");
+    applyAnimationToCell(7, "red");
+    //applyAnimationToCell(50, "purple", 4);
+    setTimeout(function(){applyAnimationToCell(1, "blue");}, 2000);
 }
 
 function applyAnimationToCell(cellNumber, AnimationColor) {
     // Create a unique animation for each cell
-    var animationName = "paintDrop-" + cellNumber;
-    var styleSheet = document.styleSheets[0];
+    let animationName = "paintDrop-" + cellNumber;
+    let styleSheet = document.styleSheets[0];
 
     // Apply the unique animation to the specific cell
-    var cellID = cellNumber;
-    var theCell = document.getElementById(cellID);
-    var style = window.getComputedStyle(theCell);
+    let cellID = cellNumber;
+    let theCell = document.getElementById(cellID);
+    let style = window.getComputedStyle(theCell);
 
+    theCell.style.clipPath = 'circle(30%)';
+    theCell.style.position = 'relative';
+    let tempColor = style.getPropertyValue('background-color');
+    theCell.style.backgroundColor = AnimationColor;
+    let frames = 0;
+    let id = setInterval(frame, 10);
+
+    function frame() {
+        if (frames <= 15) {
+            if (frames == 15) {
+                theCell.style.backgroundColor = "color-mix(in srgb, " + AnimationColor + ", " + tempColor + ")";
+            }
+            let location = -15 + frames;
+            theCell.style.top = location.toString() + 'vh';
+            frames++;
+            console.log(frames);
+        }
+        else if (frames > 15 && frames <= 85) {
+            let circle = 15 + frames;
+            theCell.style.clipPath = `circle(${circle}%)`;
+            frames++;
+            console.log(frames);
+        }
+        else {
+            clearInterval(id);
+        }
+    }
+
+/* Old Animation way using css instead of javascript
     theCell.style.position = `relative`;
     theCell.style.clipPath = `circle(30%)`;
     styleSheet.insertRule(`@keyframes ${animationName} {
-                          0% { top: -50vh; }
+                          0% { top: -100px; }
                           50% { top: 0; background-color: ${AnimationColor}; clip-path: circle(30%); }
                           100% { background-color: color-mix(in srgb, ${AnimationColor}, ${style.getPropertyValue('background-color')}); clip-path: circle(100%); }
                         }`, styleSheet.cssRules.length);
     theCell.style.animationFillMode = `forwards`;
-    theCell.style.animation = `${animationName} 10s linear forwards`;
-    //cells[0].style.backgroundColor = 'blue';//`color-mix(in srgb, ${AnimationColor}, ${style.getPropertyValue('background-color')}`;
+    theCell.style.animation = `${animationName} 3s linear forwards`;
+    //theCell.style.backgroundColor = `blue`;
+    theCell.animationName = 'none';
+    //theCell.style.animation = 'none';
+    //theCell.offsetHeight;
+    //theCell.style.animation = null;
+    //theCell.style.backgroundColor = `blue`;//`color-mix(in srgb, ${AnimationColor}, ${style.getPropertyValue('background-color')}`;
+
+*/
 }
 
 const allResults = [];

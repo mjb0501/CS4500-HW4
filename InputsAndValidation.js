@@ -24,9 +24,8 @@ function getGlobalElements() {
     colors[0] = color1Dropdown;
     colors[1] = color2Dropdown;
     colors[2] = color3Dropdown;
-    experimentParameters.xVal = xDimBox;
-    experimentParameters.yVal = yDimBox;
-    console.log(colors[0], colors[1], colors[2], xDimBox, yDimBox, experimentParameters.xVal, stoppingCDropdown, color1Dropdown);
+
+    console.log(colors);
 }
 
 //populates the color dropdown
@@ -96,7 +95,7 @@ function validateForm() {
         theInputBox.hidden = true;
         oldGridHeading.hidden = true;
         mainGridDiv.className = "col-md-12";
-        PAINT_ONCE(xDimBox.value, yDimBox.value, colors, stoppingCDropdown.value);
+        PAINT_ONCE(experimentParameters.xVal, experimentParameters.yVal, colors, experimentParameters.stoppingCriteria);
     }
     return returnVal;
 }

@@ -28,9 +28,11 @@ const stoppingCriteria = {
     {
         let isFull = true;
         for(let i = 0; i < experimentParameters.gridSize(); i++) {
-            let currentCell = document.getElementById((i+1).toString());
+            let currentCell = document.getElementById(((i+1).toString()));
             let currentColor = window.getComputedStyle(currentCell).getPropertyValue('background-color');
-            if (currentColor === "") //insert proper call to tell if square has been colored.
+            console.log(currentCell);
+            console.log(currentColor);
+            if (color === "white") //insert proper call to tell if square has been colored.
                 return isFull = false;
         }
         return isFull;
@@ -56,6 +58,7 @@ function DrawGrid(rows, columns) {
         for (var j = 0; j < columns; j++) {
             var cell = row.insertCell(j);
             cell.id = (i * columns + j + 1).toString(); // Assign a unique id to each cel
+            console.log(cell.id);
         }
     }
 // test animation coloring
@@ -87,9 +90,10 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
 const allResults = [];
 function PAINT_ONCE(x, y, colors, stoppingCriteriaChoice){
     DrawGrid(x, y);
-    experimentParameters.xVal = x;
-    experimentParameters.yVal = y;
-    experimentParameters.stoppingCriteria = stoppingCriteriaChoice;
+    experimentParameters.xVal = xDimBox.value;
+    experimentParameters.yVal = yDimBox.value;
+    experimentParameters.stoppingCriteria = stoppingCDropdown.value;
+    console.log(experimentParameters);
     switch(stoppingCriteriaChoice) {
         case 0:
             while (!stoppingCriteria.isFull()) {

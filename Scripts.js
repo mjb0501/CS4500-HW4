@@ -1,13 +1,11 @@
 const experimentParameters = {
-    xVal:0,
-    yVal:0,
     dVal:0,
     reps:0,
     stoppingCriteria:0,
     independentVar:"0",
     independentVarQuantity:0,
     dependentVar:"0",
-    gridSize:function(){return this.xVal * this.yVal;}
+    gridSize:function(){return xDimBox.value * yDimBox.value;}
 };
 
 

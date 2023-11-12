@@ -95,7 +95,7 @@ function validateForm() {
         theInputBox.hidden = true;
         oldGridHeading.hidden = true;
         mainGridDiv.className = "col-md-12";
-        PAINT_ONCE(experimentParameters.xVal, experimentParameters.yVal, colors, experimentParameters.stoppingCriteria);
+        PAINT_ONCE(xDimBox.value, yDimBox.value, colors, experimentParameters.stoppingCriteria);
     }
     return returnVal;
 }

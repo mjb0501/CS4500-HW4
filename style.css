@@ -4,31 +4,9 @@
     box-sizing: border-box;
     font-family: 'poppins', sans-serif;
 }
-/* NavBar format*/
-nav{
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 20px 8%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+/* nav logo format*/
 nav .logo{
-    width: 80px;
-}
-/* format of links*/
-nav ul li{
-    list-style: none;
-    display: inline-block;
-    margin-left: 40px;
-}
-/* color links*/
-nav ul li a{
-    text-decoration: none;
-    color: azure;
-    font-size: 17px;
+    width: 100px;
 }
 /*homepage title*/
 .content{
@@ -77,11 +55,15 @@ video {
     -webkit-transition: 1s opacity;
     transition: 1s opacity;
 }
-.placeholder {
-    height: 350px;
+
+/* placeholders to keep boxes in center of screen*/
+#placeholderIndex {
+    height: 300px;
+}
+#placeholderGrid {
+    height: 200px;
 }
 .grid{
-    padding: 100px;
     color: white;
 }
 .userInput{
@@ -91,7 +73,8 @@ video {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 75%;
+    width: 100%;
+    max-width: 600px;
     border-radius: 20px;
 }
 .inputBoxSmall {
@@ -122,7 +105,8 @@ tr {
 td {
     width: 25px;
     height: 25px;
-    border: 2px solid white;
+    border: 2px solid black;
+    background-color: white;
 }
 .center {
     margin-left: auto;

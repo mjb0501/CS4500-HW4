@@ -4,7 +4,6 @@ let theGrid, mainGridDiv, oldGridHeading, form;
 let inputError, theInputBox;
 let yDimBox, xDimBox, placeholderBox;
 const colorOptions = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "grey"];
-const colorValues = ["FF0000", "FF7700", "FFED00", "00B500", "0047AB", "8024AB", "FF80D5", "808080"];
 const colors = [];
 
 //sets all the global elements
@@ -18,14 +17,8 @@ function getGlobalElements() {
     yDimBox = document.getElementById("yDim");
     theInputBox = document.getElementById("inputBoxFirst");
     mainGridDiv = document.getElementById("mainGrid");
-    oldGridHeading = document.getElementById("oldGridHeading");
-    placeholderBox = document.getElementById("placeholder");
+    placeholderBox = document.getElementById("placeholderGrid");
     form = document.getElementById("inputFormIntro");
-    colors[0] = color1Dropdown;
-    colors[1] = color2Dropdown;
-    colors[2] = color3Dropdown;
-
-    console.log(colors);
 }
 
 //populates the color dropdown
@@ -34,7 +27,7 @@ function populateColorDropdown(dropdown) {
         const opt = colorOptions[i];
         const el = document.createElement("option");
         el.textContent = opt;
-        el.value = colorValues[i];
+        el.value = colorOptions[i];
         dropdown.appendChild(el);
     }
 }
@@ -89,13 +82,16 @@ function validateForm() {
     if (!returnVal) {
         inputError.hidden = false;
     } else {
+        //populate the color options chosen
+        colors.push(color1Dropdown.value);
+        colors.push(color2Dropdown.value);
+        colors.push(color3Dropdown.value);
         //let's hide this box and make the grid front and center of everything
-        placeholderBox.style.height = "100px";
+        placeholderBox.hidden = true;
         theGrid.hidden = false;
         theInputBox.hidden = true;
-        oldGridHeading.hidden = true;
         mainGridDiv.className = "col-md-12";
-        PAINT_ONCE(xDimBox.value, yDimBox.value, colors, experimentParameters.stoppingCriteria);
+        PAINT_ONCE(colors);
     }
     return returnVal;
 }

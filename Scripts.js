@@ -28,9 +28,9 @@ const stoppingCriteria = {
         for(let i = 0; i < experimentParameters.gridSize(); i++) {
             let currentCell = document.getElementById(((i+1).toString()));
             let currentColor = window.getComputedStyle(currentCell).getPropertyValue('background-color');
-            console.log(currentCell);
-            console.log(currentColor);
-            if (color === "white") //insert proper call to tell if square has been colored.
+            //console.log(currentCell);
+            //console.log(currentColor);
+            if (currentColor === "rgb(255, 255, 255)") //insert proper call to tell if square has been colored.
                 return isFull = false;
         }
         return isFull;
@@ -56,15 +56,14 @@ function DrawGrid(rows, columns) {
         for (var j = 0; j < columns; j++) {
             var cell = row.insertCell(j);
             cell.id = (i * columns + j + 1).toString(); // Assign a unique id to each cel
-            console.log(cell.id);
         }
     }
 // test animation coloring
-    applyAnimationToCell(1, "red");
-    applyAnimationToCell(2, "blue");
-    applyAnimationToCell(7, "red");
+    //applyAnimationToCell(1, "red");
+    //applyAnimationToCell(2, "blue");
+    //applyAnimationToCell(7, "red");
     //applyAnimationToCell(50, "purple", 4);
-    setTimeout(function(){applyAnimationToCell(1, "blue");}, 2000);
+    //setTimeout(function(){applyAnimationToCell(1, "blue");}, 2000);
 }
 
 function applyAnimationToCell(cellNumber, AnimationColor) {
@@ -75,6 +74,7 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     // Apply the unique animation to the specific cell
     let cellID = cellNumber;
     let theCell = document.getElementById(cellID);
+    console.log(cellNumber);
     let style = window.getComputedStyle(theCell);
 
     theCell.style.clipPath = 'circle(30%)';
@@ -92,7 +92,7 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
             let location = -15 + frames;
             theCell.style.top = location.toString() + 'vh';
             frames++;
-            console.log(frames);
+            //console.log(frames);
         }
         else if (frames > 15 && frames <= 85) {
             let circle = 15 + frames;
@@ -126,16 +126,15 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
 }
 
 const allResults = [];
-function PAINT_ONCE(x, y, colors, stoppingCriteriaChoice){
-    DrawGrid(x, y);
-    experimentParameters.xVal = xDimBox.value;
-    experimentParameters.yVal = yDimBox.value;
-    experimentParameters.stoppingCriteria = stoppingCDropdown.value;
+function PAINT_ONCE(colors){
+    DrawGrid(xDimBox.value, yDimBox.value);
+    experimentParameters.stoppingCriteria = parseInt(stoppingCDropdown.value);
     console.log(experimentParameters);
-    switch(stoppingCriteriaChoice) {
+    switch(experimentParameters.stoppingCriteria) {
         case 0:
             while (!stoppingCriteria.isFull()) {
-                let randomCoord = Math.floor(Math.random() * experimentParameters.gridSize());
+                let randomCoord = Math.floor(Math.random() * (experimentParameters.gridSize() + 1)); //need the +1 to hit max size
+                randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                 let color = Math.floor(Math.random()*3);
                 applyAnimationToCell(randomCoord, colors[color]);
                 if(color === 0)

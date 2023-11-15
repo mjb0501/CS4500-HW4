@@ -8,6 +8,14 @@ const experimentParameters = {
     gridSize:function(){return xDimBox.value * yDimBox.value;}
 };
 
+const initialExperiment = {
+    xVal: 0,
+    yVal: 0,
+    stoppingCriteria: 0,
+    gridSize: function() {return this.x * this.y;},
+    colors: []
+};
+
 
 const independentVarValues = [];
 
@@ -22,14 +30,12 @@ const results = {
 
 const stoppingCriteria = {
     //isFull should be sent as 0.
-    isFull: function()
+    isFull: function(size)
     {
         let isFull = true;
-        for(let i = 0; i < experimentParameters.gridSize(); i++) {
+        for(let i = 0; i < size; i++) {
             let currentCell = document.getElementById(((i+1).toString()));
             let currentColor = window.getComputedStyle(currentCell).getPropertyValue('background-color');
-            //console.log(currentCell);
-            //console.log(currentColor);
             if (currentColor === "rgb(255, 255, 255)") //insert proper call to tell if square has been colored.
                 return isFull = false;
         }
@@ -37,9 +43,9 @@ const stoppingCriteria = {
     },
 
     //isDoubleDropped should be sent as 1
-    isDoubleDropped:function(){
+    isDoubleDropped:function(size){
         let isDoubleDropped = false;
-        for(let i = 0; i < experimentParameters.gridSize(); i++) {
+        for(let i = 0; i < size; i++) {
             if(square[i].drops > 1) //insert proper check for number of drops
                 return isDoubleDropped = true;
         }
@@ -126,17 +132,17 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
 }
 
 const allResults = [];
-function PAINT_ONCE(colors){
-    DrawGrid(xDimBox.value, yDimBox.value);
-    experimentParameters.stoppingCriteria = parseInt(stoppingCDropdown.value);
-    console.log(experimentParameters);
-    switch(experimentParameters.stoppingCriteria) {
+function PAINT_ONCE(currentExperiment){
+    //console.log(experimentParameters);
+    DrawGrid(currentExperiment.y, currentExperiment.x);
+    switch(currentExperiment.stoppingCriteria) {
         case 0:
-            while (!stoppingCriteria.isFull()) {
-                let randomCoord = Math.floor(Math.random() * (experimentParameters.gridSize() + 1)); //need the +1 to hit max size
+            while (!stoppingCriteria.isFull(currentExperiment.gridSize())) {
+                let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
                 randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
-                let color = Math.floor(Math.random()*3);
-                applyAnimationToCell(randomCoord, colors[color]);
+                let color = Math.floor(Math.random() * 3);
+                applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
+                //setTimeout(function () { applyAnimationToCell(randomCoord, colors[color]) }, 5);
                 if(color === 0)
                     results.c1Drops++;
                 if(color === 1)
@@ -146,8 +152,8 @@ function PAINT_ONCE(colors){
             }
             break;
         case 1:
-            while (!stoppingCriteria.isDoubleDropped()){
-                let randomCoord = Math.floor(Math.random() * experimentParameters.gridSize());
+            while (!stoppingCriteria.isDoubleDropped(currentExperiment.gridSize())){
+                let randomCoord = Math.floor(Math.random() * currentExperiment.gridSize());
                 let color = Math.floor(Math.random() /*times however we quantify colors*/)
                 // Insert logic that initiates paint animation
                 grid[randomCoord].color++;

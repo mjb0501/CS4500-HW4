@@ -4,7 +4,6 @@ let theGrid, mainGridDiv, oldGridHeading, form;
 let inputError, theInputBox;
 let yDimBox, xDimBox, placeholderBox;
 const colorOptions = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "grey"];
-const colors = [];
 
 //sets all the global elements
 function getGlobalElements() {
@@ -42,8 +41,11 @@ window.addEventListener("load", (event) => {
 
     //let's add the colors to the dropdowns
     populateColorDropdown(color1Dropdown);
+    color1Dropdown.value = "red";
     populateColorDropdown(color2Dropdown);
+    color2Dropdown.value = "green";
     populateColorDropdown(color3Dropdown);
+    color3Dropdown.value = "blue";
 
     //let's add the stopping criteria
     var stoppingOptions = ["Every square is full", "A single square was double dropped on"];
@@ -82,16 +84,20 @@ function validateForm() {
     if (!returnVal) {
         inputError.hidden = false;
     } else {
-        //populate the color options chosen
-        colors.push(color1Dropdown.value);
-        colors.push(color2Dropdown.value);
-        colors.push(color3Dropdown.value);
+        //populate the DTO to send over to scripts
+        let thisExperiment = initialExperiment;
+        thisExperiment.colors.push(color1Dropdown.value);
+        thisExperiment.colors.push(color2Dropdown.value);
+        thisExperiment.colors.push(color3Dropdown.value);
+        thisExperiment.x = parseInt(xDimBox.value);
+        thisExperiment.y = parseInt(yDimBox.value);
+        thisExperiment.stoppingCriteria = parseInt(stoppingCDropdown.value);
         //let's hide this box and make the grid front and center of everything
         placeholderBox.hidden = true;
         theGrid.hidden = false;
         theInputBox.hidden = true;
         mainGridDiv.className = "col-md-12";
-        PAINT_ONCE(colors);
+        PAINT_ONCE(thisExperiment);
     }
     return returnVal;
 }

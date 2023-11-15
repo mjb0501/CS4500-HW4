@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="Scripts.js"></script>
+    <script src="Index.js"></script>
     <meta charset="UTF-8">
     <meta name = "viewport" content =" width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
@@ -20,8 +20,20 @@
             </nav>
         <div id="placeholderIndex" class="row"></div>
         <div class="content">
-            <h1>Paint Canvas</h1>
-            <a href="grid.html">Get Started</a>
+            <div id="initialButton">
+                <h1>Paint Canvas</h1>
+                <a onclick="ShowMessage()">Get Started</a>
+            </div>
+            <div id="welcomeMessage" class="messageBox welcomeMessage" hidden="hidden">
+                <form onsubmit="return GoToGrid()">
+                    <h2>Welcome to our site!</h2><br>
+                    Example on where we would describe how this site operates.<br>
+                    Maybe even put a video of our site working to show them??<br><br>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id elit maximus, rutrum nisl sit amet, ultricies velit. Duis dapibus magna ac urna ultrices, sed congue dolor scelerisque. Nullam semper erat ut justo pretium ornare. Nunc maximus nibh non eros scelerisque cursus sed eu dui. In euismod libero nunc, vitae accumsan tellus rhoncus sit amet. Quisque finibus quam eget felis varius congue. Nullam a posuere est. Orci varius natoque penatibus.
+                    <br><br>
+                    <button class="button" type="submit">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>

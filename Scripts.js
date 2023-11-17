@@ -88,7 +88,7 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     let tempColor = style.getPropertyValue('background-color');
     theCell.style.backgroundColor = AnimationColor;
     let frames = 0;
-    let id = setInterval(frame, 10);
+    let id = setInterval(frame, 3);
 
     function frame() {
         if (frames <= 15) {
@@ -111,6 +111,8 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
         }
     }
 
+
+
 /* Old Animation way using css instead of javascript
     theCell.style.position = `relative`;
     theCell.style.clipPath = `circle(30%)`;
@@ -130,6 +132,8 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
 
 */
 }
+
+
 
 const allResults = [];
 function PAINT_ONCE(currentExperiment){
@@ -163,4 +167,9 @@ function PAINT_ONCE(currentExperiment){
 
 function PAINT_MANY(x, y, c1, c2, c3, stoppingCriteria, reps){
 
+}
+
+function getStarted() {
+    ShowMessage();
+    introAnimation();
 }

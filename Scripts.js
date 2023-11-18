@@ -40,17 +40,7 @@ const stoppingCriteria = {
                 return isFull = false;
         }
         return isFull;
-    },
-
-    //isDoubleDropped should be sent as 1
-    isDoubleDropped:function(size){
-        let isDoubleDropped = false;
-        for(let i = 0; i < size; i++) {
-            if(square[i].drops > 1) //insert proper check for number of drops
-                return isDoubleDropped = true;
-        }
-        return isDoubleDropped;
-    },
+    }
 }
 
 // New and improved draw grid, using Sean's rewritten method and josh's ID
@@ -72,13 +62,14 @@ function DrawGrid(rows, columns) {
     //setTimeout(function(){applyAnimationToCell(1, "blue");}, 2000);
 }
 
+
 function applyAnimationToCell(cellNumber, AnimationColor) {
     // Create a unique animation for each cell
     let animationName = "paintDrop-" + cellNumber;
     let styleSheet = document.styleSheets[0];
 
     // Apply the unique animation to the specific cell
-    let cellID = cellNumber;
+    cellID = cellNumber;
     let theCell = document.getElementById(cellID);
     console.log(cellNumber);
     let style = window.getComputedStyle(theCell);
@@ -132,36 +123,79 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
 
 */
 }
-
+function paintSingleCanvas(currentExperiment){
+    let randomCoord = Math.floor(Math.random() * currentExperiment.gridSize() + 1);
+    let color = Math.floor(Math.random() * 3);
+    applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
+    if(color === 0) {
+        results.c1Drops++;
+    }
+    if(color === 1) {
+        results.c2Drops++;
+    }
+    if(color === 2) {
+        results.c3Drops++;
+    }
+}
 
 
 const allResults = [];
-function PAINT_ONCE(currentExperiment){
+
+function PAINT_ONCE(currentExperiment) {
     //console.log(experimentParameters);
     DrawGrid(currentExperiment.y, currentExperiment.x);
-    switch(currentExperiment.stoppingCriteria) {
+    switch (currentExperiment.stoppingCriteria) {
         case 0:
-            while (!stoppingCriteria.isFull(currentExperiment.gridSize())) {
+        function paintLoopCriteria0() {
+            setTimeout(function () {
                 let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
                 randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                 let color = Math.floor(Math.random() * 3);
                 applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
-                //setTimeout(function () { applyAnimationToCell(randomCoord, colors[color]) }, 5);
-                if(color === 0)
+                if (color === 0)
                     results.c1Drops++;
-                if(color === 1)
+                if (color === 1)
                     results.c2Drops++;
-                if(color === 2)
+                if (color === 2)
                     results.c3Drops++;
-            }
+                if (!stoppingCriteria.isFull(currentExperiment.gridSize()))
+                    paintLoopCriteria0();
+            }, 300)
+        }
+
+            paintLoopCriteria0(); //run at least once, it will stay in loop as needed
             break;
+
         case 1:
-            while (!stoppingCriteria.isDoubleDropped(currentExperiment.gridSize())){
-                let randomCoord = Math.floor(Math.random() * currentExperiment.gridSize());
-                let color = Math.floor(Math.random() /*times however we quantify colors*/)
-                // Insert logic that initiates paint animation
-                grid[randomCoord].color++;
+            let isDoubleDripped = false;
+            const dropTracker = [];
+        function paintLoopCriteria0() {
+            setTimeout(function () {
+                let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
+                randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
+                let color = Math.floor(Math.random() * 3);
+                applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
+                console.log("Length of tracker: " + dropTracker.length);
+                for (let i = 0; i < dropTracker.length; i++) {
+                    if (dropTracker[i] === randomCoord) {
+                        isDoubleDripped = true;
+                    }
+                }
+                dropTracker.push(randomCoord);
+                if (color === 0)
+                    results.c1Drops++;
+                    if (color === 1)
+                    results.c2Drops++;
+                    if (color === 2)
+                    results.c3Drops++;
+                    if (!isDoubleDripped)
+                        paintLoopCriteria0();
+
+                }, 300)
             }
+
+                paintLoopCriteria0(); //run at least once, it will stay in loop as needed
+                break;
     }
 }
 

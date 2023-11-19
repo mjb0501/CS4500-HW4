@@ -1,6 +1,6 @@
 //global elements
 let color1Dropdown, color2Dropdown, color3Dropdown, stoppingCDropdown;
-let theGrid, mainGridDiv, oldGridHeading, form;
+let theGrid, mainGridDiv, form;
 let inputError, theInputBox;
 let yDimBox, xDimBox, placeholderBox;
 const colorOptions = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "grey"];

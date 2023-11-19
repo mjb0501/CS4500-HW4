@@ -58,7 +58,7 @@ function SetGridSize(x, y) {
 // New and improved draw grid, using Sean's rewritten method and josh's ID
 function DrawGrid(rows, columns) {
     var grid = document.getElementById("theGrid");
-    var size = SetGridSize(rows, columns);
+    var size = SetGridSize(columns, rows);
     for (var i = 0; i < rows; i++) {
         var row = grid.insertRow(i);
 

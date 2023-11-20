@@ -24,83 +24,124 @@ function introAnimation() {
     let xTable = document.getElementById("xDimensionTable");
     let yTable = document.getElementById("yDimensionTable");
     let colorTable = document.getElementById("colorTable");
+    let submit = document.getElementById("submit");
+    let increment = document.getElementById("increment");
+    let decrement = document.getElementById("decrement");
+    let page = 1;
 
     let frames = 0;
 
     let id = setInterval(animate, 2);
 
+    function incrementPage() {
+        page++;
+        clearInterval(id);
+        frames = 0;
+        id = setInterval(animate, 2);
+    }
+
+    function decrementPage() {
+        page--;
+        clearInterval(id);
+        frames = 0;
+        id = setInterval(animate, 2);
+    }
+
+    introAnimation.incrementPage = incrementPage;
+    introAnimation.decrementPage = decrementPage;
     function animate() {
-        if (frames <= 50) {
+        if (frames <= 50 && page == 1) {
+            decrement.hidden = true;
+            text.innerHTML = "This website paints grid based images like so: ";
+            table.style.opacity = 0;
+            table.hidden = false;
+            list1.hidden = true;
+            list1.style.opacity = 0;
+            list2.hidden = true;
+            list2.style.opacity = 0;
+            list3.hidden = true;
+            list3.style.opacity = 0;
+            list4.hidden = true;
+            list4.style.opacity = 0;
+            text.style.opacity = 0;
             text.style.opacity = (frames/50);
             frames++;
         }
-        if (frames > 50 && frames <= 100) {
+        if (frames > 50 && frames <= 100 && page == 1) {
             table.style.opacity = ((frames-50)/50);
             frames++;
         }
-        if (frames > 100 && frames <= 120) {
+        if (frames > 100 && frames <= 120 && page == 1) {
             frames++
         }
-        if (frames > 120 && frames <= 150) {
+        if (frames <= 20 && page == 2) {
+            decrement.hidden = false;
+            xTable.hidden = true;
+            xTable.style.opacity = 0;
             text.innerHTML = "To make a picture you need to provide 4 things: ";
             table.hidden = true;
             frames++;
         }
-        if (frames > 150 && frames <= 170) {
+        if (frames > 20 && frames <= 40 && page == 2) {
             list1.hidden = false;
-            list1.style.opacity = ((frames-150)/20);
+            list1.style.opacity = ((frames-20)/20);
             frames++;
         }
-        if (frames > 170 && frames <= 190) {
+        if (frames > 40 && frames <= 60 && page == 2) {
             list2.hidden = false;
-            list2.style.opacity = ((frames-170)/20);
+            list2.style.opacity = ((frames-40)/20);
             frames++;
         }
-        if (frames > 190 && frames <= 210) {
+        if (frames > 60 && frames <= 80 && page == 2) {
             list3.hidden = false;
-            list3.style.opacity = ((frames-190)/20);
+            list3.style.opacity = ((frames-60)/20);
             frames++;
         }
-        if (frames > 210 && frames <= 410) {
+        if (frames > 80 && frames <= 100 && page == 2) {
             list4.hidden = false;
-            list4.style.opacity = ((frames-210)/20);
+            list4.style.opacity = ((frames-80)/20);
             frames++;
         }
-        if (frames > 410 && frames <= 610) {
+        if (frames <= 100 && page == 3) {
+            yTable.hidden = true;
+            yTable.style.opacity = 0;
             list1.hidden = true;
             list2.hidden = true;
             list3.hidden = true;
             list4.hidden = true;
             text.innerHTML = "To select the X dimension enter a number.  For example if 3 is given the cavas will look like this:";
             xTable.hidden = false;
-            xTable.style.opacity = ((frames-410)/100);
+            xTable.style.opacity = (frames/100);
             frames++;
         }
-        if (frames > 610 && frames <= 810) {
+        if (frames <= 100 && page == 4) {
+            colorTable.hidden = true;
+            colorTable.style.opacity = 0;
             xTable.hidden = true;
             text.innerHTML = "To select Y dimension give a number.  For example if 3 is given the canvas will look like this:";
             yTable.hidden = false;
-            yTable.style.opacity = ((frames-610)/100);
+            yTable.style.opacity = (frames/100);
             frames++;
         }
-        if (frames > 810 && frames <= 1010) {
+        if (frames <= 100 && page == 5) {
             yTable.hidden = true;
             text.innerHTML = "For colors choose a color from the dropdown menu. The colors will be colors that will paint the image.  For example if red, blue, and green are chosen your graph could look like this: ";
             colorTable.hidden = false;
-            colorTable.style.opacity = ((frames-810)/100);
+            colorTable.style.opacity = (frames/100);
             frames++;
         }
-        if (frames > 1010 && frames <= 1210) {
+        if (frames <= 100 && page == 6) {
+            increment.hidden = false;
+            submit.hidden = true;
             colorTable.hidden = true;
             text.innerHTML = "For stopping criteria choose a criteria from the dropdown menu.  The criteria will determine when the website stops painting."
             frames++;
         }
-        if (frames > 1210) {
+        if (page == 7) {
+            increment.hidden = true;
             text.innerHTML = "That is all good luck painting!";
+            submit.hidden = false;
             frames++
-        }
-        if (frames > 1250) {
-            clearInterval(id);
         }
     }
 return false;

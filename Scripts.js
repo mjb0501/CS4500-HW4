@@ -85,6 +85,7 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     theCell.style.clipPath = 'circle(30%)';
     theCell.style.position = 'relative';
     let tempColor = style.getPropertyValue('background-color');
+    console.log("color: " + tempColor);
     theCell.style.backgroundColor = AnimationColor;
     let frames = 0;
     let id = setInterval(frame, 3);

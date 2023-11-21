@@ -132,6 +132,7 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
 
 */
 }
+
 function paintSingleCanvas(currentExperiment){
     let randomCoord = Math.floor(Math.random() * currentExperiment.gridSize() + 1);
     let color = Math.floor(Math.random() * 3);
@@ -152,6 +153,42 @@ const allResults = [];
 
 function PAINT_ONCE(currentExperiment) {
     //console.log(experimentParameters);
+    let callTime = 500;
+    let speed = 1.0;
+    let speedButton = document.getElementById("speedUp");
+    let slowButton = document.getElementById("slowDown");
+    let currentSpeed = document.getElementById("speed");
+    speedButton.hidden = false;
+    slowButton.hidden = false;
+    currentSpeed.hidden = false;
+
+    function speedUp() {
+        slowButton.disabled = false;
+        slowButton.innerHTML = "Slow Down";
+        speed += 0.2;
+        callTime -= 50;
+        currentSpeed.innerHTML = speed.toPrecision(2) + "x";
+        if (speed >= 3.0) {
+            speedButton.disabled = true;
+            speedButton.innerHTML = "Max";
+        }
+    }
+
+    function slowDown() {
+        speedButton.disabled = false;
+        speedButton.innerHTML = "Speed Up";
+        speed -= 0.2;
+        callTime += 50;
+        currentSpeed.innerHTML = speed.toPrecision(2) + "x";
+        if (speed <= 0.3) {
+            slowButton.disabled = true;
+            slowButton.innerHTML = "Max";
+        }
+    }
+
+    PAINT_ONCE.speedUp = speedUp;
+    PAINT_ONCE.slowDown = slowDown;
+
     DrawGrid(currentExperiment.y, currentExperiment.x);
     switch (currentExperiment.stoppingCriteria) {
         case 0:
@@ -169,7 +206,7 @@ function PAINT_ONCE(currentExperiment) {
                         results.c3Drops++;
                     if (!stoppingCriteria.isFull(currentExperiment.gridSize()))
                         paintLoopCriteria0();
-                }, 300)
+                }, callTime)
             }
             paintLoopCriteria0(); //run at least once, it will stay in loop as needed
             break;

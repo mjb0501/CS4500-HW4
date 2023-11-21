@@ -99,6 +99,10 @@ video {
     color: white;
     font-weight: 700;
 }
+.button.speed {
+    display: flex;
+    flex-direction: row;
+}
 .errorBox {
     border:2px solid red;
 }
@@ -144,5 +148,10 @@ td {
     opacity: 0;
     margin-left: auto;
     margin-right: auto;
+}
+
+.speed-items {
+    display: flex;
+    flex-direction: row;
 }
 

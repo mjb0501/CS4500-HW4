@@ -1,7 +1,4 @@
 
-    const ctx = document.getElementById('Graph');
-
-
 var graphCreated = false;
 function createGraph(){
     if (graphCreated==false) {

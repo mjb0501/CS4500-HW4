@@ -85,12 +85,12 @@ function validateForm() {
         inputError.hidden = false;
     } else {
         //populate the DTO to send over to scripts
-        let thisExperiment = initialExperiment;
+        let thisExperiment = singleExperiment;
         thisExperiment.colors.push(color1Dropdown.value);
         thisExperiment.colors.push(color2Dropdown.value);
         thisExperiment.colors.push(color3Dropdown.value);
-        thisExperiment.x = parseInt(xDimBox.value);
-        thisExperiment.y = parseInt(yDimBox.value);
+        thisExperiment.xVal = parseInt(xDimBox.value);
+        thisExperiment.yVal = parseInt(yDimBox.value);
         thisExperiment.stoppingCriteria = parseInt(stoppingCDropdown.value);
         //let's hide this box and make the grid front and center of everything
         placeholderBox.hidden = true;

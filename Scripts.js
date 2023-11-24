@@ -1,32 +1,34 @@
 const experimentParameters = {
-    dVal:0,
-    reps:0,
-    stoppingCriteria:0,
-    independentVar:"0",
-    independentVarQuantity:0,
-    dependentVar:"0",
-    gridSize:function(){return xDimBox.value * yDimBox.value;}
+    dVal:null,
+    xVal:null,
+    yVal:null,
+    reps:null,
+    stoppingCriteria:null,
+    independentVar:null,
+    independentVarValues:[],
+    dependentVar:null,
+    colors: [],
+    gridSize:function(){return this.xVal * this.yVal;}
 };
 
-const initialExperiment = {
+const singleExperiment = {
     xVal: 0,
     yVal: 0,
     stoppingCriteria: 0,
-    gridSize: function() {return this.x * this.y;},
+    gridSize: function() {return this.xVal * this.yVal;},
     colors: []
 };
-
-
-const independentVarValues = [];
 
 const results = {
     totalDrops:function(){return this.c1Drops + this.c2Drops + this.c3Drops},
     c1Drops:0,
     c2Drops:0,
     c3Drops:0,
-    maxDrops:0,
+    maxDrops1Square:0,
     averageDrops:0,
 };
+
+const allResults = [];
 
 const stoppingCriteria = {
     //isFull should be sent as 0.
@@ -79,13 +81,13 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     // Apply the unique animation to the specific cell
     cellID = cellNumber;
     let theCell = document.getElementById(cellID);
-    console.log(cellNumber);
+    //console.log(cellNumber);
     let style = window.getComputedStyle(theCell);
 
     theCell.style.clipPath = 'circle(30%)';
     theCell.style.position = 'relative';
     let tempColor = style.getPropertyValue('background-color');
-    console.log("color: " + tempColor);
+    //console.log("color: " + tempColor);
     theCell.style.backgroundColor = AnimationColor;
     let frames = 0;
     let id = setInterval(frame, 3);
@@ -104,7 +106,7 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
             let circle = 15 + frames;
             theCell.style.clipPath = `circle(${circle}%)`;
             frames++;
-            console.log(frames);
+        //    console.log(frames);
         }
         else {
             clearInterval(id);
@@ -133,25 +135,8 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
 */
 }
 
-function paintSingleCanvas(currentExperiment){
-    let randomCoord = Math.floor(Math.random() * currentExperiment.gridSize() + 1);
-    let color = Math.floor(Math.random() * 3);
-    applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
-    if(color === 0) {
-        results.c1Drops++;
-    }
-    if(color === 1) {
-        results.c2Drops++;
-    }
-    if(color === 2) {
-        results.c3Drops++;
-    }
-}
-
-
-const allResults = [];
-
 function PAINT_ONCE(currentExperiment) {
+
     //console.log(experimentParameters);
     let callTime = 500;
     let speed = 1.0;
@@ -189,7 +174,9 @@ function PAINT_ONCE(currentExperiment) {
     PAINT_ONCE.speedUp = speedUp;
     PAINT_ONCE.slowDown = slowDown;
 
-    DrawGrid(currentExperiment.y, currentExperiment.x);
+    DrawGrid(currentExperiment.yVal, currentExperiment.xVal);
+    const dropTracker = [];
+
     switch (currentExperiment.stoppingCriteria) {
         case 0:
             function paintLoopCriteria0() {
@@ -198,6 +185,7 @@ function PAINT_ONCE(currentExperiment) {
                     randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                     let color = Math.floor(Math.random() * 3);
                     applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
+                    dropTracker.push(randomCoord);
                     if (color === 0)
                         results.c1Drops++;
                     if (color === 1)
@@ -212,37 +200,76 @@ function PAINT_ONCE(currentExperiment) {
             break;
         case 1:
             let isDoubleDripped = false;
-            const dropTracker = [];
-            function paintLoopCriteria1() {
-                setTimeout(function () {
-                    let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
-                    randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
-                    let color = Math.floor(Math.random() * 3);
-                    applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
-                    console.log("Length of tracker: " + dropTracker.length);
-                    for (let i = 0; i < dropTracker.length; i++) {
-                        if (dropTracker[i] === randomCoord) {
-                            isDoubleDripped = true;
-                        }
+        function paintLoopCriteria1() {
+            setTimeout(function () {
+                let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
+                randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
+                let color = Math.floor(Math.random() * 3);
+                applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
+                //console.log("Length of tracker: " + dropTracker.length);
+                for (let i = 0; i < dropTracker.length; i++) {
+                    if (dropTracker[i] === randomCoord) {
+                        isDoubleDripped = true;
+                        break;
                     }
-                    dropTracker.push(randomCoord);
-                    if (color === 0)
-                        results.c1Drops++;
-                    if (color === 1)
-                        results.c2Drops++;
-                    if (color === 2)
-                        results.c3Drops++;
-                    if (!isDoubleDripped)
-                        paintLoopCriteria0();
-                    }, 300)
                 }
+                dropTracker.push(randomCoord);
+                if (color === 0)
+                    results.c1Drops++;
+                if (color === 1)
+                    results.c2Drops++;
+                if (color === 2)
+                    results.c3Drops++;
+                //console.log(dropTracker);
+                if (!isDoubleDripped)
+                    paintLoopCriteria1();
+            }, 300)
+        }
             paintLoopCriteria1(); //run at least once, it will stay in loop as needed
             break;
     }
+    results.averageDrops = results.totalDrops()/currentExperiment.gridSize;
+    dropTracker.sort(function(a, b){return a - b});
+    for(let i = 0; i < currentExperiment.gridSize; i++){
+        let maxCounter = 0;
+        if(dropTracker[i] === dropTracker[i+1]) {
+            while (dropTracker[i] === dropTracker[i + 1]) {
+                maxCounter++;
+                i++;
+                if (maxCounter > results.maxDrops1Square)
+                    results.maxDrops1Square = maxCounter;
+            }
+        }
+        }
+    console.log("Max drop on a square: " + results.maxDrops1Square);
+    console.log(dropTracker);
+    console.log(results);
 }
 
-function PAINT_MANY(x, y, c1, c2, c3, stoppingCriteria, reps){
+function PAINT_MANY(experimentParameters){
+/*
+Independent variables:  0 = dimension
+                        1 = repetitions
+                        2 = stopping criteria
+                        3 = x value
+                        4 = y value
+ */
+    allResults = [];
 
+    switch (experimentParameters.independentVar){
+        case 0:
+            for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
+                for(let j = 0; j < experimentParameters.reps; j++){
+                    let thisExperiment = singleExperiment;
+                    thisExperiment.xVal = experimentParameters.independentVarValues[i];
+                    thisExperiment.yVal = experimentParameters.independentVarValues[i];
+                    thisExperiment.colors = experimentParameters.colors;
+                    thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
+                    PAINT_ONCE(thisExperiment);
+                }
+            }
+
+    }
 }
 
 function getStarted() {

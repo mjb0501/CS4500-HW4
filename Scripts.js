@@ -48,7 +48,7 @@ const stoppingCriteria = {
 //based on the grid size, lets make sure it fits the page
 function SetGridSize(x, y) {
     //first do the height
-    var squareHeight = (window.innerHeight - 125) / y; //for the nav and extra for bottom
+    var squareHeight = (window.innerHeight - 175) / y; //for the nav and extra for bottom buttons
 
     //now check the width
     var squareWidth = window.innerWidth / x;
@@ -112,32 +112,14 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
             clearInterval(id);
         }
     }
+}
 
+//this method does some hiding and showing on the UI to setup the next experiement
+function setupNextExperiment() {
 
-
-/* Old Animation way using css instead of javascript
-    theCell.style.position = `relative`;
-    theCell.style.clipPath = `circle(30%)`;
-    styleSheet.insertRule(`@keyframes ${animationName} {
-                          0% { top: -100px; }
-                          50% { top: 0; background-color: ${AnimationColor}; clip-path: circle(30%); }
-                          100% { background-color: color-mix(in srgb, ${AnimationColor}, ${style.getPropertyValue('background-color')}); clip-path: circle(100%); }
-                        }`, styleSheet.cssRules.length);
-    theCell.style.animationFillMode = `forwards`;
-    theCell.style.animation = `${animationName} 3s linear forwards`;
-    //theCell.style.backgroundColor = `blue`;
-    theCell.animationName = 'none';
-    //theCell.style.animation = 'none';
-    //theCell.offsetHeight;
-    //theCell.style.animation = null;
-    //theCell.style.backgroundColor = `blue`;//`color-mix(in srgb, ${AnimationColor}, ${style.getPropertyValue('background-color')}`;
-
-*/
 }
 
 function PAINT_ONCE(currentExperiment) {
-
-    //console.log(experimentParameters);
     let callTime = 500;
     let speed = 1.0;
     let speedButton = document.getElementById("speedUp");
@@ -220,7 +202,6 @@ function PAINT_ONCE(currentExperiment) {
                     results.c2Drops++;
                 if (color === 2)
                     results.c3Drops++;
-                //console.log(dropTracker);
                 if (!isDoubleDripped)
                     paintLoopCriteria1();
             }, 300)
@@ -244,6 +225,7 @@ function PAINT_ONCE(currentExperiment) {
     console.log("Max drop on a square: " + results.maxDrops1Square);
     console.log(dropTracker);
     console.log(results);
+    setupNextExperiment();
 }
 
 function PAINT_MANY(experimentParameters){

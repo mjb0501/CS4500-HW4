@@ -28,7 +28,7 @@ const results = {
     averageDrops:0,
 };
 
-const allResults = [];
+let allResults = [];
 
 const stoppingCriteria = {
     //isFull should be sent as 0.
@@ -175,7 +175,8 @@ function PAINT_ONCE(currentExperiment) {
     PAINT_ONCE.slowDown = slowDown;
 
     DrawGrid(currentExperiment.yVal, currentExperiment.xVal);
-    const dropTracker = [];
+    //build an array of grid size, fill it with the number 0 all the way through
+    let dropTracker = new Array(currentExperiment.gridSize()).fill(0);
 
     switch (currentExperiment.stoppingCriteria) {
         case 0:
@@ -185,7 +186,7 @@ function PAINT_ONCE(currentExperiment) {
                     randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                     let color = Math.floor(Math.random() * 3);
                     applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
-                    dropTracker.push(randomCoord);
+                    dropTracker[randomCoord - 1]++;
                     if (color === 0)
                         results.c1Drops++;
                     if (color === 1)
@@ -206,14 +207,13 @@ function PAINT_ONCE(currentExperiment) {
                 randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                 let color = Math.floor(Math.random() * 3);
                 applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
-                //console.log("Length of tracker: " + dropTracker.length);
+                dropTracker[randomCoord - 1]++; // lets add the drop now before checking for double drips
                 for (let i = 0; i < dropTracker.length; i++) {
-                    if (dropTracker[i] === randomCoord) {
+                    if (dropTracker[i - 1] === 2) {
                         isDoubleDripped = true;
                         break;
                     }
                 }
-                dropTracker.push(randomCoord);
                 if (color === 0)
                     results.c1Drops++;
                 if (color === 1)

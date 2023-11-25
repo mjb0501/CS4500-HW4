@@ -24,10 +24,20 @@
                     <table id="theGrid" class="center"></table>
                 </div>
             </div>
-            <div class="col-md-12" style="display: flex; flex-direction: row; gap: 250px; justify-content: center">
-                <button class="button speed" type="button" id="slowDown" hidden="hidden" onclick="PAINT_ONCE.slowDown()">Slow Down</button>
-                <h3 id="speed" hidden="hidden" class="speed-items" style="color: white;">1.0x</h3>
-                <button class="button speed" type="button" id="speedUp" hidden="hidden" onclick="PAINT_ONCE.speedUp()">Speed Up</button>
+            <div class="col-md-12">
+                <div id="speedButtons" hidden="hidden" style="display: flex; flex-direction: row; gap: 250px; justify-content: center">
+                    <button class="button speed" type="button" id="slowDown" onclick="PAINT_ONCE.slowDown()">Slow Down</button>
+                    <h3 id="speed" class="speed-items" style="color: white;">1.0x</h3>
+                    <button class="button speed" type="button" id="speedUp" onclick="PAINT_ONCE.speedUp()">Speed Up</button>
+                </div>
+                <div id="experimentOneComplete" hidden="hidden">
+                    <h3 id="finishMessage">Experiment has been completed.</h3>
+                    <button class="button" type="button" id="expFinished" onclick="completeExperimentOne()">CONTINUE</button>
+                </div>
+                <div id="welcomeMessage" class="messageBox welcomeMessage" hidden="hidden">
+                    <h2>Explain functionality thru animation of the next round of experiments.</h2>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec arcu felis. Fusce quis sagittis nisi, et mattis velit. Integer congue eros diam, non accumsan eros dictum non. Sed venenatis, libero at lobortis sodales, neque lectus pulvinar augue, in tristique arcu nibh quis leo. Donec gravida congue lectus, id elementum.
+                </div>
             </div>
             <div id="inputBoxFirst" class="col-md-12">
             <div class="row">

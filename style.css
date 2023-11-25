@@ -154,3 +154,12 @@ td {
     display: flex;
     flex-direction: row;
 }
+
+#experimentOneComplete {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

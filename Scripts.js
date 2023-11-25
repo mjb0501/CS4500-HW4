@@ -48,7 +48,7 @@ const stoppingCriteria = {
 //based on the grid size, lets make sure it fits the page
 function SetGridSize(x, y) {
     //first do the height
-    var squareHeight = (window.innerHeight - 175) / y; //for the nav and extra for bottom buttons
+    var squareHeight = (window.innerHeight - 250) / y; //for the nav and extra for bottom buttons
 
     //now check the width
     var squareWidth = window.innerWidth / x;
@@ -81,13 +81,11 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     // Apply the unique animation to the specific cell
     cellID = cellNumber;
     let theCell = document.getElementById(cellID);
-    //console.log(cellNumber);
     let style = window.getComputedStyle(theCell);
 
     theCell.style.clipPath = 'circle(30%)';
     theCell.style.position = 'relative';
     let tempColor = style.getPropertyValue('background-color');
-    //console.log("color: " + tempColor);
     theCell.style.backgroundColor = AnimationColor;
     let frames = 0;
     let id = setInterval(frame, 3);
@@ -100,13 +98,11 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
             let location = -15 + frames;
             theCell.style.top = location.toString() + 'vh';
             frames++;
-            //console.log(frames);
         }
         else if (frames > 15 && frames <= 85) {
             let circle = 15 + frames;
             theCell.style.clipPath = `circle(${circle}%)`;
             frames++;
-        //    console.log(frames);
         }
         else {
             clearInterval(id);
@@ -114,9 +110,24 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     }
 }
 
-//this method does some hiding and showing on the UI to setup the next experiement
-function setupNextExperiment() {
+//this method does some hiding and showing on the UI to setup the next experiment
+function setupNextExperiment(message) {
+    let speedButtons = document.getElementById("speedButtons");
+    let experimentOneComplete = document.getElementById("experimentOneComplete");
+    let finishMessage = document.getElementById("finishMessage");
+    speedButtons.hidden = true;
+    experimentOneComplete.hidden = false;
+    finishMessage.textContent = finishMessage.textContent + " " + message;
+}
 
+function completeExperimentOne() {
+    let welcomeMessage = document.getElementById("welcomeMessage");
+    let experimentOneComplete = document.getElementById("experimentOneComplete");
+    let theGrid = document.getElementById("theGrid");
+    experimentOneComplete.hidden = true;
+    welcomeMessage.hidden = false;
+    theGrid.hidden = true;
+    return false;
 }
 
 function PAINT_ONCE(currentExperiment) {
@@ -125,9 +136,8 @@ function PAINT_ONCE(currentExperiment) {
     let speedButton = document.getElementById("speedUp");
     let slowButton = document.getElementById("slowDown");
     let currentSpeed = document.getElementById("speed");
-    speedButton.hidden = false;
-    slowButton.hidden = false;
-    currentSpeed.hidden = false;
+    let speedButtons = document.getElementById("speedButtons");
+    speedButtons.hidden = false;
 
     function speedUp() {
         slowButton.disabled = false;
@@ -175,8 +185,11 @@ function PAINT_ONCE(currentExperiment) {
                         results.c2Drops++;
                     if (color === 2)
                         results.c3Drops++;
-                    if (!stoppingCriteria.isFull(currentExperiment.gridSize()))
+                    if (!stoppingCriteria.isFull(currentExperiment.gridSize())) {
                         paintLoopCriteria0();
+                    } else {
+                        setupNextExperiment("All squares have been dripped on!");
+                    }
                 }, callTime)
             }
             paintLoopCriteria0(); //run at least once, it will stay in loop as needed
@@ -202,8 +215,11 @@ function PAINT_ONCE(currentExperiment) {
                     results.c2Drops++;
                 if (color === 2)
                     results.c3Drops++;
-                if (!isDoubleDripped)
+                if (!isDoubleDripped) {
                     paintLoopCriteria1();
+                } else {
+                    setupNextExperiment("A square has been double dripped on!");
+                }
             }, 300)
         }
             paintLoopCriteria1(); //run at least once, it will stay in loop as needed
@@ -221,11 +237,10 @@ function PAINT_ONCE(currentExperiment) {
                     results.maxDrops1Square = maxCounter;
             }
         }
-        }
+    }
     console.log("Max drop on a square: " + results.maxDrops1Square);
     console.log(dropTracker);
     console.log(results);
-    setupNextExperiment();
 }
 
 function PAINT_MANY(experimentParameters){

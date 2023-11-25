@@ -113,19 +113,21 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
 //this method does some hiding and showing on the UI to setup the next experiment
 function setupNextExperiment(message) {
     let speedButtons = document.getElementById("speedButtons");
-    let experimentOneComplete = document.getElementById("experimentOneComplete");
+    let finishExpOneMessage = document.getElementById("finishExpOneMessage");
     let finishMessage = document.getElementById("finishMessage");
     speedButtons.hidden = true;
-    experimentOneComplete.hidden = false;
+    finishExpOneMessage.hidden = false;
     finishMessage.textContent = finishMessage.textContent + " " + message;
 }
 
-function completeExperimentOne() {
-    let welcomeMessage = document.getElementById("welcomeMessage");
-    let experimentOneComplete = document.getElementById("experimentOneComplete");
+function closeExperimentOne() {
+    let secondExplanation = document.getElementById("secondExplanation");
+    let finishExpOneMessage = document.getElementById("finishExpOneMessage");
     let theGrid = document.getElementById("theGrid");
-    experimentOneComplete.hidden = true;
-    welcomeMessage.hidden = false;
+    let placeholderGrid = document.getElementById("placeholderGrid");
+    finishExpOneMessage.hidden = true;
+    placeholderGrid.hidden = false;
+    secondExplanation.hidden = false;
     theGrid.hidden = true;
     return false;
 }

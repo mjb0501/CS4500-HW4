@@ -1,32 +1,71 @@
 //global elements
-let color1Dropdown, color2Dropdown, color3Dropdown, stoppingCDropdown;
-let color1DropdownSecond, color2DropdownSecond, color3DropdownSecond, stoppingCDropdownSecond, independentDropdown;
-let theGrid, mainGridDiv, form, inputFormSecond, secondExplanation;
-let inputError, theInputBox, inputBoxSecond;
-let yDimBox, xDimBox, placeholderBox;
+//dropdowns
+let color1Dropdown, color2Dropdown, color3Dropdown, stoppingCDropdown, color1DropdownSecond, color2DropdownSecond, color3DropdownSecond, stoppingCDropdownSecond, independentDropdown;
+//input errors
+let inputError, inputErrorSecond
+//X, Y & Independent
+let yDimBox, xDimBox, yDimBoxSecond, xDimBoxSecond, indVarValues, numIndValues, repetitions;
+//forms
+let form, inputFormSecond, secondExplanation;
+//input box and placeholder
+let theInputBox, inputBoxSecond, placeholderBox;
+//grid stuff
+let theGrid, mainGridDiv;
+//the different sections of 2nd experiment(s)
+let partOne, partTwo, partThree, partFour, partFive, partSix;
+
+//constant dropdown values
 const colorOptions = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "grey"];
+const stoppingOptions = ["Every square is full", "A single square was double dropped on"];
+const independentVariables = ["Single Dimension for both X and Y axis", "X Dimension", "Number of Repetitions"];
 
 //sets all the global elements
 function getGlobalElements() {
+    //dropdowns
     color1Dropdown = document.getElementById("colors1");
     color2Dropdown = document.getElementById("colors2");
     color3Dropdown = document.getElementById("colors3");
     color1DropdownSecond = document.getElementById("colors1Second");
     color2DropdownSecond = document.getElementById("colors2Second");
     color3DropdownSecond = document.getElementById("colors3Second");
-    inputError = document.getElementById("inputError");
     stoppingCDropdown = document.getElementById("stoppingC");
     stoppingCDropdownSecond = document.getElementById("stoppingCSecond");
     independentDropdown = document.getElementById("indVar");
+
+    //input errors
+    inputError = document.getElementById("inputError");
+    inputErrorSecond = document.getElementById("inputErrorSecond");
+
+    //X, Y & Independent
     xDimBox = document.getElementById("xDim");
     yDimBox = document.getElementById("yDim");
-    theInputBox = document.getElementById("inputBoxFirst");
-    inputBoxSecond = document.getElementById("inputBoxSecond");
-    mainGridDiv = document.getElementById("mainGrid");
-    placeholderBox = document.getElementById("placeholderGrid");
+    xDimBoxSecond = document.getElementById("xDimSecond");
+    yDimBoxSecond = document.getElementById("yDimSecond");
+    indVarValues = document.getElementById("indVarValues");
+    numIndValues = document.getElementById("numIndValues");
+    repetitions = document.getElementById("repetitions");
+
+    //forms
     form = document.getElementById("inputFormIntro");
     inputFormSecond = document.getElementById("inputFormSecond");
     secondExplanation = document.getElementById("secondExplanation");
+
+    //input box and placeholder
+    theInputBox = document.getElementById("inputBoxFirst");
+    inputBoxSecond = document.getElementById("inputBoxSecond");
+    placeholderBox = document.getElementById("placeholderGrid");
+
+    //grid stuff
+    mainGridDiv = document.getElementById("mainGrid");
+    theGrid = document.getElementById("theGrid");
+
+    //the different sections of 2nd experiment(s)
+    partOne = document.getElementById("partOne");
+    partTwo = document.getElementById("partTwo");
+    partThree = document.getElementById("partThree");
+    partFour = document.getElementById("partFour");
+    partFive = document.getElementById("partFive");
+    partSix = document.getElementById("partSix");
 }
 
 //populates the color dropdown
@@ -45,7 +84,6 @@ window.addEventListener("load", (event) => {
     getGlobalElements();
     //hide the errorValidation box
     inputError.hidden = true;
-    theGrid = document.getElementById("theGrid");
     theGrid.hidden;
 
     //let's add the colors to the dropdowns
@@ -64,9 +102,6 @@ window.addEventListener("load", (event) => {
     populateColorDropdown(color3DropdownSecond);
     color3DropdownSecond.value = "blue";
 
-    //let's add the stopping criteria
-    var stoppingOptions = ["Every square is full", "A single square was double dropped on"];
-
     for(i = 0; i < stoppingOptions.length; i++) {
         opt = stoppingOptions[i];
         el = document.createElement("option");
@@ -83,7 +118,6 @@ window.addEventListener("load", (event) => {
         stoppingCDropdownSecond.appendChild(el);
     }
 
-    var independentVariables = ["Single Dimension for both X and Y axis", "X Dimension", "Number of Repetitions"];
     for(i = 0; i < independentVariables.length; i++) {
         opt = independentVariables[i];
         el = document.createElement("option");
@@ -147,23 +181,121 @@ function showInputSecondRound() {
     return true;
 }
 
+//["Single Dimension for both X and Y axis", "X Dimension", "Number of Repetitions"];
+
+function resetError() {
+    numIndValues.style.border = "";
+    indVarValues.style.border = "";
+    repetitions.style.border = "";
+    inputErrorSecond.innerHTML = "";
+}
+
 function continueOne() {
-    let partOne = document.getElementById("partOne");
-    let partTwo = document.getElementById("partTwo");
+    //let's validate and send them to the next appropriate section
+    if (numIndValues.value > 10 || numIndValues.value < 1) {
+        numIndValues.style.border ="3px solid red";
+        inputErrorSecond.innerHTML = "Please select a valid number between 1 and 10.";
+        return false;
+    }
+    resetError();
     partOne.hidden = true;
     partTwo.hidden = false;
 }
 
 function continueTwo() {
-    let partTwo = document.getElementById("partTwo");
-    let partThree = document.getElementById("partThree");
-    partTwo.hidden = true;
-    partThree.hidden = false;
+    let values = indVarValues.value;
+    let valueArray = values.split(',');
+    let pastValue = 0;
+    if (valueArray.length < 2) {
+        indVarValues.style.border = "3px solid red";
+        inputErrorSecond.innerHTML = "You must provide at least two independent values.";
+        return false;
+    }
+    for (let i = 0; i < valueArray.length; i++)
+    {
+        let currentValue = valueArray[i].trim();
+        if (isNaN(currentValue)) {
+            indVarValues.style.border = "3px solid red";
+            inputErrorSecond.innerHTML = "Your independent values contain something that is not a number.<br>Or, you did not use commas to separate your values.";
+            return false;
+        }
+        currentValue = parseInt(currentValue);
+        if (currentValue === 0) {
+            indVarValues.style.border ="3px solid red";
+            inputErrorSecond.innerHTML = "Your independent values cannot contain a 0.";
+            return false;
+        }
+        if (currentValue <= pastValue) {
+            indVarValues.style.border ="3px solid red";
+            inputErrorSecond.innerHTML = "Your independent values must be in increasing order.";
+            return false;
+        }
+        pastValue = currentValue;
+    }
+
+    resetError();
+    let selection = independentDropdown.value;
+    if (selection === "0") {
+        //they chose same value for X & Y
+        partTwo.hidden = true;
+        partFive.hidden = false;
+    } else if (selection === "1") {
+        //they only chose a value for X
+        partTwo.hidden = true;
+        partFour.hidden = false;
+    } else if (selection === "2") {
+        //they chose a value for repetitions
+        partTwo.hidden = true;
+        partThree.hidden = false;
+    }
 }
 
 function continueThree() {
-    let partThree = document.getElementById("partThree");
-    let partFour = document.getElementById("partFour");
+    //let's validate and send them to the next appropriate section
+    if (xDimBoxSecond.value > 50 || xDimBoxSecond.value < 1) {
+        xDimBoxSecond.style.border ="3px solid red";
+        inputErrorSecond.innerHTML = "Please select a valid number between 1 and 50.";
+        return false;
+    }
+
     partThree.hidden = true;
     partFour.hidden = false;
+}
+
+function continueFour() {
+    //let's validate and send them to the final section
+    if (yDimBoxSecond.value > 50 || yDimBoxSecond.value < 1) {
+        yDimBoxSecond.style.border ="3px solid red";
+        inputErrorSecond.innerHTML = "Please select a valid number between 1 and 50.";
+        return false;
+    }
+
+    let selection = independentDropdown.value;
+    if (selection === "1") {
+        //they only chose a value for X
+        partFour.hidden = true;
+        partFive.hidden = false;
+    } else if (selection === "2") {
+        //they chose a value for repetitions
+        partFour.hidden = true;
+        partSix.hidden = false;
+    }
+}
+
+function continueFive() {
+    //let's validate and send them to the final section
+    if (repetitions.value > 10000 || repetitions.value < 1) {
+        repetitions.style.border ="3px solid red";
+        inputErrorSecond.innerHTML = "Please select a valid number between 1 and 10000.";
+        return false;
+    }
+    resetError();
+    partFive.hidden = true;
+    partSix.hidden = false;
+}
+
+function validateSecondForm() {
+    //populate the DTO to send over to scripts
+    let thisExperiment = experimentParameters;
+    PAINT_MANY(thisExperiment);
 }

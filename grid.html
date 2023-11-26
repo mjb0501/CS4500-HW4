@@ -54,21 +54,31 @@
                                     <label for="indVar">Independent Variable</label>
                                     <select id="indVar" name="indVar" required></select>
                                     <br>
-                                    <label for="indVarValues">Independent Variable Values</label>
-                                    <input id="indVarValues" required /><br>
+                                    <label for="numIndValues"># of Independent Values</label>
+                                    <input id="numIndValues" type="number" required /><br>
                                     <button class="button" onclick="return continueOne()">Continue</button>
                                 </div>
                                 <div id="partTwo" hidden="hidden">
-                                    <label for="yDimSecond">Y Dimension</label>
-                                    <input id="yDimSecond" class="inputBoxSmall" type="number" required /><br>
+                                    <label for="indVarValues">Independent Variable Values</label>
+                                    <input id="indVarValues" required /><br>
                                     <button class="button" onclick="return continueTwo()">Continue</button>
                                 </div>
                                 <div id="partThree" hidden="hidden">
-                                    <label for="repetitions"># of Repetitions</label>
-                                    <input id="repetitions" class="inputBoxSmall" type="number" required /><br>
+                                    <label for="xDimSecond">X Dimension</label>
+                                    <input id="xDimSecond" class="inputBoxSmall" type="number" required /><br>
                                     <button class="button" onclick="return continueThree()">Continue</button>
                                 </div>
                                 <div id="partFour" hidden="hidden">
+                                    <label for="yDimSecond">Y Dimension</label>
+                                    <input id="yDimSecond" class="inputBoxSmall" type="number" required /><br>
+                                    <button class="button" onclick="return continueFour()">Continue</button>
+                                </div>
+                                <div id="partFive" hidden="hidden">
+                                    <label for="repetitions"># of Repetitions</label>
+                                    <input id="repetitions" class="inputBoxSmall" type="number" required /><br>
+                                    <button class="button" onclick="return continueFive()">Continue</button>
+                                </div>
+                                <div id="partSix" hidden="hidden">
                                     <label for="colors1Second">Color Choice 1:</label>
                                     <select id="colors1Second" name ="color1Second" required></select>
                                     <br>

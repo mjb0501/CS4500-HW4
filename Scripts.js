@@ -1,32 +1,34 @@
 const experimentParameters = {
-    dVal:0,
-    reps:0,
-    stoppingCriteria:0,
-    independentVar:"0",
-    independentVarQuantity:0,
-    dependentVar:"0",
-    gridSize:function(){return xDimBox.value * yDimBox.value;}
+    dVal:null,
+    xVal:null,
+    yVal:null,
+    reps:null,
+    stoppingCriteria:null,
+    independentVar:null,
+    independentVarValues:[],
+    dependentVar:null,
+    colors: [],
+    gridSize:function(){return this.xVal * this.yVal;}
 };
 
-const initialExperiment = {
+const singleExperiment = {
     xVal: 0,
     yVal: 0,
     stoppingCriteria: 0,
-    gridSize: function() {return this.x * this.y;},
+    gridSize: function() {return this.xVal * this.yVal;},
     colors: []
 };
-
-
-const independentVarValues = [];
 
 const results = {
     totalDrops:function(){return this.c1Drops + this.c2Drops + this.c3Drops},
     c1Drops:0,
     c2Drops:0,
     c3Drops:0,
-    maxDrops:0,
+    maxDrops1Square:0,
     averageDrops:0,
 };
+
+let allResults = [];
 
 const stoppingCriteria = {
     //isFull should be sent as 0.
@@ -46,7 +48,7 @@ const stoppingCriteria = {
 //based on the grid size, lets make sure it fits the page
 function SetGridSize(x, y) {
     //first do the height
-    var squareHeight = (window.innerHeight - 125) / y; //for the nav and extra for bottom
+    var squareHeight = (window.innerHeight - 250) / y; //for the nav and extra for bottom buttons
 
     //now check the width
     var squareWidth = window.innerWidth / x;
@@ -79,13 +81,11 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     // Apply the unique animation to the specific cell
     cellID = cellNumber;
     let theCell = document.getElementById(cellID);
-    console.log(cellNumber);
     let style = window.getComputedStyle(theCell);
 
     theCell.style.clipPath = 'circle(30%)';
     theCell.style.position = 'relative';
     let tempColor = style.getPropertyValue('background-color');
-    console.log("color: " + tempColor);
     theCell.style.backgroundColor = AnimationColor;
     let frames = 0;
     let id = setInterval(frame, 3);
@@ -98,69 +98,48 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
             let location = -15 + frames;
             theCell.style.top = location.toString() + 'vh';
             frames++;
-            //console.log(frames);
         }
         else if (frames > 15 && frames <= 85) {
             let circle = 15 + frames;
             theCell.style.clipPath = `circle(${circle}%)`;
             frames++;
-            console.log(frames);
         }
         else {
             clearInterval(id);
         }
     }
-
-
-
-/* Old Animation way using css instead of javascript
-    theCell.style.position = `relative`;
-    theCell.style.clipPath = `circle(30%)`;
-    styleSheet.insertRule(`@keyframes ${animationName} {
-                          0% { top: -100px; }
-                          50% { top: 0; background-color: ${AnimationColor}; clip-path: circle(30%); }
-                          100% { background-color: color-mix(in srgb, ${AnimationColor}, ${style.getPropertyValue('background-color')}); clip-path: circle(100%); }
-                        }`, styleSheet.cssRules.length);
-    theCell.style.animationFillMode = `forwards`;
-    theCell.style.animation = `${animationName} 3s linear forwards`;
-    //theCell.style.backgroundColor = `blue`;
-    theCell.animationName = 'none';
-    //theCell.style.animation = 'none';
-    //theCell.offsetHeight;
-    //theCell.style.animation = null;
-    //theCell.style.backgroundColor = `blue`;//`color-mix(in srgb, ${AnimationColor}, ${style.getPropertyValue('background-color')}`;
-
-*/
 }
 
-function paintSingleCanvas(currentExperiment){
-    let randomCoord = Math.floor(Math.random() * currentExperiment.gridSize() + 1);
-    let color = Math.floor(Math.random() * 3);
-    applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
-    if(color === 0) {
-        results.c1Drops++;
-    }
-    if(color === 1) {
-        results.c2Drops++;
-    }
-    if(color === 2) {
-        results.c3Drops++;
-    }
+//this method does some hiding and showing on the UI to setup the next experiment
+function setupNextExperiment(message) {
+    let speedButtons = document.getElementById("speedButtons");
+    let finishExpOneMessage = document.getElementById("finishExpOneMessage");
+    let finishMessage = document.getElementById("finishMessage");
+    speedButtons.hidden = true;
+    finishExpOneMessage.hidden = false;
+    finishMessage.textContent = finishMessage.textContent + " " + message;
 }
 
-
-const allResults = [];
+function closeExperimentOne() {
+    let secondExplanation = document.getElementById("secondExplanation");
+    let finishExpOneMessage = document.getElementById("finishExpOneMessage");
+    let theGrid = document.getElementById("theGrid");
+    let placeholderGrid = document.getElementById("placeholderGrid");
+    finishExpOneMessage.hidden = true;
+    placeholderGrid.hidden = false;
+    secondExplanation.hidden = false;
+    theGrid.hidden = true;
+    return false;
+}
 
 function PAINT_ONCE(currentExperiment) {
-    //console.log(experimentParameters);
     let callTime = 500;
     let speed = 1.0;
     let speedButton = document.getElementById("speedUp");
     let slowButton = document.getElementById("slowDown");
     let currentSpeed = document.getElementById("speed");
-    speedButton.hidden = false;
-    slowButton.hidden = false;
-    currentSpeed.hidden = false;
+    let speedButtons = document.getElementById("speedButtons");
+    speedButtons.hidden = false;
 
     function speedUp() {
         slowButton.disabled = false;
@@ -189,7 +168,10 @@ function PAINT_ONCE(currentExperiment) {
     PAINT_ONCE.speedUp = speedUp;
     PAINT_ONCE.slowDown = slowDown;
 
-    DrawGrid(currentExperiment.y, currentExperiment.x);
+    DrawGrid(currentExperiment.yVal, currentExperiment.xVal);
+    //build an array of grid size, fill it with the number 0 all the way through
+    let dropTracker = new Array(currentExperiment.gridSize()).fill(0);
+
     switch (currentExperiment.stoppingCriteria) {
         case 0:
             function paintLoopCriteria0() {
@@ -198,51 +180,95 @@ function PAINT_ONCE(currentExperiment) {
                     randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                     let color = Math.floor(Math.random() * 3);
                     applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
+                    dropTracker[randomCoord - 1]++;
                     if (color === 0)
                         results.c1Drops++;
                     if (color === 1)
                         results.c2Drops++;
                     if (color === 2)
                         results.c3Drops++;
-                    if (!stoppingCriteria.isFull(currentExperiment.gridSize()))
+                    if (!stoppingCriteria.isFull(currentExperiment.gridSize())) {
                         paintLoopCriteria0();
+                    } else {
+                        setupNextExperiment("All squares have been dripped on!");
+                    }
                 }, callTime)
             }
             paintLoopCriteria0(); //run at least once, it will stay in loop as needed
             break;
         case 1:
             let isDoubleDripped = false;
-            const dropTracker = [];
-            function paintLoopCriteria1() {
-                setTimeout(function () {
-                    let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
-                    randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
-                    let color = Math.floor(Math.random() * 3);
-                    applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
-                    console.log("Length of tracker: " + dropTracker.length);
-                    for (let i = 0; i < dropTracker.length; i++) {
-                        if (dropTracker[i] === randomCoord) {
-                            isDoubleDripped = true;
-                        }
+        function paintLoopCriteria1() {
+            setTimeout(function () {
+                let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
+                randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
+                let color = Math.floor(Math.random() * 3);
+                applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
+                dropTracker[randomCoord - 1]++; // lets add the drop now before checking for double drips
+                for (let i = 0; i < dropTracker.length; i++) {
+                    if (dropTracker[i - 1] === 2) {
+                        isDoubleDripped = true;
+                        break;
                     }
-                    dropTracker.push(randomCoord);
-                    if (color === 0)
-                        results.c1Drops++;
-                    if (color === 1)
-                        results.c2Drops++;
-                    if (color === 2)
-                        results.c3Drops++;
-                    if (!isDoubleDripped)
-                        paintLoopCriteria0();
-                    }, 300)
                 }
+                if (color === 0)
+                    results.c1Drops++;
+                if (color === 1)
+                    results.c2Drops++;
+                if (color === 2)
+                    results.c3Drops++;
+                if (!isDoubleDripped) {
+                    paintLoopCriteria1();
+                } else {
+                    setupNextExperiment("A square has been double dripped on!");
+                }
+            }, 300)
+        }
             paintLoopCriteria1(); //run at least once, it will stay in loop as needed
             break;
     }
+    results.averageDrops = results.totalDrops()/currentExperiment.gridSize;
+    dropTracker.sort(function(a, b){return a - b});
+    for(let i = 0; i < currentExperiment.gridSize; i++){
+        let maxCounter = 0;
+        if(dropTracker[i] === dropTracker[i+1]) {
+            while (dropTracker[i] === dropTracker[i + 1]) {
+                maxCounter++;
+                i++;
+                if (maxCounter > results.maxDrops1Square)
+                    results.maxDrops1Square = maxCounter;
+            }
+        }
+    }
+    console.log("Max drop on a square: " + results.maxDrops1Square);
+    console.log(dropTracker);
+    console.log(results);
 }
 
-function PAINT_MANY(x, y, c1, c2, c3, stoppingCriteria, reps){
+function PAINT_MANY(experimentParameters){
+/*
+Independent variables:  0 = dimension
+                        1 = repetitions
+                        2 = stopping criteria
+                        3 = x value
+                        4 = y value
+ */
+    allResults = [];
 
+    switch (experimentParameters.independentVar){
+        case 0:
+            for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
+                for(let j = 0; j < experimentParameters.reps; j++){
+                    let thisExperiment = singleExperiment;
+                    thisExperiment.xVal = experimentParameters.independentVarValues[i];
+                    thisExperiment.yVal = experimentParameters.independentVarValues[i];
+                    thisExperiment.colors = experimentParameters.colors;
+                    thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
+                    PAINT_ONCE(thisExperiment);
+                }
+            }
+
+    }
 }
 
 function getStarted() {

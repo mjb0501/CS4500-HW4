@@ -155,3 +155,11 @@ td {
     flex-direction: row;
 }
 
+#finishExpOneMessage {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

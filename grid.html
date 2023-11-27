@@ -19,51 +19,118 @@
         </nav>
         <div id="placeholderGrid" class="row"></div>
         <div class="row">
-            <div id="mainGrid" class="col-md-12">
+            <div id="mainGrid" class="col-md-12 text-center">
+                <div class="grid">
+                    <table id="theGrid" class="center"></table>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div id="speedButtons" hidden="hidden" style="display: flex; flex-direction: row; gap: 250px; justify-content: center">
+                    <button class="button speed" type="button" id="slowDown" onclick="PAINT_ONCE.slowDown()">Slow Down</button>
+                    <h3 id="speed" class="speed-items" style="color: white;">1.0x</h3>
+                    <button class="button speed" type="button" id="speedUp" onclick="PAINT_ONCE.speedUp()">Speed Up</button>
+                </div>
+                <div id="finishExpOneMessage" hidden="hidden">
+                    <h3 id="finishMessage">Experiment has been completed.</h3>
+                    <button class="button" type="button" id="expFinished" onclick="closeExperimentOne()">CONTINUE</button>
+                </div>
+                <form id="secondExplanation" onsubmit="return showInputSecondRound()" hidden="hidden">
+                    <div class="messageBox welcomeMessage">
+                        <h2>Explain functionality thru animation of the next round of experiments.</h2><br>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec arcu felis.
+                        Fusce quis sagittis nisi, et mattis velit. Integer congue eros diam, non accumsan eros dictum non.
+                        Sed venenatis, libero at lobortis sodales, neque lectus pulvinar augue, in tristique arcu nibh quis leo. Donec gravida congue lectus, id elementum.<br>
+                        <button class="button" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div id="inputBoxSecond" class="col-md-12" hidden="hidden">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <div class="grid">
-                            <table id="theGrid" class="center"></table>
+                        <div class ="messageBox">
+                            <form id="inputFormSecond" onsubmit="return validateSecondForm()">
+                                <h3>Experiment 2 - Input Settings</h3>
+                                <div id="partOne">
+                                    <label for="indVar">Independent Variable</label>
+                                    <select id="indVar" name="indVar" required></select>
+                                    <br>
+                                    <label for="numIndValues"># of Independent Values</label>
+                                    <input id="numIndValues" type="number" required /><br>
+                                    <button class="button" onclick="return continueOne()">Continue</button>
+                                </div>
+                                <div id="partTwo" hidden="hidden">
+                                    <label for="indVarValues">Independent Variable Values</label>
+                                    <input id="indVarValues" required /><br>
+                                    <button class="button" onclick="return continueTwo()">Continue</button>
+                                </div>
+                                <div id="partThree" hidden="hidden">
+                                    <label for="xDimSecond">X Dimension</label>
+                                    <input id="xDimSecond" class="inputBoxSmall" type="number" required /><br>
+                                    <button class="button" onclick="return continueThree()">Continue</button>
+                                </div>
+                                <div id="partFour" hidden="hidden">
+                                    <label for="yDimSecond">Y Dimension</label>
+                                    <input id="yDimSecond" class="inputBoxSmall" type="number" required /><br>
+                                    <button class="button" onclick="return continueFour()">Continue</button>
+                                </div>
+                                <div id="partFive" hidden="hidden">
+                                    <label for="repetitions"># of Repetitions</label>
+                                    <input id="repetitions" class="inputBoxSmall" type="number" required /><br>
+                                    <button class="button" onclick="return continueFive()">Continue</button>
+                                </div>
+                                <div id="partSix" hidden="hidden">
+                                    <label for="colors1Second">Color Choice 1:</label>
+                                    <select id="colors1Second" name ="color1Second" required></select>
+                                    <br>
+                                    <label for="colors2Second">Color Choice 2:</label>
+                                    <select id="colors2Second" name ="color2Second" required></select>
+                                    <br>
+                                    <label for="colors3Second">Color Choice 3:</label>
+                                    <select id="colors3Second" name ="color3Second" required></select>
+                                    <br>
+                                    <label for="stoppingCSecond">Stopping Criteria</label>
+                                    <select id="stoppingCSecond" name="stoppingCSecond" required></select>
+                                    <br>
+                                    <button class="button" type="submit">Submit</button>
+                                    <br>
+                                </div>
+                                <span id="inputErrorSecond" class="errorMessage"></span>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12" style="display: flex; flex-direction: row; gap: 250px">
-                <button class="button speed" type="button" id="slowDown" hidden="hidden" onclick="PAINT_ONCE.slowDown()">Slow Down</button>
-                <h3 id="speed" hidden="hidden" class="speed-items" style="color: white;">1.0x</h3>
-                <button class="button speed" type="button" id="speedUp" hidden="hidden" onclick="PAINT_ONCE.speedUp()">Speed Up</button>
-            </div>
             <div id="inputBoxFirst" class="col-md-12">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class ="messageBox">
-                        <form id="inputFormIntro" onsubmit="return validateForm()">
-                            <h3>Input Settings</h3>
-                            <label for="xDim">X Dimension</label>
-                            <input id="xDim" class="inputBoxSmall" type="number" required />
-                            <br>
-                            <label for="yDim">Y Dimension</label>
-                            <input id="yDim" class="inputBoxSmall" type="number" required />
-                            <br>
-                            <label for="colors1">Color Choice 1:</label>
-                            <select id="colors1" name ="color1" required></select>
-                            <br>
-                            <label for="colors2">Color Choice 2:</label>
-                            <select id="colors2" name ="color2" required></select>
-                            <br>
-                            <label for="colors3">Color Choice 3:</label>
-                            <select id="colors3" name ="color3" required></select>
-                            <br>
-                            <label for="stoppingC">Stopping Criteria</label>
-                            <select id="stoppingC" name="stoppingC" required></select>
-                            <br>
-                            <button class="button" type="submit">Submit</button>
-                            <br>
-                            <span id="inputError" class="errorMessage"></span>
-                        </form>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class ="messageBox">
+                            <form id="inputFormIntro" onsubmit="return validateForm()">
+                                <h3>Input Settings</h3>
+                                <label for="xDim">X Dimension</label>
+                                <input id="xDim" class="inputBoxSmall" type="number" required />
+                                <br>
+                                <label for="yDim">Y Dimension</label>
+                                <input id="yDim" class="inputBoxSmall" type="number" required />
+                                <br>
+                                <label for="colors1">Color Choice 1:</label>
+                                <select id="colors1" name ="color1" required></select>
+                                <br>
+                                <label for="colors2">Color Choice 2:</label>
+                                <select id="colors2" name ="color2" required></select>
+                                <br>
+                                <label for="colors3">Color Choice 3:</label>
+                                <select id="colors3" name ="color3" required></select>
+                                <br>
+                                <label for="stoppingC">Stopping Criteria</label>
+                                <select id="stoppingC" name="stoppingC" required></select>
+                                <br>
+                                <button class="button" type="submit">Submit</button>
+                                <br>
+                                <span id="inputError" class="errorMessage"></span>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>

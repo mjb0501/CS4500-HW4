@@ -32,14 +32,29 @@ function createGraph(){
         context.fillStyle = "lightblue";
         context.fillRect(10, 10, 380, 180);
 
-        const ctx = document.getElementById('graph');
-        new Chart(ctx, {
+        // get the grid
+        const theGrid = document.getElementById('theGrid');
+
+
+        let colorCounts = getGridColors(singleExperiment.gridSize());
+
+        // Extracting labels and data from colorCounts
+        let labels = Object.keys(colorCounts);
+        let data = Object.values(colorCounts);
+
+        // Log colors and counts
+        for (let i = 0; i < labels.length; i++) {
+            console.log(`Color: ${labels[i]}, Count: ${data[i]}`);
+        }
+
+
+        const ctx = document.getElementById('graph');new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: labels, // Use the extracted labels
                 datasets: [{
                     label: '# of Colors',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: data, // Use the extracted data
                     borderWidth: 1
                 }]
             },
@@ -76,3 +91,35 @@ function hideGraph()
     }
 
 }
+
+function getGridColors(gridSize) {
+
+    // Create an object to store color counts
+    let colorCounts = {};
+
+    for (var i = 1; i <= gridSize; i++) {
+        var cell = document.getElementById(i);
+
+        // Get the background color of the cell in RGB format
+        var rgbColor = getComputedStyle(cell).backgroundColor;
+
+        // Convert the RGB color to a string
+        var colorString = rgbColor.toString();
+
+        // Check if the color string is already in the object
+        if (colorCounts[colorString]) {
+            // Increment the count if the color string is already present
+            colorCounts[colorString]++;
+        } else {
+            // Add the color string to the object with a count of 1 if it's not present
+            colorCounts[colorString] = 1;
+        }
+    }
+
+    // Return the colorCounts object
+    return colorCounts;
+}
+
+
+
+

@@ -67,6 +67,7 @@ function DrawGrid(rows, columns) {
         for (var j = 0; j < columns; j++) {
             var cell = row.insertCell(j);
             cell.id = (i * columns + j + 1).toString(); // Assign a unique id to each cel
+            cell.innerText = ((i * columns + j + 1).toString());
             cell.style.width = size.toString() + "px";
             cell.style.height = size.toString() + "px";
         }
@@ -110,14 +111,24 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     }
 }
 
+
+
 //this method does some hiding and showing on the UI to setup the next experiment
 function setupNextExperiment(message) {
     let speedButtons = document.getElementById("speedButtons");
     let finishExpOneMessage = document.getElementById("finishExpOneMessage");
     let finishMessage = document.getElementById("finishMessage");
+
+    let graphBox = document.getElementById("graphHide")
+    let graphBox2 = document.getElementById("graphShow")
+
     speedButtons.hidden = true;
     finishExpOneMessage.hidden = false;
     finishMessage.textContent = finishMessage.textContent + " " + message;
+
+    graphBox.hidden = false;
+    graphBox2.hidden = false;
+
 }
 
 function closeExperimentOne() {
@@ -125,9 +136,11 @@ function closeExperimentOne() {
     let finishExpOneMessage = document.getElementById("finishExpOneMessage");
     let theGrid = document.getElementById("theGrid");
     let placeholderGrid = document.getElementById("placeholderGrid");
+
     finishExpOneMessage.hidden = true;
     placeholderGrid.hidden = false;
     secondExplanation.hidden = false;
+
     theGrid.hidden = true;
     return false;
 }

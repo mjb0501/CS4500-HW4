@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content =" width=device-width, initial-scale=1.0">
@@ -17,6 +17,15 @@
                 <img src = "Images/Logo.png" class = "logo" alt="Our Main Logo">
             </a>
         </nav>
+
+        <div>
+            <button id="graphShow" hidden = "hidden" onclick="createGraph()">Create Graph</button>
+        </div>
+        <div>
+            <button id="graphHide" hidden = "hidden" onclick="hideGraph()">Hide Graph</button>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <div id="placeholderGrid" class="row"></div>
         <div class="row">
             <div id="mainGrid" class="col-md-12 text-center">
@@ -136,5 +145,6 @@
     </div>
     <script src="Scripts.js"></script>
     <script src="InputsAndValidation.js"></script>
+    <script src="graph.js"></script>
 </body>
 </html>

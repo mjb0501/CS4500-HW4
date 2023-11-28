@@ -78,6 +78,7 @@ function introAnimation() {
             decrement.hidden = false;
             xTable.hidden = true;
             xTable.style.opacity = 0;
+            text.style.opacity = 1;
             text.innerHTML = "To make a picture you need to provide 4 things: ";
             table.hidden = true;
             frames++;

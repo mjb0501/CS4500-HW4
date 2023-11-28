@@ -191,6 +191,7 @@ function PAINT_ONCE(currentExperiment) {
                         paintLoopCriteria0();
                     } else {
                         setupNextExperiment("All squares have been dripped on!");
+                        ShowGraphButtons();
                     }
                 }, callTime)
             }

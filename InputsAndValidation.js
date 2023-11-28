@@ -299,3 +299,11 @@ function validateSecondForm() {
     let thisExperiment = experimentParameters;
     PAINT_MANY(thisExperiment);
 }
+
+function ShowGraphButtons(){
+    var graphHide = document.getElementById("graphShow")
+    var graphCreate = document.getElementById("graphHide")
+    graphHide.hidden = false;
+    graphCreate.hidden = false;
+
+}

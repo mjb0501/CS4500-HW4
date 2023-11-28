@@ -8,14 +8,14 @@ const experimentParameters = {
     independentVarValues:[],
     dependentVar:null,
     colors: [],
-    gridSize:function(){return this.xVal * this.yVal;}
+    gridSize:function(){return (this.xVal * this.yVal)}
 };
 
 const singleExperiment = {
     xVal: 0,
     yVal: 0,
     stoppingCriteria: 0,
-    gridSize: function() {return this.xVal * this.yVal;},
+    gridSize: function() {return (this.xVal * this.yVal)},
     colors: []
 };
 
@@ -251,6 +251,13 @@ function PAINT_ONCE(currentExperiment) {
                         paintLoopCriteria0();
                     } else {
                         setupNextExperiment("All squares have been dripped on!");
+                        results.averageDrops = (results.totalDrops() / currentExperiment.gridSize());
+                        for(let i = 0; i < currentExperiment.gridSize(); i++){
+                            if(dropTracker[i] > results.maxDrops1Square) {
+                                results.maxDrops1Square = dropTracker[i];
+                            }
+                        }
+                        console.log(results.maxDrops1Square);
                     }
                 }, callTime)
             }
@@ -281,28 +288,23 @@ function PAINT_ONCE(currentExperiment) {
                     paintLoopCriteria1();
                 } else {
                     setupNextExperiment("A square has been double dripped on!");
+                    results.averageDrops = (results.totalDrops() / currentExperiment.gridSize());
+                    for(let i = 0; i < currentExperiment.gridSize(); i++){
+                        if(dropTracker[i] > results.maxDrops1Square) {
+                            results.maxDrops1Square = dropTracker[i];
+                        }
+                    }
                 }
             }, 300)
         }
             paintLoopCriteria1(); //run at least once, it will stay in loop as needed
             break;
     }
-    results.averageDrops = results.totalDrops()/currentExperiment.gridSize;
-    dropTracker.sort(function(a, b){return a - b});
-    for(let i = 0; i < currentExperiment.gridSize; i++){
-        let maxCounter = 0;
-        if(dropTracker[i] === dropTracker[i+1]) {
-            while (dropTracker[i] === dropTracker[i + 1]) {
-                maxCounter++;
-                i++;
-                if (maxCounter > results.maxDrops1Square)
-                    results.maxDrops1Square = maxCounter;
-            }
-        }
-    }
-    console.log("Max drop on a square: " + results.maxDrops1Square);
-    console.log(dropTracker);
-    console.log(results);
+
+    //console.log("Max drop on a square: " + results.maxDrops1Square);
+    //console.log(dropTracker);
+    //console.log(results);
+    //console.log(currentExperiment);
 }
 
 function PAINT_MANY(experimentParameters){

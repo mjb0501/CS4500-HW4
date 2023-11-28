@@ -110,6 +110,66 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     }
 }
 
+function secondAnimation() {
+    let container = document.getElementById("animationStaging");
+    let text = document.getElementById("animationText2");
+    let submit = document.getElementById("submit2");
+    let increment = document.getElementById("increment2");
+    let decrement = document.getElementById("decrement2");
+    let page2 = 1;
+
+    let frames = 0;
+
+    let id = setInterval(animate, 2);
+
+    function incrementPage() {
+        page2++;
+    }
+
+    function decrementPage() {
+        page2--;
+    }
+
+    secondAnimation.incrementPage = incrementPage;
+    secondAnimation.decrementPage = decrementPage;
+    function animate() {
+        if (page2 == 1) {
+            decrement.hidden = true;
+            text.innerHTML = "Now you can conduct experiments based on the paintings by choosing independent and dependent variables.";
+        }
+        if (page2 == 2) {
+            decrement.hidden = false;
+            text.innerHTML = "First you will be asked to choose an independent variable in the experiment and the number of independent variables you would like.";
+        }
+        if (page2 == 3) {
+            text.innerHTML = "After that you will be asked to provide the values of the independent variables in a comma seperated list like this: 3, 4, 5, 6";
+        }
+        if (page2 == 4) {
+            text.innerHTML = "After that you will be asked to provide values for either the number of repetitions, x and y dimensions, or y dimension and number of repetitions depending on your choice of independent variables.";
+        }
+        if (page2 == 5) {
+            text.innerHTML = "After providing those values you will be prompted for colors and stopping criteria like you just did for the painting.";
+        }
+        if (page2 == 6) {
+            text.innerHTML = "After submitting colors and stopping criteria the experiment will run after which a variety of dependent variable values will be shown in a table format and you will have to choose one or two dependent variables.";
+        }
+        if (page2 == 7) {
+            text.innerHTML = "After choosing dependent variables, graphs will be shown corresponding to the dependent variables you have chosen.";
+        }
+        if (page2 == 8) {
+            increment.hidden = false;
+            submit.hidden = true;
+            text.innerHTML = "After this the experiment is complete and you will be able to make another graph based on the experiment data, make a new experiment or quit the program.";
+        }
+        if (page2 == 8) {
+            increment.hidden = true;
+            submit.hidden = false;
+            text.innerHTML = "You are ready to begin the experiment.  Have fun Experimenting!";
+        }
+    }
+    return false;
+}
+
 //this method does some hiding and showing on the UI to setup the next experiment
 function setupNextExperiment(message) {
     let speedButtons = document.getElementById("speedButtons");

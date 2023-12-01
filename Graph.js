@@ -1,7 +1,7 @@
 
-var graphCreated = false;
+let graphCreated = false;
 function createGraph(){
-    if (graphCreated==false) {
+    if (graphCreated === false) {
         // Create a new container div element
         var containerDiv = document.createElement("div");
 
@@ -35,7 +35,6 @@ function createGraph(){
         // get the grid
         const theGrid = document.getElementById('theGrid');
 
-
         let colorCounts = getGridColors(singleExperiment.gridSize());
 
         // Extracting labels and data from colorCounts
@@ -46,7 +45,6 @@ function createGraph(){
         for (let i = 0; i < labels.length; i++) {
             console.log(`Color: ${labels[i]}, Count: ${data[i]}`);
         }
-
 
         const ctx = document.getElementById('graph');new Chart(ctx, {
             type: 'bar',
@@ -71,20 +69,27 @@ function createGraph(){
     else return 0;
 }
 
-var graphHidden = false;
+let graphHidden = true;
+
 function hideGraph()
 {
+    //if it's not been created and they want to see it, lets create it now
+    if (!graphCreated) {
+        createGraph();
+    }
+
     // find the div element that contains the canvas for the graph
-    graph = document.getElementById('graphContainer')
     hideButton = document.getElementById('graphHide')
+    graph = document.getElementById('graphContainer')
+
     // hide it
-    if(graphCreated && graphHidden ==false) {
+    if(graphHidden === false) {
         graph.style.display = "none"
         hideButton.innerText ="Show Graph"
         graphHidden = true;
     }
     // unhide it
-    else if(graphCreated && graphHidden == true){
+    else if (graphHidden === true){
         graph.style.display = "block"
         hideButton.innerText ="Hide Graph"
         graphHidden = false;

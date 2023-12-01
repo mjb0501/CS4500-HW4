@@ -79,6 +79,24 @@ function populateColorDropdown(dropdown) {
     }
 }
 
+//removes colors that have already been selected
+function disableSelectedOptions(selectedIndex, dropdowns) {
+    for (let i = 0; i < dropdowns.length; i++) {
+        if (i !== selectedIndex) {
+            dropdowns[i].options[selectedIndex].disabled = true;
+        }
+    }
+}
+
+//reenables a color that has been deselected
+function enableAllOptions(dropdowns) {
+    for (let i = 0; i < dropdowns.length; i++) {
+        for (let j = 0; j < dropdowns[i].options.length; j++) {
+            dropdowns[i].options[j].disabled = false;
+        }
+    }
+}
+
 //on page load, lets do some tasks
 window.addEventListener("load", (event) => {
     getGlobalElements();
@@ -88,19 +106,43 @@ window.addEventListener("load", (event) => {
 
     //let's add the colors to the dropdowns
     populateColorDropdown(color1Dropdown);
-    color1Dropdown.value = "red";
     populateColorDropdown(color2Dropdown);
-    color2Dropdown.value = "green";
     populateColorDropdown(color3Dropdown);
-    color3Dropdown.value = "blue";
 
     //let's add the colors to the dropdowns for 2nd experiment
     populateColorDropdown(color1DropdownSecond);
-    color1DropdownSecond.value = "red";
     populateColorDropdown(color2DropdownSecond);
-    color2DropdownSecond.value = "green";
     populateColorDropdown(color3DropdownSecond);
+
+    const colorsInitial = document.querySelectorAll('#colors1, #colors2, #colors3');
+    const colorsSecond = document.querySelectorAll('#colors1Second, #colors2Second, #colors3Second');
+    //initial event listeners
+    for (let i = 0; i < colorsInitial.length; i++) {
+        colorsInitial[i].addEventListener('change', function () {
+            enableAllOptions(colorsInitial);
+            disableSelectedOptions(this.selectedIndex, colorsInitial);
+        });
+    }
+    //second event listeners
+    for (let i = 0; i < colorsSecond.length; i++) {
+        colorsSecond[i].addEventListener('change', function () {
+            enableAllOptions(colorsSecond);
+            disableSelectedOptions(this.selectedIndex, colorsSecond);
+        });
+    }
+
+    color1Dropdown.value = "red";
+    disableSelectedOptions(color1Dropdown.selectedIndex, colorsInitial);
+    color2Dropdown.value = "green";
+    disableSelectedOptions(color2Dropdown.selectedIndex, colorsInitial);
+    color3Dropdown.value = "blue";
+    disableSelectedOptions(color3Dropdown.selectedIndex, colorsInitial);
+    color1DropdownSecond.value = "red";
+    disableSelectedOptions(color1DropdownSecond.selectedIndex, colorsInitial);
+    color2DropdownSecond.value = "green";
+    disableSelectedOptions(color2DropdownSecond.selectedIndex, colorsInitial);
     color3DropdownSecond.value = "blue";
+    disableSelectedOptions(color3DropdownSecond.selectedIndex, colorsInitial);
 
     for(i = 0; i < stoppingOptions.length; i++) {
         opt = stoppingOptions[i];
@@ -298,12 +340,4 @@ function validateSecondForm() {
     //populate the DTO to send over to scripts
     let thisExperiment = experimentParameters;
     PAINT_MANY(thisExperiment);
-}
-
-function ShowGraphButtons(){
-    var graphHide = document.getElementById("graphShow")
-    var graphCreate = document.getElementById("graphHide")
-    graphHide.hidden = false;
-    graphCreate.hidden = false;
-
 }

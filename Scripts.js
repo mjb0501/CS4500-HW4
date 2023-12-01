@@ -204,7 +204,6 @@ function PAINT_ONCE(currentExperiment) {
                                 results.maxDrops1Square = dropTracker[i];
                             }
                         }
-                        ShowGraphButtons();
                         /*console.log("Max drop on a square: " + results.maxDrops1Square);
                         console.log(dropTracker);
                         console.log(results);

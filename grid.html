@@ -18,13 +18,6 @@
             </a>
         </nav>
 
-        <div>
-            <button id="graphShow" hidden = "hidden" onclick="createGraph()">Create Graph</button>
-        </div>
-        <div>
-            <button id="graphHide" hidden = "hidden" onclick="hideGraph()">Hide Graph</button>
-        </div>
-
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <div id="placeholderGrid" class="row"></div>
         <div class="row">
@@ -42,6 +35,7 @@
                 <div id="finishExpOneMessage" hidden="hidden">
                     <h3 id="finishMessage">Experiment has been completed.</h3>
                     <button class="button" type="button" id="expFinished" onclick="closeExperimentOne();secondAnimation();">CONTINUE</button>
+                    <button id="graphHide" class="button" onclick="hideGraph()">Show Graph</button>
                 </div>
                 <form id="secondExplanation" onsubmit="return showInputSecondRound()" hidden="hidden">
                     <div class="messageBox welcomeMessage">

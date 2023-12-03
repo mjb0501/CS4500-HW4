@@ -324,13 +324,13 @@ function SINGLE_PAINT(currentExperiment){
                     }
                 }
                 if (color === 0)
-                    results.c0Drops++;
+                    result.c0Drops++;
                 if (color === 1)
-                    results.c1Drops++;
+                    result.c1Drops++;
                 if (color === 2)
-                    results.c2Drops++;
+                    result.c2Drops++;
             }
-            allResults.push(results);
+            allResults.push(result);
             break;
     }
 

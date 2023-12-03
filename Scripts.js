@@ -19,14 +19,16 @@ const singleExperiment = {
     colors: []
 };
 
-const results = {
-    c0Drops:0,
-    c1Drops:0,
-    c2Drops:0,
-    maxDrops1Square:0,
-    averageDrops:0,
-    totalDrops:function(){return this.c0Drops + this.c1Drops + this.c2Drops},
-};
+function Results() {
+    this.c0Drops = 0;
+    this.c1Drops = 0;
+    this.c2Drops = 0;
+    this.maxDrops1Square = 0;
+    this.averageDrops = 0;
+    this.totalDrops = function (){
+        return this.c0Drops + this.c1Drops + this.c2Drops
+    };
+}
 
 let allResults = [];
 
@@ -281,7 +283,7 @@ Independent variables:  0 = dimension
 function SINGLE_PAINT(currentExperiment){
 
     let dropTracker = new Array(currentExperiment.gridSize()).fill(0);
-    let result = results;
+    let result = new Results;
 
     switch (currentExperiment.stoppingCriteria) {
         case 0:
@@ -299,7 +301,7 @@ function SINGLE_PAINT(currentExperiment){
                     result.c2Drops++;
                 isFull = isFullFunction(dropTracker);
             }
-            results.averageDrops = (result.totalDrops() / currentExperiment.gridSize());
+            result.averageDrops = (result.totalDrops() / currentExperiment.gridSize());
             for(let i = 0; i < currentExperiment.gridSize(); i++){
                 if(dropTracker[i] > result.maxDrops1Square) {
                     result.maxDrops1Square = dropTracker[i];

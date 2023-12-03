@@ -84,14 +84,14 @@ function hideGraph()
 
     // hide it
     if(graphHidden === false) {
-        graph.style.display = "none"
-        hideButton.innerText ="Show Graph"
+        graph.hidden = true;
+        hideButton.innerText ="Show Graph";
         graphHidden = true;
     }
     // unhide it
     else if (graphHidden === true){
-        graph.style.display = "block"
-        hideButton.innerText ="Hide Graph"
+        graph.hidden = false;
+        hideButton.innerText ="Hide Graph";
         graphHidden = false;
     }
 

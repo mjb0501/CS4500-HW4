@@ -132,9 +132,13 @@ function closeExperimentOne() {
     let finishExpOneMessage = document.getElementById("finishExpOneMessage");
     let theGrid = document.getElementById("theGrid");
     let placeholderGrid = document.getElementById("placeholderGrid");
+    let graph = document.getElementById('graphContainer');
     finishExpOneMessage.hidden = true;
     placeholderGrid.hidden = false;
     secondExplanation.hidden = false;
+    if (graph) { //just in case it has not been created yet
+        graph.hidden = true;
+    }
     theGrid.hidden = true;
     return false;
 }
@@ -375,4 +379,21 @@ function SINGLE_PAINT(currentExperiment){
 function getStarted() {
     ShowMessage();
     introAnimation();
+}
+
+function secondAnimation() {
+    //placeholder for Marley, this was error-ing out as it didn't exist.
+    function incrementPage() {
+
+    }
+
+    function decrementPage() {
+
+    }
+
+    //just putting this here to keep the experiment going for now, will need to be removed
+    let submit2 = document.getElementById('submit2');
+    let increment2 = document.getElementById('increment2');
+    submit2.hidden = false;
+    increment2.hidden = true;
 }

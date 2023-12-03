@@ -60,27 +60,32 @@
                                     <br>
                                     <label for="numIndValues"># of Independent Values</label>
                                     <input id="numIndValues" type="number" required /><br>
-                                    <button class="button" onclick="return continueOne()">Continue</button>
+                                    <button type="button" class="button" onclick="return continueOne()">Continue</button>
                                 </div>
                                 <div id="partTwo" hidden="hidden">
                                     <label for="indVarValues">Independent Variable Values</label>
-                                    <input id="indVarValues" required /><br>
-                                    <button class="button" onclick="return continueTwo()">Continue</button>
+                                    <input id="indVarValues" name="indVarValues" required /><br>
+                                    <span style="font-size: 12px;">(Seperated by commas.)</span><br><br>
+                                    <button type="button" class="button" onclick="return returnOne()">Back</button>
+                                    <button type="button" class="button" onclick="return continueTwo()">Continue</button>
                                 </div>
                                 <div id="partThree" hidden="hidden">
                                     <label for="xDimSecond">X Dimension</label>
-                                    <input id="xDimSecond" class="inputBoxSmall" type="number" required /><br>
-                                    <button class="button" onclick="return continueThree()">Continue</button>
+                                    <input id="xDimSecond" name="xDimSecond" class="inputBoxSmall" type="number"/><br>
+                                    <button type="button" class="button" onclick="return returnTwo()">Back</button>
+                                    <button type="button" class="button" onclick="return continueThree()">Continue</button>
                                 </div>
                                 <div id="partFour" hidden="hidden">
                                     <label for="yDimSecond">Y Dimension</label>
-                                    <input id="yDimSecond" class="inputBoxSmall" type="number" required /><br>
-                                    <button class="button" onclick="return continueFour()">Continue</button>
+                                    <input id="yDimSecond" name="yDimSecond" class="inputBoxSmall" type="number"/><br>
+                                    <button type="button" class="button" onclick="return returnThree()">Back</button>
+                                    <button type="button" class="button" onclick="return continueFour()">Continue</button>
                                 </div>
                                 <div id="partFive" hidden="hidden">
                                     <label for="repetitions"># of Repetitions</label>
-                                    <input id="repetitions" class="inputBoxSmall" type="number" required /><br>
-                                    <button class="button" onclick="return continueFive()">Continue</button>
+                                    <input id="repetitions" name="repetitions" class="inputBoxSmall" type="number"/><br>
+                                    <button type="button" class="button" onclick="return returnFour()">Back</button>
+                                    <button type="button" class="button" onclick="return continueFive()">Continue</button>
                                 </div>
                                 <div id="partSix" hidden="hidden">
                                     <label for="colors1Second">Color Choice 1:</label>
@@ -95,9 +100,11 @@
                                     <label for="stoppingCSecond">Stopping Criteria</label>
                                     <select id="stoppingCSecond" name="stoppingCSecond" required></select>
                                     <br>
+                                    <button type="button" class="button" onclick="return returnFive()">Back</button>
                                     <button class="button" type="submit">Submit</button>
                                     <br>
                                 </div>
+                                <br>
                                 <span id="inputErrorSecond" class="errorMessage"></span>
                             </form>
                         </div>

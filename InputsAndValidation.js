@@ -16,7 +16,7 @@ let partOne, partTwo, partThree, partFour, partFive, partSix;
 
 //constant dropdown values
 const colorOptions = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "grey"];
-const stoppingOptions = ["Every square is full", "A single square was double dropped on"];
+const stoppingOptions = ["Every square is full", "A single square was double dropped on","All Colors hit 100 drops"];
 const independentVariables = ["Single Dimension for both X and Y axis", "X Dimension", "Number of Repetitions"];
 
 //sets all the global elements
@@ -79,20 +79,12 @@ function populateColorDropdown(dropdown) {
     }
 }
 
-//removes colors that have already been selected
-function disableSelectedOptions(selectedIndex, dropdowns) {
-    for (let i = 0; i < dropdowns.length; i++) {
-        if (i !== selectedIndex) {
-            dropdowns[i].options[selectedIndex].disabled = true;
-        }
-    }
-}
-
-//reenables a color that has been deselected
-function enableAllOptions(dropdowns) {
-    for (let i = 0; i < dropdowns.length; i++) {
-        for (let j = 0; j < dropdowns[i].options.length; j++) {
-            dropdowns[i].options[j].disabled = false;
+//disables or re-enables colors that have already been selected
+function disableEnableSelectedOptions(dropdowns) {
+    for (let i = 0; i < colorOptions.length; i++) {
+        let colorSelected = colorOptions[i] === dropdowns[0].value || colorOptions[i] === dropdowns[1].value ||  colorOptions[i] === dropdowns[2].value;
+        for (let j = 0; j < dropdowns.length; j++) {
+            dropdowns[j].options[i].disabled = colorSelected;
         }
     }
 }
@@ -102,7 +94,7 @@ window.addEventListener("load", (event) => {
     getGlobalElements();
     //hide the errorValidation box
     inputError.hidden = true;
-    theGrid.hidden;
+    theGrid.hidden = true;
 
     //let's add the colors to the dropdowns
     populateColorDropdown(color1Dropdown);
@@ -119,30 +111,22 @@ window.addEventListener("load", (event) => {
     //initial event listeners
     for (let i = 0; i < colorsInitial.length; i++) {
         colorsInitial[i].addEventListener('change', function () {
-            enableAllOptions(colorsInitial);
-            disableSelectedOptions(this.selectedIndex, colorsInitial);
+            disableEnableSelectedOptions(colorsInitial);
         });
-    }
-    //second event listeners
-    for (let i = 0; i < colorsSecond.length; i++) {
         colorsSecond[i].addEventListener('change', function () {
-            enableAllOptions(colorsSecond);
-            disableSelectedOptions(this.selectedIndex, colorsSecond);
+            disableEnableSelectedOptions(colorsSecond);
         });
     }
 
     color1Dropdown.value = "red";
-    disableSelectedOptions(color1Dropdown.selectedIndex, colorsInitial);
     color2Dropdown.value = "green";
-    disableSelectedOptions(color2Dropdown.selectedIndex, colorsInitial);
     color3Dropdown.value = "blue";
-    disableSelectedOptions(color3Dropdown.selectedIndex, colorsInitial);
+    disableEnableSelectedOptions(colorsInitial);
+
     color1DropdownSecond.value = "red";
-    disableSelectedOptions(color1DropdownSecond.selectedIndex, colorsInitial);
     color2DropdownSecond.value = "green";
-    disableSelectedOptions(color2DropdownSecond.selectedIndex, colorsInitial);
     color3DropdownSecond.value = "blue";
-    disableSelectedOptions(color3DropdownSecond.selectedIndex, colorsInitial);
+    disableEnableSelectedOptions(colorsSecond);
 
     for(i = 0; i < stoppingOptions.length; i++) {
         opt = stoppingOptions[i];
@@ -171,8 +155,8 @@ window.addEventListener("load", (event) => {
     //do not let the form refresh the page, this is all done in JS
     function handleForm(event) { event.preventDefault(); }
     form.addEventListener('submit', handleForm);
-    function handleForm(event) { event.preventDefault(); }
     secondExplanation.addEventListener('submit', handleForm);
+    inputFormSecond.addEventListener('submit', handleForm);
 });
 
 function validateForm() {
@@ -223,8 +207,6 @@ function showInputSecondRound() {
     return true;
 }
 
-//["Single Dimension for both X and Y axis", "X Dimension", "Number of Repetitions"];
-
 function resetError() {
     numIndValues.style.border = "";
     indVarValues.style.border = "";
@@ -232,25 +214,43 @@ function resetError() {
     inputErrorSecond.innerHTML = "";
 }
 
+//globals for the second experiment(s)
+let indValueSelection = -1;
+let indValueCount = 0;
+let indValues = [];
+let XVal = 0;
+let YVal = 0;
+let reps = 0;
+
 function continueOne() {
-    //let's validate and send them to the next appropriate section
-    if (numIndValues.value > 10 || numIndValues.value < 1) {
+    //setup the independent variable with # of independent values
+    if (numIndValues.value > 10 || numIndValues.value < 2) {
         numIndValues.style.border ="3px solid red";
         inputErrorSecond.innerHTML = "Please select a valid number between 1 and 10.";
         return false;
     }
+    indValueSelection = independentDropdown.selectedIndex;
+    indValueCount = parseInt(numIndValues.value);
     resetError();
     partOne.hidden = true;
     partTwo.hidden = false;
 }
 
+function returnOne() {
+    partOne.hidden = false;
+    partTwo.hidden = true;
+}
+
 function continueTwo() {
+    //get the independent values
     let values = indVarValues.value;
     let valueArray = values.split(',');
     let pastValue = 0;
-    if (valueArray.length < 2) {
+    indValues = []; //reset
+
+    if (valueArray.length !== indValueCount) {
         indVarValues.style.border = "3px solid red";
-        inputErrorSecond.innerHTML = "You must provide at least two independent values.";
+        inputErrorSecond.innerHTML = "You must provide " + indValueCount + " independent values that you indicated in the previous step.";
         return false;
     }
     for (let i = 0; i < valueArray.length; i++)
@@ -273,54 +273,76 @@ function continueTwo() {
             return false;
         }
         pastValue = currentValue;
+        indValues.push(currentValue);
     }
 
     resetError();
-    let selection = independentDropdown.value;
-    if (selection === "0") {
+    if (indValueSelection === 0) {
         //they chose same value for X & Y
         partTwo.hidden = true;
         partFive.hidden = false;
-    } else if (selection === "1") {
+    } else if (indValueSelection === 1) {
         //they only chose a value for X
         partTwo.hidden = true;
         partFour.hidden = false;
-    } else if (selection === "2") {
+    } else if (indValueSelection === 2) {
         //they chose a value for repetitions
         partTwo.hidden = true;
         partThree.hidden = false;
     }
 }
 
+function returnTwo() {
+    partThree.hidden = true;
+    partTwo.hidden = false;
+}
+
 function continueThree() {
-    //let's validate and send them to the next appropriate section
+    //get the X Dim value
     if (xDimBoxSecond.value > 50 || xDimBoxSecond.value < 1) {
         xDimBoxSecond.style.border ="3px solid red";
         inputErrorSecond.innerHTML = "Please select a valid number between 1 and 50.";
         return false;
     }
-
+    XVal = parseInt(xDimBoxSecond.value);
     partThree.hidden = true;
     partFour.hidden = false;
 }
 
+function returnThree() {
+    partFour.hidden = true;
+    if (indValueSelection === 1) { //they only chose a value for X
+        partTwo.hidden = false;
+    } else if (indValueSelection === 2) { //they chose a value for repetitions
+        partThree.hidden = false;
+    }
+}
+
 function continueFour() {
-    //let's validate and send them to the final section
+    //get the Y Dim value
     if (yDimBoxSecond.value > 50 || yDimBoxSecond.value < 1) {
         yDimBoxSecond.style.border ="3px solid red";
         inputErrorSecond.innerHTML = "Please select a valid number between 1 and 50.";
         return false;
     }
-
-    let selection = independentDropdown.value;
-    if (selection === "1") {
+    YVal = parseInt(yDimBoxSecond.value);
+    if (indValueSelection === 1) {
         //they only chose a value for X
         partFour.hidden = true;
         partFive.hidden = false;
-    } else if (selection === "2") {
+    } else if (indValueSelection === 2) {
         //they chose a value for repetitions
         partFour.hidden = true;
         partSix.hidden = false;
+    }
+}
+
+function returnFour() {
+    partFive.hidden = true;
+    if (indValueSelection === 0) { //they chose a value for X & Y
+        partTwo.hidden = false;
+    } else if (indValueSelection === 1) { //they only chose a value for X
+        partFour.hidden = false;
     }
 }
 
@@ -331,13 +353,33 @@ function continueFive() {
         inputErrorSecond.innerHTML = "Please select a valid number between 1 and 10000.";
         return false;
     }
+    reps = parseInt(repetitions.value);
     resetError();
     partFive.hidden = true;
     partSix.hidden = false;
 }
 
+function returnFive() {
+    partSix.hidden = true;
+    if (indValueSelection === 0 || indValueSelection === 1) {
+        partFive.hidden = false;
+    } else if (indValueSelection === 2) { //they only chose repetitions
+        partFour.hidden = false;
+    }
+}
+
 function validateSecondForm() {
     //populate the DTO to send over to scripts
     let thisExperiment = experimentParameters;
+    thisExperiment.xVal = XVal;
+    thisExperiment.yVal = YVal;
+    thisExperiment.reps = reps;
+    thisExperiment.stoppingCriteria = parseInt(stoppingCDropdownSecond.value);
+    thisExperiment.independentVar = indValueSelection;
+    thisExperiment.independentVarValues = indValues;
+    thisExperiment.colors.push(color1DropdownSecond.value);
+    thisExperiment.colors.push(color2DropdownSecond.value);
+    thisExperiment.colors.push(color3DropdownSecond.value);
     PAINT_MANY(thisExperiment);
+    return true;
 }

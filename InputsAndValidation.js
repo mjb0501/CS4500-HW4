@@ -16,7 +16,7 @@ let partOne, partTwo, partThree, partFour, partFive, partSix;
 
 //constant dropdown values
 const colorOptions = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "grey"];
-const stoppingOptions = ["Every square is full", "A single square was double dropped on","All Colors hit 100 drops"];
+const stoppingOptions = ["Every square is full", "A single square was double dropped on","All colors drop at least (2 x Grid Size) in drops"];
 const independentVariables = ["Single Dimension for both X and Y axis", "X Dimension", "Number of Repetitions"];
 
 //sets all the global elements

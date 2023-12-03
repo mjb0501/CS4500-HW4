@@ -8,7 +8,8 @@ const experimentParameters = {
     independentVarValues:[],
     dependentVar:null,
     colors: [],
-    gridSize:function(){return this.xVal * this.yVal;}
+    gridSize:function(){return this.xVal * this.yVal;},
+    colorTotalAllowedDrops:function(){return (this.xVal * this.yVal) * 2; }
 };
 
 const singleExperiment = {

@@ -16,7 +16,7 @@ let partOne, partTwo, partThree, partFour, partFive, partSix;
 
 //constant dropdown values
 const colorOptions = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "grey"];
-const stoppingOptions = ["Every square is full", "A single square was double dropped on","All colors drop at least (2 x Grid Size) in drops"];
+const stoppingOptions = ["Every square is full", "A single square was double dropped on","(2 x Grid Size) of color drops have fallen"];
 const independentVariables = ["Single Dimension for both X and Y axis", "X Dimension", "Number of Repetitions"];
 
 //sets all the global elements
@@ -89,12 +89,49 @@ function disableEnableSelectedOptions(dropdowns) {
     }
 }
 
+function stoppingCriteriaUpdate(type) {
+    if (type === 1) {
+        if (parseInt(xDimBox.value) && parseInt(yDimBox.value)) {
+            let drops = parseInt(xDimBox.value) * parseInt(yDimBox.value);
+            stoppingCDropdown.options[2].text = drops + " color drops have fallen";
+        } else {
+            stoppingCDropdown.options[2].text = "(2 x Grid Size) color drops have fallen";
+        }
+    } else {
+        if (parseInt(xDimBoxSecond.value) && parseInt(yDimBoxSecond.value)) {
+            let drops2 = parseInt(xDimBoxSecond.value) * parseInt(yDimBoxSecond.value);
+            stoppingCDropdownSecond.options[2].text = drops2 + " color drops have fallen";
+        } else {
+            stoppingCDropdownSecond.options[2].text = "(2 x Grid Size) color drops have fallen";
+        }
+    }
+}
+
 //on page load, lets do some tasks
 window.addEventListener("load", (event) => {
     getGlobalElements();
     //hide the errorValidation box
     inputError.hidden = true;
     theGrid.hidden = true;
+
+    stoppingCDropdown.addEventListener('change', function() {
+        stoppingCriteriaUpdate(1);
+    });
+    stoppingCDropdownSecond.addEventListener('change', function() {
+        stoppingCriteriaUpdate(2);
+    });
+    xDimBox.addEventListener('change', function() {
+        stoppingCriteriaUpdate(1);
+    });
+    yDimBox.addEventListener('change', function() {
+        stoppingCriteriaUpdate(1);
+    });
+    xDimBoxSecond.addEventListener('change', function() {
+        stoppingCriteriaUpdate(2);
+    });
+    yDimBoxSecond.addEventListener('change', function() {
+        stoppingCriteriaUpdate(2);
+    });
 
     //let's add the colors to the dropdowns
     populateColorDropdown(color1Dropdown);
@@ -271,6 +308,19 @@ function continueTwo() {
             indVarValues.style.border ="3px solid red";
             inputErrorSecond.innerHTML = "Your independent values must be in increasing order.";
             return false;
+        }
+        if (indValueSelection === 0 || indValueSelection === 1) {
+            if (currentValue < 1 || currentValue > 50) {
+                indVarValues.style.border = "3px solid red";
+                inputErrorSecond.innerHTML = "Your independent values can only be between 1 and 50. (for the grid)";
+                return false;
+            }
+        } else if (indValueSelection === 2) {
+            if (currentValue < 1 || currentValue > 10000) {
+                indVarValues.style.border = "3px solid red";
+                inputErrorSecond.innerHTML = "Your independent values can only be between 1 and 10000. (for the repetitions)";
+                return false;
+            }
         }
         pastValue = currentValue;
         indValues.push(currentValue);

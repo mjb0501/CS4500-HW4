@@ -17,7 +17,8 @@ const singleExperiment = {
     yVal: 0,
     stoppingCriteria: 0,
     gridSize: function() {return this.xVal * this.yVal;},
-    colors: []
+    colors: [],
+    colorTotalAllowedDrops:function(){return (this.xVal * this.yVal) * 2; }
 };
 
 function Results() {
@@ -187,6 +188,7 @@ function PAINT_ONCE(currentExperiment) {
     DrawGrid(currentExperiment.yVal, currentExperiment.xVal);
     //build an array of grid size, fill it with the number 0 all the way through
     let dropTracker = new Array(currentExperiment.gridSize()).fill(0);
+    let totalDrops = 0; //tracks drops in switch case 2
 
     switch (currentExperiment.stoppingCriteria) {
         case 0:
@@ -229,6 +231,25 @@ function PAINT_ONCE(currentExperiment) {
             }, 300)
         }
             paintLoopCriteria1(); //run at least once, it will stay in loop as needed
+            break;
+        case 2:
+        function paintLoopCriteria2() {
+            setTimeout(function () {
+                let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
+                randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
+                let color = Math.floor(Math.random() * 3);
+                applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
+                totalDrops++;
+                console.log(totalDrops);
+                console.log(currentExperiment.colorTotalAllowedDrops());
+                if (totalDrops < currentExperiment.colorTotalAllowedDrops()) {
+                    paintLoopCriteria2();
+                } else {
+                    setupNextExperiment(currentExperiment.colorTotalAllowedDrops() + " drops have been painted!");
+                }
+            }, callTime)
+        }
+            paintLoopCriteria2(); //run at least once, it will stay in loop as needed
             break;
     }
 
@@ -285,6 +306,7 @@ function SINGLE_PAINT(currentExperiment){
 
     let dropTracker = new Array(currentExperiment.gridSize()).fill(0);
     let result = new Results;
+    let totalDrops = 0;
 
     switch (currentExperiment.stoppingCriteria) {
         case 0:
@@ -316,7 +338,6 @@ function SINGLE_PAINT(currentExperiment){
                 let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
                 randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                 let color = Math.floor(Math.random() * 3);
-                applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
                 dropTracker[randomCoord - 1]++; // lets add the drop now before checking for double drips
                 for (let i = 0; i < dropTracker.length; i++) {
                     if (dropTracker[i - 1] === 2) {
@@ -333,8 +354,22 @@ function SINGLE_PAINT(currentExperiment){
             }
             allResults.push(result);
             break;
-    }
+        case 2:
+            let totalDropsReached = false;
+            while(!totalDropsReached) {
+                let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
+                randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
+                let color = Math.floor(Math.random() * 3);
+                applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
+                totalDrops++;
+                console.log(totalDrops);
+                console.log(currentExperiment.colorTotalAllowedDrops());
+                if (totalDrops < currentExperiment.colorTotalAllowedDrops())
+                    totalDropsReached = true;
 
+                }
+            break;
+}
 }
 
 function getStarted() {

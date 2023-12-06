@@ -52,7 +52,7 @@ function introAnimation() {
     function animate() {
         if (frames <= 50 && page == 1) {
             decrement.hidden = true;
-            text.innerHTML = "This website paints grid based images like so: ";
+            text.innerHTML = "This website paints grid-based images like so: ";
             table.style.opacity = 0;
             table.hidden = false;
             list1.hidden = true;
@@ -79,7 +79,7 @@ function introAnimation() {
             xTable.hidden = true;
             xTable.style.opacity = 0;
             text.style.opacity = 1;
-            text.innerHTML = "To make a picture you need to provide 4 things: ";
+            text.innerHTML = "To make a picture, you need to provide 4 things: ";
             table.hidden = true;
             frames++;
         }
@@ -110,7 +110,7 @@ function introAnimation() {
             list2.hidden = true;
             list3.hidden = true;
             list4.hidden = true;
-            text.innerHTML = "To select the X dimension enter a number.  For example if 3 is given the cavas will look like this:";
+            text.innerHTML = "First, enter a number for the X dimension.  For example, if 3 is given, the canvas will look like this:";
             xTable.hidden = false;
             xTable.style.opacity = (frames/100);
             frames++;
@@ -119,14 +119,14 @@ function introAnimation() {
             colorTable.hidden = true;
             colorTable.style.opacity = 0;
             xTable.hidden = true;
-            text.innerHTML = "To select Y dimension give a number.  For example if 3 is given the canvas will look like this:";
+            text.innerHTML = "Second, enter a number for the Y dimension.  For example, if 3 is given, the canvas will look like this:";
             yTable.hidden = false;
             yTable.style.opacity = (frames/100);
             frames++;
         }
         if (frames <= 100 && page == 5) {
             yTable.hidden = true;
-            text.innerHTML = "For colors choose a color from the dropdown menu. The colors will be colors that will paint the image.  For example if red, blue, and green are chosen your graph could look like this: ";
+            text.innerHTML = "For colors, choose from the dropdown menus. Your selection will be the colors that paint the grid cells.  For example, if red, blue, and green are chosen, your graph could look like this: ";
             colorTable.hidden = false;
             colorTable.style.opacity = (frames/100);
             frames++;
@@ -135,12 +135,12 @@ function introAnimation() {
             increment.hidden = false;
             submit.hidden = true;
             colorTable.hidden = true;
-            text.innerHTML = "For stopping criteria choose a criteria from the dropdown menu.  The criteria will determine when the website stops painting."
+            text.innerHTML = "For stopping criteria, choose from the dropdown menu.  The criteria will determine when the colors stop painting the grid."
             frames++;
         }
         if (page == 7) {
             increment.hidden = true;
-            text.innerHTML = "That is all good luck painting!";
+            text.innerHTML = "That is all. Good luck painting!";
             submit.hidden = false;
             frames++
         }

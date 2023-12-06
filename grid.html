@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content =" width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Favicons/favicon-16x16.png">
+    <link rel="manifest" href="/Favicons/site.webmanifest">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Homework 4</title>
@@ -33,13 +37,13 @@
                     <button class="button speed" type="button" id="speedUp" onclick="PAINT_ONCE.speedUp()">Speed Up</button>
                 </div>
                 <div id="finishExpOneMessage" hidden="hidden">
-                    <h3 id="finishMessage">Experiment has been completed.</h3>
+                    <h3 id="finishMessage">The experiment has been completed.</h3>
                     <button class="button" type="button" id="expFinished" onclick="closeExperimentOne();secondAnimation();">CONTINUE</button>
                     <button id="graphHide" class="button" onclick="hideGraph()">Show Graph</button>
                 </div>
                 <form id="secondExplanation" onsubmit="return showInputSecondRound()" hidden="hidden">
                     <div class="messageBox welcomeMessage">
-                        <h2 id="animationText2">Now you can conduct experiments based on the paintings by choosing independent and dependent variables.</h2>
+                        <h2 id="animationText2">You can now conduct experiments based on the paintings by choosing independent and dependent variables.</h2>
                         <br>
                         <br>
                         <button id="decrement2" class="button" type="button" onclick=secondAnimation.decrementPage() hidden="hidden">previous page</button>

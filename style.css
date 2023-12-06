@@ -22,6 +22,10 @@ nav .logo{
     -webkit-text-stroke: 2px azure;
     color: transparent;
 }
+/* window styles */
+.content, .messageBox{
+    color: azure;
+}
 /* get started button*/
 .content a{
     text-decoration: none;
@@ -32,9 +36,10 @@ nav .logo{
     padding: 14px 70px;
     border-radius: 50px;
     margin-top: 20px;
+    transition: background-color 0.5s;
 }
 .content a:hover {
-    color: black !important;
+    background-color: rgba(32, 33, 36, 0.75) !important;
 }
 
 video {
@@ -74,8 +79,8 @@ video {
     text-align: center;
 }
 .messageBox{
-    background-color: #80F6FF;
-    border: 3px solid black;
+    background-color: rgba(32, 33, 36, 0.60);
+    border: 3px solid azure;
     padding: 30px;
     display: block;
     margin-left: auto;
@@ -92,12 +97,15 @@ video {
     font-weight: 700;
 }
 .button {
-    background-color: grey;
+    background-color: rgba(32, 33, 36, 0);
     border-radius: 20px;
-    border: 2px solid black;
+    border: 2px solid azure;
     padding: 10px 50px 10px 50px;
     color: white;
     font-weight: 700;
+}
+.button:hover {
+    background-color: rgba(32, 33, 36, 0.8);
 }
 .button.speed {
     display: flex;

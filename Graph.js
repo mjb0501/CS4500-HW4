@@ -1,29 +1,44 @@
 
 let graphCreated = false;
-function createGraph(){
+let graphHidden = true; // Set initial state to hidden
+
+let graphHeight = 600;
+let graphWidth = 400;
+
+
+
+function createGraphOverlay() {
     if (graphCreated === false) {
-        // Create a new container div element
-        var containerDiv = document.createElement("div");
+        // Create a new overlay div element
+        var overlayDiv = document.createElement("div");
 
-        // Set attributes for the container div (id, styles, etc.)
-        containerDiv.id = "graphContainer";
-        containerDiv.style.width = "400px";
-        containerDiv.style.height = "200px";
-        containerDiv.style.border = "1px solid black";
+        // Set attributes for the overlay div (id, styles, etc.)
+        overlayDiv.id = "graphOverlay";
+        overlayDiv.style.position = "fixed";
+        overlayDiv.style.top = "50%";
+        overlayDiv.style.left = "50%";
+        overlayDiv.style.transform = "translate(-50%, -50%)";
+        overlayDiv.style.width = graphWidth + "px";
+        overlayDiv.style.height = graphHeight + "px";
+        overlayDiv.style.backgroundColor = "black";
+        overlayDiv.style.border = "1px solid white";
 
-        // Append the container div to the body of the document
-        document.body.appendChild(containerDiv);
 
-        // Create a new canvas element
+
+        // Append the overlay div to the body of the document
+        document.body.appendChild(overlayDiv);
+
+        // Create a new canvas element for the graph
         var canvas = document.createElement("canvas");
 
         // Set attributes for the canvas (width, height, etc.)
-        canvas.width = 400;
-        canvas.height = 200;
+        canvas.width = graphWidth;
+        canvas.height = graphHeight;
         canvas.id = "graph";
 
-        // Append the canvas to the container div
-        containerDiv.appendChild(canvas);
+
+        // Append the canvas to the overlay div
+        overlayDiv.appendChild(canvas);
 
         // Get the 2D rendering context for the canvas
         var context = canvas.getContext("2d");
@@ -31,6 +46,21 @@ function createGraph(){
         // Now you can use the 'context' variable to draw on the canvas
         context.fillStyle = "lightblue";
         context.fillRect(10, 10, 380, 180);
+
+        // Create a hide button within the overlay
+        var hideButton = document.createElement("button");
+        hideButton.innerText = "Close Graph";
+        hideButton.id = "hideGraphButton";
+        hideButton.onclick = hideGraph;
+        // Center the button below the graph container
+        hideButton.style.display = "block";
+        hideButton.style.margin = "auto";
+
+        // Append the button to the overlay div
+        overlayDiv.appendChild(hideButton);
+
+        // Set initial visibility based on graphHidden
+        overlayDiv.style.display = graphHidden ? "none" : "block";
 
         // get the grid
         const theGrid = document.getElementById('theGrid');
@@ -46,55 +76,81 @@ function createGraph(){
             console.log(`Color: ${labels[i]}, Count: ${data[i]}`);
         }
 
-        const ctx = document.getElementById('graph');new Chart(ctx, {
+        const ctx = document.getElementById('graph');
+        new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: labels, // Use the extracted labels
                 datasets: [{
                     label: '# of Colors',
                     data: data, // Use the extracted data
+                    backgroundColor: 'gray', // Black bars
+                    borderColor: 'white', // White outlines
                     borderWidth: 1
                 }]
             },
             options: {
                 scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)', // White grid lines with 10% transparency
+                        },
+                        ticks: {
+                            font: {
+                                color: '#ffffff', // White x-axis label text
+                            },
+                        },
+                    },
                     y: {
-                        beginAtZero: true
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)', // White grid lines with 10% transparency
+                        },
+                        ticks: {
+                            font: {
+                                color: '#ffffff', // White y-axis label text
+                            },
+                        },
+                    },
+                },
+                legend: {
+                    labels: {
+                        fontColor: '#ffffff', // White legend text
                     }
-                }
+                },
+                tooltips: {
+                    enabled: true,
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)', // White tooltip background with 80% transparency
+                    titleFontColor: 'black', // Black tooltip title text
+                    bodyFontColor: 'black', // Black tooltip body text
+                },
             }
         });
+        overlayDiv.style.display = graphHidden ? "none" : "block"
         graphCreated = true;
-    }
-    else return 0;
+    } else return 0;
 }
 
-let graphHidden = true;
-
-function hideGraph()
-{
-    //if it's not been created and they want to see it, lets create it now
+// Update hideGraph function to use the overlay container
+function hideGraph() {
+    // if it's not been created and they want to see it, let's create it now
     if (!graphCreated) {
-        createGraph();
+        createGraphOverlay();
     }
 
-    // find the div element that contains the canvas for the graph
+    // find the overlay element that contains the canvas for the graph
     hideButton = document.getElementById('graphHide')
-    graph = document.getElementById('graphContainer')
+    overlay = document.getElementById('graphOverlay')
 
-    // hide it
-    if(graphHidden === false) {
-        graph.hidden = true;
-        hideButton.innerText ="Show Graph";
-        graphHidden = true;
-    }
-    // unhide it
-    else if (graphHidden === true){
-        graph.hidden = false;
-        hideButton.innerText ="Hide Graph";
-        graphHidden = false;
-    }
 
+    // toggle visibility
+    overlay.style.display = graphHidden ? "block" : "none";
+    hideButton.innerText = graphHidden ? "Hide Graph" : "Show Graph";
+    graphHidden = !graphHidden;
+
+    // Manually trigger rendering of the chart after changing visibility
+    if (myChart) {
+        myChart.update();
+    }
 }
 
 function getGridColors(gridSize) {

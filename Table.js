@@ -40,7 +40,7 @@ function addRow() {
 }
 
 
-//, A1, A2, A3, B, and C
+//a, A1, A2, A3, B, and C
 
 /*
 A: the total number of paint drops put on the canvas before the stopping criterion stops the painting.

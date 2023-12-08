@@ -2,8 +2,8 @@
 let graphCreated = false;
 let graphHidden = true; // Set initial state to hidden
 
-let graphHeight = 600;
-let graphWidth = 400;
+let graphHeight = 450;
+let graphWidth = 650;
 
 
 
@@ -20,8 +20,8 @@ function createGraphOverlay() {
         overlayDiv.style.transform = "translate(-50%, -50%)";
         overlayDiv.style.width = graphWidth + "px";
         overlayDiv.style.height = graphHeight + "px";
-        overlayDiv.style.backgroundColor = "black";
-        overlayDiv.style.border = "1px solid white";
+       // overlayDiv.style.backgroundColor = "black";
+        //overlayDiv.style.border = "1px solid white";
 
 
 
@@ -64,7 +64,8 @@ function createGraphOverlay() {
 
         // get the grid
         const theGrid = document.getElementById('theGrid');
-
+/*
+// old code to get colors from the grid
         let colorCounts = getGridColors(singleExperiment.gridSize());
 
         // Extracting labels and data from colorCounts
@@ -75,16 +76,17 @@ function createGraphOverlay() {
         for (let i = 0; i < labels.length; i++) {
             console.log(`Color: ${labels[i]}, Count: ${data[i]}`);
         }
-
+*/
         const ctx = document.getElementById('graph');
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: labels, // Use the extracted labels
+                labels: [singleExperiment.colors[0],singleExperiment.colors[1],singleExperiment.colors[2]] , //set colors of graph to the ones the user selected
                 datasets: [{
                     label: '# of Colors',
-                    data: data, // Use the extracted data
-                    backgroundColor: 'gray', // Black bars
+                 //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
+                    data: [4, 3, 2],
+                    backgroundColor: 'gray', // gray bars
                     borderColor: 'white', // White outlines
                     borderWidth: 1
                 }]
@@ -146,11 +148,14 @@ function hideGraph() {
     overlay.style.display = graphHidden ? "block" : "none";
     hideButton.innerText = graphHidden ? "Hide Graph" : "Show Graph";
     graphHidden = !graphHidden;
-
+/*
+//bugged dont enable
     // Manually trigger rendering of the chart after changing visibility
     if (myChart) {
         myChart.update();
     }
+
+ */
 }
 
 function getGridColors(gridSize) {

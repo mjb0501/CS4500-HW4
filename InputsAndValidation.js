@@ -420,7 +420,8 @@ function returnFive() {
 function continueSix (){
     partSix.hidden=true;
     inputFormSecond.hidden = true;
-    hideGraph()
+    secondExplanation.hidden = true;
+    setTable()
 }
 
 function validateSecondForm() {
@@ -436,7 +437,6 @@ function validateSecondForm() {
     thisExperiment.colors.push(color2DropdownSecond.value);
     thisExperiment.colors.push(color3DropdownSecond.value);
     PAINT_MANY(thisExperiment);
-    setTable()
     continueSix();
     return true;
 }

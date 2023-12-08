@@ -1,5 +1,7 @@
 let table;
 let tableData = [];
+let tableHeight = 450;
+let tableWidth = 650;
 const exampleTableRowData = {
     Dimension: 3,
     AverageDrops: "test",
@@ -34,18 +36,39 @@ function createTable() {
     const columns = Object.keys(exampleTableRowData).map(key => ({ title: key, field: key, editor: "input" }));
 
     // Create a Tabulator table dynamically
-    const tableContainer = document.createElement("div");
-    tableContainer.id = "table-container";
-    tableContainer.style.width="500px";
-    tableContainer.style.width="500px";
-    document.body.appendChild(tableContainer);
+    const overlayDiv = document.createElement("div");
+    overlayDiv.id = "table-container";
+
+// set style center pf screen
+    overlayDiv.style.position = "fixed";
+    overlayDiv.style.top = "50%";
+    overlayDiv.style.left = "50%";
+    overlayDiv.style.transform = "translate(-50%, -50%)";
+    overlayDiv.style.width = tableWidth + "px";
+    overlayDiv.style.height = tableHeight + "px";
+    document.body.appendChild(overlayDiv);
+// create button to continue, closes itself then opens graph
+
+    var hideButton = document.createElement("button");
+    hideButton.innerText = "Continue";
+    hideButton.id = "closeTable";
+    hideButton.onclick = closeTable;
+    hideButton.style.position = "fixed";
+    hideButton.style.top = "calc(50% + " + (tableHeight / 2 + 40) + "px)"; // Adjusted the top position to be below the first element
+    hideButton.style.left = "50%";
+    hideButton.style.transform = "translate(-50%, -50%)";
+    hideButton.style.width = tableWidth + "px";
+    hideButton.style.height = "40px"; // Adjusted the height as needed
+
+    document.body.appendChild(hideButton);
+
 
     table = new Tabulator("#table-container", {
         columns: columns,
         layout: "fitColumns",
         responsiveLayout:"hide",
         autoColumns:true,
-        height:"400px",
+        height:tableHeight,
         data: tableData,
 
 
@@ -58,7 +81,19 @@ function addRow() {
     table.addRow(exampleTableRowData);
 }
 
+function closeTable(){
+    let table = document.getElementById("table-container")
+    let button = document.getElementById("closeTable")
+   // let messageBox = document.getElementsByClassName("messageBox");
 
+    messageBox.hodden = true;
+    table.hidden = true;
+    button.hidden = true;
+
+
+    hideGraph();
+
+}
 //, A1, A2, A3, B, and C
 
 /*

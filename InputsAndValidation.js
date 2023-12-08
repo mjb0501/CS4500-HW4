@@ -417,6 +417,11 @@ function returnFive() {
         partFour.hidden = false;
     }
 }
+function continueSix (){
+    partSix.hidden=true;
+    inputFormSecond.hidden = true;
+    hideGraph()
+}
 
 function validateSecondForm() {
     //populate the DTO to send over to scripts
@@ -431,5 +436,15 @@ function validateSecondForm() {
     thisExperiment.colors.push(color2DropdownSecond.value);
     thisExperiment.colors.push(color3DropdownSecond.value);
     PAINT_MANY(thisExperiment);
+    setTable()
+    continueSix();
     return true;
+}
+
+
+
+function  setTable(){
+    setTableData();
+    createTable();
+
 }

@@ -183,7 +183,7 @@ td {
     max-width: 600px;
     border-radius: 20px;
 }
-#hideGraphButton{
+#graphHide{
     background-color: rgba(32, 33, 36, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     display: block;
@@ -195,6 +195,6 @@ td {
     color: white;
 }
 
-#hideGraphButton:hover {
+#graphHide:hover {
     background-color: rgba(32, 33, 36, 1);
 }

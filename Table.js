@@ -1,15 +1,33 @@
 let table;
+let tableData = [];
 const exampleTableRowData = {
     Dimension: 3,
-    A: "15",
-    A1: "25",
-    A2: "120",
-    A3: 1.8,
-    B: "green",
-    C: 20,
-    Criterion: 100,
-    Rep: 123,
+    AverageDrops: "test",
+    Color1: "test",
+    Color2: "test",
+    Color3: "test",
+    B: "test",
+    C: "test",
+    Criterion: "test",
+    Rep: "test",
 };
+function setTableData(){
+    for (var i = 0; i < allResults.length; i++) {
+        const exampleTableRowData = {
+            Dimension: 3,
+            A: allResults[i].averageDrops,
+            A1: allResults[i].c0Drops,
+            A2: allResults[i].c1Drops,
+            A3: allResults[i].c2Drops,
+            B: "test",
+            C: "test",
+            Criterion: "test",
+            Rep: "test",
+        };
+        tableData.push(exampleTableRowData);
+        console.log(tableData)
+    }
+}
 
 function createTable() {
     // Extract column names from the keys of exampleTableRowData
@@ -28,6 +46,7 @@ function createTable() {
         responsiveLayout:"hide",
         autoColumns:true,
         height:"400px",
+        data: tableData,
 
 
     });
@@ -40,7 +59,7 @@ function addRow() {
 }
 
 
-//a, A1, A2, A3, B, and C
+//, A1, A2, A3, B, and C
 
 /*
 A: the total number of paint drops put on the canvas before the stopping criterion stops the painting.

@@ -39,7 +39,7 @@
                 <div id="finishExpOneMessage" hidden="hidden">
                     <h3 id="finishMessage">The experiment has been completed.</h3>
                     <button class="button" type="button" id="expFinished" onclick="closeExperimentOne();secondAnimation();">CONTINUE</button>
-                    <button id="graphHide" class="button" onclick="hideGraph()">Show Graph</button>
+                    <!-- <button id="graphHide" class="button" onclick="hideGraph()">Show Graph</button> !-->
                 </div>
                 <form id="secondExplanation" onsubmit="return showInputSecondRound()" hidden="hidden">
                     <div class="messageBox welcomeMessage">
@@ -152,5 +152,9 @@
     <script src="Scripts.js"></script>
     <script src="InputsAndValidation.js"></script>
     <script src="graph.js"></script>
+    <script src="Table.js"></script>
+    <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
+
 </body>
 </html>

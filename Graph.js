@@ -49,8 +49,8 @@ function createGraphOverlay() {
 
         // Create a hide button within the overlay
         var hideButton = document.createElement("button");
-        hideButton.innerText = "Close Graph";
-        hideButton.id = "hideGraphButton";
+        hideButton.innerText = "Continue";
+        hideButton.id = "graphHide";
         hideButton.onclick = hideGraph;
         // Center the button below the graph container
         hideButton.style.display = "block";
@@ -81,7 +81,7 @@ function createGraphOverlay() {
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: [singleExperiment.colors[0],singleExperiment.colors[1],singleExperiment.colors[2]] , //set colors of graph to the ones the user selected
+                labels: [experimentParameters.colors[0],experimentParameters.colors[1],experimentParameters.colors[2]] , //set colors of graph to the ones the user selected
                 datasets: [{
                     label: '# of Colors',
                  //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
@@ -142,11 +142,16 @@ function hideGraph() {
     // find the overlay element that contains the canvas for the graph
     hideButton = document.getElementById('graphHide')
     overlay = document.getElementById('graphOverlay')
-
+    graph = document.getElementById('graph')
+/*
+    delete graph;
+    delete overlay;
+    delete hideButton;
+*/
 
     // toggle visibility
     overlay.style.display = graphHidden ? "block" : "none";
-    hideButton.innerText = graphHidden ? "Hide Graph" : "Show Graph";
+    hideButton.innerText = graphHidden ? "Continue" : "Show Graph";
     graphHidden = !graphHidden;
 /*
 //bugged dont enable

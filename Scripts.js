@@ -302,7 +302,7 @@ Independent variables:  0 = dimension
     console.log(allResults);
 }
 
-function SINGLE_PAINT(currentExperiment){
+function SINGLE_PAINT(currentExperiment) {
 
     let dropTracker = new Array(currentExperiment.gridSize()).fill(0);
     let result = new Results;
@@ -311,30 +311,32 @@ function SINGLE_PAINT(currentExperiment){
     switch (currentExperiment.stoppingCriteria) {
         case 0:
             let isFull = false;
-            while(!isFull){
+            while (!isFull) {
                 let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
                 randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                 let color = Math.floor(Math.random() * 3);
                 dropTracker[randomCoord - 1]++;
                 if (color === 0)
                     result.c0Drops++;
-                if (color === 1)
+                else if (color === 1)
                     result.c1Drops++;
-                if (color === 2)
+                else if (color === 2)
                     result.c2Drops++;
                 isFull = isFullFunction(dropTracker);
             }
             result.averageDrops = (result.totalDrops() / currentExperiment.gridSize());
-            for(let i = 0; i < currentExperiment.gridSize(); i++){
-                if(dropTracker[i] > result.maxDrops1Square) {
+            for (let i = 0; i < currentExperiment.gridSize(); i++) {
+                if (dropTracker[i] > result.maxDrops1Square) {
                     result.maxDrops1Square = dropTracker[i];
                 }
             }
+
             allResults.push(result);
             break;
+
         case 1:
             let isDoubleDripped = false;
-            while(!isDoubleDripped){
+            while (!isDoubleDripped) {
                 let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
                 randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                 let color = Math.floor(Math.random() * 3);
@@ -347,27 +349,46 @@ function SINGLE_PAINT(currentExperiment){
                 }
                 if (color === 0)
                     result.c0Drops++;
-                if (color === 1)
+                else if (color === 1)
                     result.c1Drops++;
-                if (color === 2)
+                else if (color === 2)
                     result.c2Drops++;
+            }
+            result.averageDrops = (result.totalDrops() / currentExperiment.gridSize());
+            for (let i = 0; i < currentExperiment.gridSize(); i++) {
+                if (dropTracker[i] > result.maxDrops1Square) {
+                    result.maxDrops1Square = dropTracker[i];
+                }
             }
             allResults.push(result);
             break;
+
         case 2:
             let totalDropsReached = false;
-            while(!totalDropsReached) {
+            while (!totalDropsReached) {
                 let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
                 randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                 let color = Math.floor(Math.random() * 3);
-                applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
                 totalDrops++;
                 console.log(totalDrops);
                 console.log(currentExperiment.colorTotalAllowedDrops());
-                if (totalDrops < currentExperiment.colorTotalAllowedDrops())
+                if (totalDrops === currentExperiment.colorTotalAllowedDrops())
                     totalDropsReached = true;
+                if (color === 0)
+                    result.c0Drops++;
+                else if (color === 1)
+                    result.c1Drops++;
+                else if (color === 2)
+                    result.c2Drops++;
+            }
 
+            result.averageDrops = (result.totalDrops() / currentExperiment.gridSize());
+            for (let i = 0; i < currentExperiment.gridSize(); i++) {
+                if (dropTracker[i] > result.maxDrops1Square) {
+                    result.maxDrops1Square = dropTracker[i];
                 }
+            }
+            allResults.push(result);
             break;
 }
 }

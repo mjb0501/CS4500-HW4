@@ -87,7 +87,7 @@ function closeTable(){
     let button = document.getElementById("closeTable")
    // let messageBox = document.getElementsByClassName("messageBox");
 
-    messageBox.hodden = true;
+    messageBox.hidden = true;
     table.hidden = true;
     button.hidden = true;
 

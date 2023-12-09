@@ -263,6 +263,10 @@ Independent variables:  0 = dimension
  */
     allResults = [];
     let thisExperiment = singleExperiment;
+    let loading = document.getElementById("loading");
+    document.getElementById("experimentHeader").innerHTML = "Experiment Loading";
+    document.getElementById("partSix").hidden = true;
+    loading.hidden = false;
     thisExperiment.colors = experimentParameters.colors;
 
     switch (experimentParameters.independentVar){
@@ -271,6 +275,7 @@ Independent variables:  0 = dimension
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
             for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
                 for(let j = 0; j < experimentParameters.reps; j++){
+                    loading.innerHTML = (j*i) + "/" + (experimentParameters.independentVarValues.length*experimentParameters.reps);
                     thisExperiment.xVal = experimentParameters.independentVarValues[i];
                     thisExperiment.yVal = experimentParameters.independentVarValues[i];
                     SINGLE_PAINT(thisExperiment);
@@ -283,6 +288,7 @@ Independent variables:  0 = dimension
             for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
                 thisExperiment.xVal = experimentParameters.independentVarValues[i];
                 for(let j = 0; j < experimentParameters.reps; j++){
+                    loading.innerHTML = (j*i) + "/" + (experimentParameters.independentVarValues.length*experimentParameters.reps);
                     SINGLE_PAINT(thisExperiment);
                 }
             }
@@ -293,12 +299,14 @@ Independent variables:  0 = dimension
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
             for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
                 for(let j = 0; j < experimentParameters.independentVarValues[i]; j++){
+                    loading.innerHTML = (j*i) + "/" + (experimentParameters.independentVarValues.length*experimentParameters.independentVarValues[i]);
                     SINGLE_PAINT(thisExperiment);
                 }
             }
             break;
 
     }
+    loading.hidden = true;
     console.log(allResults);
 }
 
@@ -400,18 +408,61 @@ function getStarted() {
 }
 
 function secondAnimation() {
-    //placeholder for Marley, this was error-ing out as it didn't exist.
-    function incrementPage() {
+    let container = document.getElementById("animationStaging");
+    let text = document.getElementById("animationText2");
+    let submit = document.getElementById("submit2");
+    let increment = document.getElementById("increment2");
+    let decrement = document.getElementById("decrement2");
+    let page2 = 1;
 
+    let frames = 0;
+
+    let id = setInterval(animate, 2);
+
+    function incrementPage() {
+        page2++;
     }
 
     function decrementPage() {
-
+        page2--;
     }
 
-    //just putting this here to keep the experiment going for now, will need to be removed
-    let submit2 = document.getElementById('submit2');
-    let increment2 = document.getElementById('increment2');
-    submit2.hidden = false;
-    increment2.hidden = true;
+    secondAnimation.incrementPage = incrementPage;
+    secondAnimation.decrementPage = decrementPage;
+    function animate() {
+        if (page2 == 1) {
+            decrement.hidden = true;
+            text.innerHTML = "Now you can conduct experiments based on the paintings by choosing independent and dependent variables.";
+        }
+        if (page2 == 2) {
+            decrement.hidden = false;
+            text.innerHTML = "First you will be asked to choose an independent variable in the experiment and the number of independent variables you would like.";
+        }
+        if (page2 == 3) {
+            text.innerHTML = "After that you will be asked to provide the values of the independent variables in a comma seperated list like this: 3, 4, 5, 6";
+        }
+        if (page2 == 4) {
+            text.innerHTML = "After that you will be asked to provide values for either the number of repetitions, x and y dimensions, or y dimension and number of repetitions depending on your choice of independent variables.";
+        }
+        if (page2 == 5) {
+            text.innerHTML = "After providing those values you will be prompted for colors and stopping criteria like you just did for the painting.";
+        }
+        if (page2 == 6) {
+            text.innerHTML = "After submitting colors and stopping criteria the experiment will run after which a variety of dependent variable values will be shown in a table format and you will have to choose one or two dependent variables.";
+        }
+        if (page2 == 7) {
+            text.innerHTML = "After choosing dependent variables, graphs will be shown corresponding to the dependent variables you have chosen.";
+        }
+        if (page2 == 8) {
+            increment.hidden = false;
+            submit.hidden = true;
+            text.innerHTML = "After this the experiment is complete and you will be able to make another graph based on the experiment data, make a new experiment or quit the program.";
+        }
+        if (page2 == 8) {
+            increment.hidden = true;
+            submit.hidden = false;
+            text.innerHTML = "You are ready to begin the experiment.  Have fun Experimenting!";
+        }
+    }
+    return false;
 }

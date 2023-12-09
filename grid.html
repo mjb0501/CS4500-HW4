@@ -57,7 +57,7 @@
                     <div class="col-md-12 text-center">
                         <div class ="messageBox">
                             <form id="inputFormSecond" onsubmit="return validateSecondForm()">
-                                <h3>Experiment 2 - Input Settings</h3>
+                                <h3 id="experimentHeader">Experiment 2 - Input Settings</h3>
                                 <div id="partOne">
                                     <label for="indVar">Independent Variable</label>
                                     <select id="indVar" name="indVar" required></select>
@@ -109,6 +109,7 @@
                                     <br>
                                 </div>
                                 <br>
+                                <h4 hidden="hidden" id="loading"></h4>
                                 <span id="inputErrorSecond" class="errorMessage"></span>
                             </form>
                         </div>

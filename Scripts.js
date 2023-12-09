@@ -271,15 +271,18 @@ Independent variables:  0 = dimension
     let totalRuns = 0;
     let runCounter = 0;
     currentPercent = 0;
+    let i = 0;
+    let j = 0;
+    let finished = false;
     thisExperiment.colors = experimentParameters.colors;
     switch (experimentParameters.independentVar){
 
         case 0:
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
             totalRuns = experimentParameters.independentVarValues.length * experimentParameters.reps;
-            let i = 0;
-            let j = 0;
-            let finished = false;
+            i = 0;
+            j = 0;
+            finished = false;
             function loopFirstCriteria() {
                 setTimeout(function () {
                     for (let newBatch = 0; newBatch < 100; newBatch++) {
@@ -315,24 +318,81 @@ Independent variables:  0 = dimension
         case 1:
             thisExperiment.yVal = experimentParameters.yVal;
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
-            for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
-                thisExperiment.xVal = experimentParameters.independentVarValues[i];
-                for(let j = 0; j < experimentParameters.reps; j++){
-                    SINGLE_PAINT(thisExperiment);
-                }
+            totalRuns = experimentParameters.independentVarValues.length * experimentParameters.reps;
+            i = 0;
+            j = 0;
+            finished = false;
+            function loopSecondCriteria() {
+                setTimeout (function() {
+                    for (let newBatch = 0; newBatch < 100; newBatch++) {
+                        if (i === experimentParameters.independentVarValues.length) {
+                            finished = true;
+                            break;
+                        }
+                        thisExperiment.xVal = experimentParameters.independentVarValues[i];
+                        SINGLE_PAINT(thisExperiment);
+                        setTableData(runCounter);
+                        j++;
+                        runCounter++;
+                        currentPercent = Math.floor((runCounter / totalRuns) * 100);
+                        updateProgressBar();
+                        if (j === experimentParameters.reps) {
+                            i++;
+                            j = 0;
+                        }
+                    }
+                    if (finished) {
+                        let progressMessage = document.getElementById("progressMessage");
+                        progressMessage.text = "Simulation finished. Loading Results....";
+                        setTable();
+                    } else {
+                        loopSecondCriteria();
+                    }
+                }, 4);
             }
+            loopSecondCriteria();
             break;
         case 2:
             thisExperiment.xVal = experimentParameters.xVal;
             thisExperiment.yVal = experimentParameters.yVal;
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
-            for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
-                for(let j = 0; j < experimentParameters.independentVarValues[i]; j++){
-                    SINGLE_PAINT(thisExperiment);
-                }
+            totalRuns = 0;
+            for (i = 0; i < experimentParameters.independentVarValues.length; i++) {
+                totalRuns += experimentParameters.independentVarValues[i];
             }
-            break;
+            i = 0;
+            j = 0;
+            finished = false;
+            function loopThirdCriteria() {
+                setTimeout(function () {
+                    for (let newBatch = 0; newBatch < 100; newBatch++) {
+                        if (i === experimentParameters.independentVarValues.length) {
+                            finished = true;
+                            break;
+                        }
 
+                        SINGLE_PAINT(thisExperiment);
+                        setTableData(runCounter);
+                        j++;
+                        runCounter++;
+                        currentPercent = Math.floor((runCounter / totalRuns) * 100);
+                        updateProgressBar();
+                        if (j === experimentParameters.independentVarValues[i]) {
+                            i++;
+                            j = 0;
+                        }
+                    }
+                    if (finished) {
+                        let progressMessage = document.getElementById("progressMessage");
+                        progressMessage.text = "Simulation finished. Loading Results....";
+                        setTable();
+                    } else {
+                        loopThirdCriteria();
+                    }
+                }, 4);
+            }
+            loopThirdCriteria();
+            break;
     }
     console.log(allResults);
 }

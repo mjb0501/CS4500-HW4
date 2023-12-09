@@ -41,7 +41,7 @@ function createTable() {
     document.body.appendChild(overlayDiv);
 
     // create button to continue, closes itself then opens graph
-    var hideButton = document.createElement("button");
+    let hideButton = document.createElement("button");
     hideButton.innerText = "Continue";
     hideButton.id = "closeTable";
     hideButton.onclick = closeTable;

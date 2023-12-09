@@ -516,39 +516,39 @@ function secondAnimation() {
     secondAnimation.incrementPage = incrementPage;
     secondAnimation.decrementPage = decrementPage;
     function animate() {
-        if (page2 == 1) {
+        if (page2 === 1) {
             decrement.hidden = true;
             //remove this line of code before submission
             submit.hidden = false;
             text.innerHTML = "Now you can conduct experiments based on the paintings by choosing independent and dependent variables.";
         }
-        if (page2 == 2) {
+        if (page2 === 2) {
             decrement.hidden = false;
             //remove this line of code before submission
             submit.hidden = true;
             text.innerHTML = "First you will be asked to choose an independent variable They are as follows:<br>1. Single Dimension for X and Y axis<br>2. X Dimension<br>3. Number of Repetitions";
         }
-        if (page2 == 3) {
+        if (page2 === 3) {
             text.innerHTML = "After that you will be asked to provide the values of the independent variables in a comma seperated list like this: 3, 4, 5, 6";
         }
-        if (page2 == 4) {
+        if (page2 === 4) {
             text.innerHTML = "After that you will be asked to provide values for either <br>1. repetitions<br>2. x and y dimensions<br>3. y dimension and repetitions";
         }
-        if (page2 == 5) {
+        if (page2 === 5) {
             text.innerHTML = "After providing those values you will be prompted for colors and stopping criteria like you just did for the painting.";
         }
-        if (page2 == 6) {
+        if (page2 === 6) {
             text.innerHTML = "After submitting colors and stopping criteria the experiment will run after which a variety of dependent variable values gathered from the experiments will be shown in a table format and you will have to choose one or two dependent variables.";
         }
-        if (page2 == 7) {
+        if (page2 === 7) {
             text.innerHTML = "After choosing dependent variables, graphs will be shown corresponding to the dependent variables you have chosen.";
         }
-        if (page2 == 8) {
+        if (page2 === 8) {
             increment.hidden = false;
             submit.hidden = true;
             text.innerHTML = "After this the experiment is complete and you will be able to make another graph based on the experiment data, make a new experiment or quit the program.";
         }
-        if (page2 == 9) {
+        if (page2 === 9) {
             increment.hidden = true;
             submit.hidden = false;
             text.innerHTML = "You are ready to begin the experiment.  Have fun Experimenting!";
@@ -559,14 +559,8 @@ function secondAnimation() {
 
 function updateProgressBar(width) {
     let theBar = document.getElementById("theBar");
-
-    (function asyncLoop() {
-        theBar.style.width = currentPercent + "%";
-        theBar.innerHTML = currentPercent + "%";
-        if (currentPercent <= 100) {
-            setTimeout(asyncLoop, 50);
-        }
-    })();
+    theBar.style.width = currentPercent + "%";
+    theBar.innerHTML = currentPercent + "%";
 }
 
 function endProgram() {

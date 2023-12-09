@@ -469,4 +469,6 @@ function resetInputs() {
     partFive.hidden = true;
     partSix.hidden = true;
     currentPercent = 0;
+    document.getElementById("table-container").remove(); //need to remove the original table
+    document.getElementById("closeTable").remove(); //need to remove the close table button
 }

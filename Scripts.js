@@ -441,19 +441,19 @@ function secondAnimation() {
             decrement.hidden = false;
             //remove this line of code before submission
             submit.hidden = true;
-            text.innerHTML = "First you will be asked to choose an independent variable in the experiment and the number of independent variables you would like.";
+            text.innerHTML = "First you will be asked to choose an independent variable They are as follows:<br>1. Single Dimension for X and Y axis<br>2. X Dimension<br>3. Number of Repetitions";
         }
         if (page2 == 3) {
             text.innerHTML = "After that you will be asked to provide the values of the independent variables in a comma seperated list like this: 3, 4, 5, 6";
         }
         if (page2 == 4) {
-            text.innerHTML = "After that you will be asked to provide values for either the number of repetitions, x and y dimensions, or y dimension and number of repetitions depending on your choice of independent variables.";
+            text.innerHTML = "After that you will be asked to provide values for either <br>1. repetitions<br>2. x and y dimensions<br>3. y dimension and repetitions";
         }
         if (page2 == 5) {
             text.innerHTML = "After providing those values you will be prompted for colors and stopping criteria like you just did for the painting.";
         }
         if (page2 == 6) {
-            text.innerHTML = "After submitting colors and stopping criteria the experiment will run after which a variety of dependent variable values will be shown in a table format and you will have to choose one or two dependent variables.";
+            text.innerHTML = "After submitting colors and stopping criteria the experiment will run after which a variety of dependent variable values gathered from the experiments will be shown in a table format and you will have to choose one or two dependent variables.";
         }
         if (page2 == 7) {
             text.innerHTML = "After choosing dependent variables, graphs will be shown corresponding to the dependent variables you have chosen.";

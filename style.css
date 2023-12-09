@@ -104,6 +104,7 @@ video {
     color: white;
     font-weight: 700;
 }
+
 .button:hover {
     background-color: rgba(32, 33, 36, 0.8);
 }

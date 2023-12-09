@@ -433,10 +433,14 @@ function secondAnimation() {
     function animate() {
         if (page2 == 1) {
             decrement.hidden = true;
+            //remove this line of code before submission
+            submit.hidden = false;
             text.innerHTML = "Now you can conduct experiments based on the paintings by choosing independent and dependent variables.";
         }
         if (page2 == 2) {
             decrement.hidden = false;
+            //remove this line of code before submission
+            submit.hidden = true;
             text.innerHTML = "First you will be asked to choose an independent variable in the experiment and the number of independent variables you would like.";
         }
         if (page2 == 3) {
@@ -459,11 +463,16 @@ function secondAnimation() {
             submit.hidden = true;
             text.innerHTML = "After this the experiment is complete and you will be able to make another graph based on the experiment data, make a new experiment or quit the program.";
         }
-        if (page2 == 8) {
+        if (page2 == 9) {
             increment.hidden = true;
             submit.hidden = false;
             text.innerHTML = "You are ready to begin the experiment.  Have fun Experimenting!";
         }
     }
     return false;
+}
+
+function endProgram() {
+    //document.getElementById(/*This is where text box for displaying thank you would go.*/).innerHTML = "Thank You for using our program.  Come Back anytime.";
+    const timeout = setTimeout(function(){window.location.href = "index.html";}, 5000);
 }

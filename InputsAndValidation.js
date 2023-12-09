@@ -436,6 +436,7 @@ function validateSecondForm() {
     thisExperiment.colors.push(color1DropdownSecond.value);
     thisExperiment.colors.push(color2DropdownSecond.value);
     thisExperiment.colors.push(color3DropdownSecond.value);
+    loadingAnimation();
     PAINT_MANY(thisExperiment);
     continueSix();
     return true;

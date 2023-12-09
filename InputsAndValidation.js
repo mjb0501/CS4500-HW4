@@ -6,7 +6,7 @@ let inputError, inputErrorSecond
 //X, Y & Independent
 let yDimBox, xDimBox, yDimBoxSecond, xDimBoxSecond, indVarValues, numIndValues, repetitions;
 //forms
-let form, inputFormSecond, secondExplanation;
+let form, inputFormSecond, secondExplanation, progressBar;
 //input box and placeholder
 let theInputBox, inputBoxSecond, placeholderBox;
 //grid stuff
@@ -49,6 +49,7 @@ function getGlobalElements() {
     form = document.getElementById("inputFormIntro");
     inputFormSecond = document.getElementById("inputFormSecond");
     secondExplanation = document.getElementById("secondExplanation");
+    progressBar = document.getElementById("progressBar");
 
     //input box and placeholder
     theInputBox = document.getElementById("inputBoxFirst");
@@ -417,12 +418,6 @@ function returnFive() {
         partFour.hidden = false;
     }
 }
-function continueSix (){
-    partSix.hidden=true;
-    inputFormSecond.hidden = true;
-    secondExplanation.hidden = true;
-    setTable()
-}
 
 function validateSecondForm() {
     //populate the DTO to send over to scripts
@@ -436,16 +431,16 @@ function validateSecondForm() {
     thisExperiment.colors.push(color1DropdownSecond.value);
     thisExperiment.colors.push(color2DropdownSecond.value);
     thisExperiment.colors.push(color3DropdownSecond.value);
-    loadingAnimation();
+    partSix.hidden = true;
+    inputFormSecond.hidden = true;
+    secondExplanation.hidden = true;
+    progressBar.hidden = false;
+    inputBoxSecond.hidden = true;
     PAINT_MANY(thisExperiment);
-    continueSix();
     return true;
 }
 
-
-
 function  setTable(){
-    setTableData();
+    progressBar.hidden = true;
     createTable();
-
 }

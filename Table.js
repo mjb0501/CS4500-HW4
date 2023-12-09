@@ -11,20 +11,17 @@ const exampleTableRowData = {
     AverageDrops: "test",
 
 };
-function setTableData(){
-    for (var i = 0; i < allResults.length; i++) {
-        const exampleTableRowData = {
 
-            TotalDrops: allResults[i].totalDrops(),
-            Color1: allResults[i].c0Drops,
-            Color2: allResults[i].c1Drops,
-            Color3: allResults[i].c2Drops,
-            MaxDrops1Square: allResults[i].maxDrops1Square,
-            AverageDrops: allResults[i].averageDrops,
-        };
-        tableData.push(exampleTableRowData);
-        console.log(tableData)
-    }
+function setTableData(expNum){
+    const exampleTableRowData = {
+        TotalDrops: allResults[expNum].totalDrops(),
+        Color1: allResults[expNum].c0Drops,
+        Color2: allResults[expNum].c1Drops,
+        Color3: allResults[expNum].c2Drops,
+        MaxDrops1Square: allResults[expNum].maxDrops1Square,
+        AverageDrops: allResults[expNum].averageDrops,
+    };
+    tableData.push(exampleTableRowData);
 }
 
 function createTable() {
@@ -91,10 +88,9 @@ function closeTable(){
     table.hidden = true;
     button.hidden = true;
 
-
     hideGraph();
-
 }
+
 //, A1, A2, A3, B, and C
 
 /*

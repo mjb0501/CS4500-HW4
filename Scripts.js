@@ -90,6 +90,8 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     // Create a unique animation for each cell
     let animationName = "paintDrop-" + cellNumber;
     let styleSheet = document.styleSheets[0];
+    let audio = document.getElementById("audio");
+    audio.playbackRate=8;
 
     // Apply the unique animation to the specific cell
     cellID = cellNumber;
@@ -101,6 +103,7 @@ function applyAnimationToCell(cellNumber, AnimationColor) {
     let tempColor = style.getPropertyValue('background-color');
     theCell.style.backgroundColor = AnimationColor;
     let frames = 0;
+    audio.play();
     let id = setInterval(frame, 3);
 
     function frame() {

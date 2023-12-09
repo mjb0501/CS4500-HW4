@@ -3,28 +3,24 @@ let tableData = [];
 let tableHeight = 450;
 let tableWidth = 650;
 const exampleTableRowData = {
-    Dimension: 3,
-    AverageDrops: "test",
+    TotalDrops: "test",
     Color1: "test",
     Color2: "test",
     Color3: "test",
-    B: "test",
-    C: "test",
-    Criterion: "test",
-    Rep: "test",
+    MaxDrops1Square: "test",
+    AverageDrops: "test",
+
 };
 function setTableData(){
     for (var i = 0; i < allResults.length; i++) {
         const exampleTableRowData = {
-            Dimension: 3,
-            A: allResults[i].averageDrops,
-            A1: allResults[i].c0Drops,
-            A2: allResults[i].c1Drops,
-            A3: allResults[i].c2Drops,
-            B: "test",
-            C: "test",
-            Criterion: "test",
-            Rep: "test",
+
+            TotalDrops: allResults[i].totalDrops(),
+            Color1: allResults[i].c0Drops,
+            Color2: allResults[i].c1Drops,
+            Color3: allResults[i].c2Drops,
+            MaxDrops1Square: allResults[i].maxDrops1Square,
+            AverageDrops: allResults[i].averageDrops,
         };
         tableData.push(exampleTableRowData);
         console.log(tableData)
@@ -38,6 +34,7 @@ function createTable() {
     // Create a Tabulator table dynamically
     const overlayDiv = document.createElement("div");
     overlayDiv.id = "table-container";
+
 
 // set style center pf screen
     overlayDiv.style.position = "fixed";
@@ -66,10 +63,14 @@ function createTable() {
     table = new Tabulator("#table-container", {
         columns: columns,
         layout: "fitColumns",
-        responsiveLayout:"hide",
+       // responsiveLayout:"hide",
         autoColumns:true,
         height:tableHeight,
         data: tableData,
+        editable: false,
+        movableRows: false,
+        selectable: false,
+        responsiveLayout:"collapse",
 
 
     });

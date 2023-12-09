@@ -276,7 +276,6 @@ Independent variables:  0 = dimension
     let finished = false;
     thisExperiment.colors = experimentParameters.colors;
     switch (experimentParameters.independentVar){
-
         case 0:
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
             totalRuns = experimentParameters.independentVarValues.length * experimentParameters.reps;
@@ -560,8 +559,6 @@ function secondAnimation() {
 
 function updateProgressBar(width) {
     let theBar = document.getElementById("theBar");
-    //theBar.style.width = width + "%";
-    //theBar.innerHTML = width + "%";
 
     (function asyncLoop() {
         theBar.style.width = currentPercent + "%";
@@ -575,4 +572,32 @@ function updateProgressBar(width) {
 function endProgram() {
     //document.getElementById(/*This is where text box for displaying thank you would go.*/).innerHTML = "Thank You for using our program.  Come Back anytime.";
     const timeout = setTimeout(function(){window.location.href = "index.html";}, 5000);
+}
+
+function makeFinalSelection() {
+    let options = document.getElementsByName('lastOption');
+
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].checked)
+            switch (options[i].value) {
+                case "0":
+                    //new dependent values and chart
+                    resetInputs();
+                    document.getElementById("dependentValues").hidden = false;
+                    document.getElementById("finalMessage").hidden = true;
+                    break;
+                case "1":
+                    //new experiment
+                    resetInputs();
+                    document.getElementById("inputBoxSecond").hidden = false;
+                    document.getElementById("finalMessage").hidden = true;
+                    break;
+                case "2":
+                    //they quit
+                    resetInputs();
+                    document.getElementById("finalMessage").hidden = true;
+                    endProgram();
+                    break;
+            }
+    }
 }

@@ -238,7 +238,6 @@ function validateForm() {
 
 //BEGIN 2nd ROUND OF EXPERIMENTS
 function showInputSecondRound() {
-    inputFormSecond.hidden = false;
     secondExplanation.hidden = true;
     theGrid.hidden = true;
     inputBoxSecond.hidden = false;
@@ -264,7 +263,7 @@ function continueOne() {
     //setup the independent variable with # of independent values
     if (numIndValues.value > 10 || numIndValues.value < 2) {
         numIndValues.style.border ="3px solid red";
-        inputErrorSecond.innerHTML = "Please select a valid number between 1 and 10.";
+        inputErrorSecond.innerHTML = "Please select a valid number between 2 and 10.";
         return false;
     }
     indValueSelection = independentDropdown.selectedIndex;
@@ -432,7 +431,6 @@ function validateSecondForm() {
     thisExperiment.colors.push(color2DropdownSecond.value);
     thisExperiment.colors.push(color3DropdownSecond.value);
     partSix.hidden = true;
-    inputFormSecond.hidden = true;
     secondExplanation.hidden = true;
     progressBar.hidden = false;
     inputBoxSecond.hidden = true;
@@ -440,7 +438,35 @@ function validateSecondForm() {
     return true;
 }
 
-function  setTable(){
+function setTable(){
     progressBar.hidden = true;
     createTable();
+}
+
+function resetInputs() {
+    document.getElementsByName('lastOption').forEach(function(value) { value.checked = false; }); //reset it
+    xDimBoxSecond.value = "";
+    yDimBoxSecond.value = "";
+    indVarValues.value = "";
+    indValues.value = [];
+    numIndValues.value = "";
+    repetitions.value = "";
+
+    const colorsSecond = document.querySelectorAll('#colors1Second, #colors2Second, #colors3Second');
+    color1DropdownSecond.value = "red";
+    color2DropdownSecond.value = "green";
+    color3DropdownSecond.value = "blue";
+    disableEnableSelectedOptions(colorsSecond);
+
+    let theBar = document.getElementById("theBar");
+    theBar.style.width = 0 + "%";
+    theBar.innerHTML = 0 + "%";
+
+    partOne.hidden = false;
+    partTwo.hidden = true;
+    partThree.hidden = true;
+    partFour.hidden = true;
+    partFive.hidden = true;
+    partSix.hidden = true;
+    currentPercent = 0;
 }

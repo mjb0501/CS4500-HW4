@@ -9,7 +9,6 @@ const exampleTableRowData = {
     Color3: "test",
     MaxDrops1Square: "test",
     AverageDrops: "test",
-
 };
 
 function setTableData(expNum){
@@ -32,8 +31,7 @@ function createTable() {
     const overlayDiv = document.createElement("div");
     overlayDiv.id = "table-container";
 
-
-// set style center pf screen
+    // set style center pf screen
     overlayDiv.style.position = "fixed";
     overlayDiv.style.top = "50%";
     overlayDiv.style.left = "50%";
@@ -41,8 +39,8 @@ function createTable() {
     overlayDiv.style.width = tableWidth + "px";
     overlayDiv.style.height = tableHeight + "px";
     document.body.appendChild(overlayDiv);
-// create button to continue, closes itself then opens graph
 
+    // create button to continue, closes itself then opens graph
     var hideButton = document.createElement("button");
     hideButton.innerText = "Continue";
     hideButton.id = "closeTable";
@@ -56,7 +54,6 @@ function createTable() {
 
     document.body.appendChild(hideButton);
 
-
     table = new Tabulator("#table-container", {
         columns: columns,
         layout: "fitColumns",
@@ -68,27 +65,21 @@ function createTable() {
         movableRows: false,
         selectable: false,
         responsiveLayout:"collapse",
-
-
     });
 }
 
-function addRow() {
-    // Add a row with the exampleTableRowData
-   // table.addData([exampleTableRowData]);
-    table.addRow(exampleTableRowData);
+function closeTable(){
+    document.getElementById("table-container").hidden = true;
+    document.getElementById("closeTable").hidden = true;
+    document.getElementById("dependentValues").hidden = false;
 }
 
-function closeTable(){
-    let table = document.getElementById("table-container")
-    let button = document.getElementById("closeTable")
-   // let messageBox = document.getElementsByClassName("messageBox");
+function showAdditionalChart() {
+    //this needs to show the chart with whatever dependent values were selected
 
-    messageBox.hidden = true;
-    table.hidden = true;
-    button.hidden = true;
-
-    hideGraph();
+    //for now, lets just call the final message
+    document.getElementById("dependentValues").hidden = true;
+    document.getElementById("finalMessage").hidden = false;
 }
 
 //, A1, A2, A3, B, and C

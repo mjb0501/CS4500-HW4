@@ -124,6 +124,24 @@
                     <div class="progress-bar progress-bar-striped bg-success" id="theBar">0%</div>
                 </div>
             </div>
+            <div id="finalMessage" class="col-md-12" hidden="hidden">
+                <div class="messageBox text-center">
+                    <h2>What would you like to do?</h2>
+                    <input type="radio" id="newGraph" name="lastOption" value="0">
+                    <label for="newGraph">Make a new table/graph from the current experimental data</label><br>
+                    <input type="radio" id="newExperiment" name="lastOption" value="1">
+                    <label for="newExperiment">Abandon this experiment, and make a new experiment.</label><br>
+                    <input type="radio" id="Quit" name="lastOption" value="2">
+                    <label for="Quit">Quit the program</label><br>
+                    <button type="button" class="button" onclick="return makeFinalSelection()">Make Selection</button>
+                </div>
+            </div>
+            <div id="dependentValues" class="col-md-12" hidden="hidden">
+                <div class="messageBox text-center">
+                    <h2>Please select one or two dependent values to see additional data on each.</h2><br>
+                    <button type="button" class="button" onclick="return showAdditionalChart()">Make Selection(s)</button>
+                </div>
+            </div>
             <div id="inputBoxFirst" class="col-md-12">
                 <div class="row">
                     <div class="col-md-12 text-center">

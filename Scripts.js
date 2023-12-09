@@ -258,6 +258,8 @@ function PAINT_ONCE(currentExperiment) {
 
 }
 
+let currentPercent = 0;
+
 function PAINT_MANY(experimentParameters){
 /*
 Independent variables:  0 = dimension
@@ -266,18 +268,49 @@ Independent variables:  0 = dimension
  */
     allResults = [];
     let thisExperiment = singleExperiment;
+    let totalRuns = 0;
+    let runCounter = 0;
+    currentPercent = 0;
     thisExperiment.colors = experimentParameters.colors;
     switch (experimentParameters.independentVar){
 
         case 0:
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
-            for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
-                for(let j = 0; j < experimentParameters.reps; j++){
-                    thisExperiment.xVal = experimentParameters.independentVarValues[i];
-                    thisExperiment.yVal = experimentParameters.independentVarValues[i];
-                    SINGLE_PAINT(thisExperiment);
-                }
+            totalRuns = experimentParameters.independentVarValues.length * experimentParameters.reps;
+            let i = 0;
+            let j = 0;
+            let finished = false;
+            function loopFirstCriteria() {
+                setTimeout(function () {
+                    for (let newBatch = 0; newBatch < 100; newBatch++) {
+                        if (i === experimentParameters.independentVarValues.length) {
+                            finished = true;
+                            break; //we are done now
+                        }
+                        thisExperiment.xVal = experimentParameters.independentVarValues[i];
+                        thisExperiment.yVal = experimentParameters.independentVarValues[i];
+                        SINGLE_PAINT(thisExperiment);
+                        setTableData(runCounter);
+                        j++;
+                        runCounter++;
+                        currentPercent = Math.floor((runCounter / totalRuns) * 100);
+                        updateProgressBar();
+                        if (j === experimentParameters.reps) {
+                            //reached max amount of reps this go around
+                            i++;
+                            j = 0;
+                        }
+                    }
+                    if (finished) {
+                        let progressMessage = document.getElementById("progressMessage");
+                        progressMessage.text = "Simulation finished. Loading Results....";
+                        setTable(); //finished, lets show the table
+                    } else {
+                        loopFirstCriteria();
+                    }
+                }, 4); //this gives control back to the UI to update progress bar (4 is minimum)
             }
+            loopFirstCriteria();
             break;
         case 1:
             thisExperiment.yVal = experimentParameters.yVal;
@@ -301,7 +334,6 @@ Independent variables:  0 = dimension
             break;
 
     }
-    document.getElementById("loader").hidden = true;
     console.log(allResults);
 }
 
@@ -394,13 +426,7 @@ function SINGLE_PAINT(currentExperiment) {
             }
             allResults.push(result);
             break;
-}
-}
-
-function loadingAnimation() {
-    document.getElementById("experimentHeader").innerHTML = "Experiment Loading";
-    document.getElementById("partSix").hidden = true;
-    document.getElementById("loader").hidden = false;
+    }
 }
 
 function getStarted() {
@@ -470,6 +496,20 @@ function secondAnimation() {
         }
     }
     return false;
+}
+
+function updateProgressBar(width) {
+    let theBar = document.getElementById("theBar");
+    //theBar.style.width = width + "%";
+    //theBar.innerHTML = width + "%";
+
+    (function asyncLoop() {
+        theBar.style.width = currentPercent + "%";
+        theBar.innerHTML = currentPercent + "%";
+        if (currentPercent <= 100) {
+            setTimeout(asyncLoop, 50);
+        }
+    })();
 }
 
 function endProgram() {

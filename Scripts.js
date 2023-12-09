@@ -291,7 +291,7 @@ Independent variables:  0 = dimension
             thisExperiment.xVal = experimentParameters.xVal;
             thisExperiment.yVal = experimentParameters.yVal;
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
-            for(let i = 0; experimentParameters.independentVarValues.length; i++){
+            for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
                 for(let j = 0; j < experimentParameters.independentVarValues[i]; j++){
                     SINGLE_PAINT(thisExperiment);
                 }
@@ -369,10 +369,11 @@ function SINGLE_PAINT(currentExperiment) {
                 let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
                 randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                 let color = Math.floor(Math.random() * 3);
+                dropTracker[randomCoord - 1]++;
                 totalDrops++;
                 console.log(totalDrops);
                 console.log(currentExperiment.colorTotalAllowedDrops());
-                if (totalDrops === currentExperiment.colorTotalAllowedDrops())
+                if (totalDrops >= currentExperiment.colorTotalAllowedDrops())
                     totalDropsReached = true;
                 if (color === 0)
                     result.c0Drops++;

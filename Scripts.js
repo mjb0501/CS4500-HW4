@@ -263,19 +263,13 @@ Independent variables:  0 = dimension
  */
     allResults = [];
     let thisExperiment = singleExperiment;
-    let loading = document.getElementById("loading");
-    document.getElementById("experimentHeader").innerHTML = "Experiment Loading";
-    document.getElementById("partSix").hidden = true;
-    loading.hidden = false;
     thisExperiment.colors = experimentParameters.colors;
-
     switch (experimentParameters.independentVar){
 
         case 0:
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
             for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
                 for(let j = 0; j < experimentParameters.reps; j++){
-                    loading.innerHTML = (j*i) + "/" + (experimentParameters.independentVarValues.length*experimentParameters.reps);
                     thisExperiment.xVal = experimentParameters.independentVarValues[i];
                     thisExperiment.yVal = experimentParameters.independentVarValues[i];
                     SINGLE_PAINT(thisExperiment);
@@ -288,7 +282,6 @@ Independent variables:  0 = dimension
             for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
                 thisExperiment.xVal = experimentParameters.independentVarValues[i];
                 for(let j = 0; j < experimentParameters.reps; j++){
-                    loading.innerHTML = (j*i) + "/" + (experimentParameters.independentVarValues.length*experimentParameters.reps);
                     SINGLE_PAINT(thisExperiment);
                 }
             }
@@ -299,14 +292,13 @@ Independent variables:  0 = dimension
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
             for(let i = 0; i < experimentParameters.independentVarValues.length; i++){
                 for(let j = 0; j < experimentParameters.independentVarValues[i]; j++){
-                    loading.innerHTML = (j*i) + "/" + (experimentParameters.independentVarValues.length*experimentParameters.independentVarValues[i]);
                     SINGLE_PAINT(thisExperiment);
                 }
             }
             break;
 
     }
-    loading.hidden = true;
+    document.getElementById("loader").hidden = true;
     console.log(allResults);
 }
 
@@ -400,6 +392,12 @@ function SINGLE_PAINT(currentExperiment) {
             allResults.push(result);
             break;
 }
+}
+
+function loadingAnimation() {
+    document.getElementById("experimentHeader").innerHTML = "Experiment Loading";
+    document.getElementById("partSix").hidden = true;
+    document.getElementById("loader").hidden = false;
 }
 
 function getStarted() {

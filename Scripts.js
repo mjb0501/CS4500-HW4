@@ -564,7 +564,14 @@ function updateProgressBar(width) {
 }
 
 function endProgram() {
-    //document.getElementById(/*This is where text box for displaying thank you would go.*/).innerHTML = "Thank You for using our program.  Come Back anytime.";
+    document.getElementById("finalMessageHeader").innerHTML = "Thank you for using our program. Come back anytime.";
+    document.getElementById("newGraph").hidden = true;
+    document.getElementById("newGraphLabel").hidden = true;
+    document.getElementById("newExperiment").hidden = true;
+    document.getElementById("newExperimentLabel").hidden = true;
+    document.getElementById("Quit").hidden = true;
+    document.getElementById("QuitLabel").hidden = true;
+    document.getElementById("finalSelectionSubmit").hidden = true;
     const timeout = setTimeout(function(){window.location.href = "index.html";}, 5000);
 }
 
@@ -589,7 +596,6 @@ function makeFinalSelection() {
                 case "2":
                     //they quit
                     resetInputs();
-                    document.getElementById("finalMessage").hidden = true;
                     endProgram();
                     break;
             }

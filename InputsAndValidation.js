@@ -420,21 +420,20 @@ function returnFive() {
 
 function validateSecondForm() {
     //populate the DTO to send over to scripts
-    let thisExperiment = experimentParameters;
-    thisExperiment.xVal = XVal;
-    thisExperiment.yVal = YVal;
-    thisExperiment.reps = reps;
-    thisExperiment.stoppingCriteria = parseInt(stoppingCDropdownSecond.value);
-    thisExperiment.independentVar = indValueSelection;
-    thisExperiment.independentVarValues = indValues;
-    thisExperiment.colors.push(color1DropdownSecond.value);
-    thisExperiment.colors.push(color2DropdownSecond.value);
-    thisExperiment.colors.push(color3DropdownSecond.value);
+    experimentParameters.xVal = XVal;
+    experimentParameters.yVal = YVal;
+    experimentParameters.reps = reps;
+    experimentParameters.stoppingCriteria = parseInt(stoppingCDropdownSecond.value);
+    experimentParameters.independentVar = indValueSelection;
+    experimentParameters.independentVarValues = indValues;
+    experimentParameters.colors.push(color1DropdownSecond.value);
+    experimentParameters.colors.push(color2DropdownSecond.value);
+    experimentParameters.colors.push(color3DropdownSecond.value);
     partSix.hidden = true;
     secondExplanation.hidden = true;
     progressBar.hidden = false;
     inputBoxSecond.hidden = true;
-    PAINT_MANY(thisExperiment);
+    PAINT_MANY();
     return true;
 }
 
@@ -472,6 +471,7 @@ function resetInputs() {
 
     document.getElementById("table-container").remove(); //need to remove the original table
     document.getElementById("closeTable").remove(); //need to remove the close table button
+    tableData = []; //reset data
 
     document.getElementById("graphHide").remove();
     document.getElementById("graph").remove();

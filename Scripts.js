@@ -260,7 +260,7 @@ function PAINT_ONCE(currentExperiment) {
 
 let currentPercent = 0;
 
-function PAINT_MANY(experimentParameters){
+function PAINT_MANY(){
 /*
 Independent variables:  0 = dimension
                         1 = x value

@@ -469,6 +469,13 @@ function resetInputs() {
     partFive.hidden = true;
     partSix.hidden = true;
     currentPercent = 0;
+
     document.getElementById("table-container").remove(); //need to remove the original table
     document.getElementById("closeTable").remove(); //need to remove the close table button
+
+    document.getElementById("graphHide").remove();
+    document.getElementById("graph").remove();
+    document.getElementById("graphOverlay").remove();
+    graphCreated = false;
+    graphHidden = true;
 }

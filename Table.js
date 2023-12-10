@@ -71,7 +71,7 @@ function createTable() {
 function closeTable(){
     document.getElementById("table-container").hidden = true;
     document.getElementById("closeTable").hidden = true;
-    document.getElementById("dependentValues").hidden = false;
+    hideGraph();
 }
 
 function showAdditionalChart() {

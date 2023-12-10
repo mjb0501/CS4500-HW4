@@ -137,6 +137,8 @@ function hideGraph() {
     // if it's not been created and they want to see it, let's create it now
     if (!graphCreated) {
         createGraphOverlay();
+    } else {
+        document.getElementById("dependentValues").hidden = false;
     }
 
     // find the overlay element that contains the canvas for the graph

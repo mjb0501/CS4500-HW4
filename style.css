@@ -89,6 +89,9 @@ video {
     max-width: 600px;
     border-radius: 20px;
 }
+.messageBox.long {
+    max-width: 1000px;
+}
 .inputBoxSmall {
     width: 75px;
 }

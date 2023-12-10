@@ -93,14 +93,14 @@ function disableEnableSelectedOptions(dropdowns) {
 function stoppingCriteriaUpdate(type) {
     if (type === 1) {
         if (parseInt(xDimBox.value) && parseInt(yDimBox.value)) {
-            let drops = parseInt(xDimBox.value) * parseInt(yDimBox.value);
+            let drops = parseInt(xDimBox.value) * parseInt(yDimBox.value) * 2;
             stoppingCDropdown.options[2].text = drops + " color drops have fallen";
         } else {
             stoppingCDropdown.options[2].text = "(2 x Grid Size) color drops have fallen";
         }
     } else {
         if (parseInt(xDimBoxSecond.value) && parseInt(yDimBoxSecond.value)) {
-            let drops2 = parseInt(xDimBoxSecond.value) * parseInt(yDimBoxSecond.value);
+            let drops2 = parseInt(xDimBoxSecond.value) * parseInt(yDimBoxSecond.value) * 2;
             stoppingCDropdownSecond.options[2].text = drops2 + " color drops have fallen";
         } else {
             stoppingCDropdownSecond.options[2].text = "(2 x Grid Size) color drops have fallen";
@@ -219,19 +219,18 @@ function validateForm() {
         inputError.hidden = false;
     } else {
         //populate the DTO to send over to scripts
-        let thisExperiment = singleExperiment;
-        thisExperiment.colors.push(color1Dropdown.value);
-        thisExperiment.colors.push(color2Dropdown.value);
-        thisExperiment.colors.push(color3Dropdown.value);
-        thisExperiment.xVal = parseInt(xDimBox.value);
-        thisExperiment.yVal = parseInt(yDimBox.value);
-        thisExperiment.stoppingCriteria = parseInt(stoppingCDropdown.value);
+        singleExperiment.colors.push(color1Dropdown.value);
+        singleExperiment.colors.push(color2Dropdown.value);
+        singleExperiment.colors.push(color3Dropdown.value);
+        singleExperiment.xVal = parseInt(xDimBox.value);
+        singleExperiment.yVal = parseInt(yDimBox.value);
+        singleExperiment.stoppingCriteria = parseInt(stoppingCDropdown.value);
         //let's hide this box and make the grid front and center of everything
         placeholderBox.hidden = true;
         theGrid.hidden = false;
         theInputBox.hidden = true;
         mainGridDiv.className = "col-md-12";
-        PAINT_ONCE(thisExperiment);
+        PAINT_ONCE();
     }
     return returnVal;
 }
@@ -442,40 +441,106 @@ function setTable(){
     createTable();
 }
 
-function resetInputs() {
-    document.getElementsByName('lastOption').forEach(function(value) { value.checked = false; }); //reset it
-    xDimBoxSecond.value = "";
-    yDimBoxSecond.value = "";
-    indVarValues.value = "";
-    indValues.value = [];
-    numIndValues.value = "";
-    repetitions.value = "";
+function resetInputs(type) {
+    if (type === 0) {
+        //just clear the dependent variable
+        experimentParameters.dependentVar = [];
+        document.getElementById("inputA").checked = false;
+        document.getElementById("inputA1").checked = false;
+        document.getElementById("inputA2").checked = false;
+        document.getElementById("inputA3").checked = false;
+        document.getElementById("inputB").checked = false;
+        document.getElementById("inputC").checked = false;
+    } else if (type === 1 || type === 2) {
+        //reset second experiment
+        document.getElementsByName('lastOption').forEach(function(value) { value.checked = false; }); //reset it
+        xDimBoxSecond.value = "";
+        yDimBoxSecond.value = "";
+        indVarValues.value = "";
+        indValues.value = [];
+        numIndValues.value = "";
+        repetitions.value = "";
 
-    const colorsSecond = document.querySelectorAll('#colors1Second, #colors2Second, #colors3Second');
-    color1DropdownSecond.value = "red";
-    color2DropdownSecond.value = "green";
-    color3DropdownSecond.value = "blue";
-    disableEnableSelectedOptions(colorsSecond);
+        const colorsSecond = document.querySelectorAll('#colors1Second, #colors2Second, #colors3Second');
+        color1DropdownSecond.value = "red";
+        color2DropdownSecond.value = "green";
+        color3DropdownSecond.value = "blue";
+        disableEnableSelectedOptions(colorsSecond);
 
-    let theBar = document.getElementById("theBar");
-    theBar.style.width = 0 + "%";
-    theBar.innerHTML = 0 + "%";
+        let theBar = document.getElementById("theBar");
+        theBar.style.width = 0 + "%";
+        theBar.innerHTML = 0 + "%";
 
-    partOne.hidden = false;
-    partTwo.hidden = true;
-    partThree.hidden = true;
-    partFour.hidden = true;
-    partFive.hidden = true;
-    partSix.hidden = true;
-    currentPercent = 0;
+        partOne.hidden = false;
+        partTwo.hidden = true;
+        partThree.hidden = true;
+        partFour.hidden = true;
+        partFive.hidden = true;
+        partSix.hidden = true;
+        currentPercent = 0;
 
-    document.getElementById("table-container").remove(); //need to remove the original table
-    document.getElementById("closeTable").remove(); //need to remove the close table button
-    tableData = []; //reset data
+        document.getElementById("table-container").remove(); //need to remove the original table
+        document.getElementById("closeTable").remove(); //need to remove the close table button
+        tableData = []; //reset data
 
-    document.getElementById("graphHide").remove();
-    document.getElementById("graph").remove();
-    document.getElementById("graphOverlay").remove();
-    graphCreated = false;
-    graphHidden = true;
+        document.getElementById("graphHide").remove();
+        document.getElementById("graph").remove();
+        document.getElementById("graphOverlay").remove();
+        graphCreated = false;
+        graphHidden = true;
+
+        if (type === 2) {
+            //also remove first experiment
+            xDimBox.value = "";
+            yDimBox.value = "";
+
+            const colorsFirst = document.querySelectorAll('#colors1, #colors2, #colors3');
+            color1Dropdown.value = "red";
+            color2Dropdown.value = "green";
+            color3Dropdown.value = "blue";
+            disableEnableSelectedOptions(colorsFirst);
+        }
+    }
+}
+
+function validateDependent() {
+    let numberOfChecked = 0;
+    experimentParameters.dependentVar = [];
+    document.getElementById("dependentError").innerHTML = "";
+
+    if (document.getElementById("inputA").checked) {
+        numberOfChecked++;
+        experimentParameters.dependentVar.push("A");
+    }
+    if (document.getElementById("inputA1").checked) {
+        numberOfChecked++;
+        experimentParameters.dependentVar.push("A1");
+    }
+    if (document.getElementById("inputA2").checked) {
+        numberOfChecked++;
+        experimentParameters.dependentVar.push("A2");
+    }
+    if (document.getElementById("inputA3").checked) {
+        numberOfChecked++;
+        experimentParameters.dependentVar.push("A3");
+    }
+    if (document.getElementById("inputB").checked) {
+        numberOfChecked++;
+        experimentParameters.dependentVar.push("B");
+    }
+    if (document.getElementById("inputC").checked) {
+        numberOfChecked++;
+        experimentParameters.dependentVar.push("C");
+    }
+
+    if (numberOfChecked === 0) {
+        document.getElementById("dependentError").innerHTML = "You must select at least one dependent variable.";
+        return;
+    } else if (numberOfChecked > 2) {
+        document.getElementById("dependentError").innerHTML = "You cannot have more than 2 dependent variables selected.";
+        return;
+    }
+
+    //all passed, move on to the chart
+    showAdditionalChart();
 }

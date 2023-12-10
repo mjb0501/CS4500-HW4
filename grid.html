@@ -42,7 +42,6 @@
                 <div id="finishExpOneMessage" hidden="hidden">
                     <h3 id="finishMessage">The experiment has been completed.</h3>
                     <button class="button" type="button" id="expFinished" onclick="closeExperimentOne();secondAnimation();">CONTINUE</button>
-                    <!-- <button id="graphHide" class="button" onclick="hideGraph()">Show Graph</button> !-->
                 </div>
                 <form id="secondExplanation" onsubmit="return showInputSecondRound()" hidden="hidden">
                     <div class="messageBox welcomeMessage">
@@ -120,7 +119,7 @@
             </div>
             <div id="progressBar" class="col-md-12" hidden="hidden">
                 <div class="messageBox">
-                    <h3 id="progressMessage" style="text-align: center;">Experiments are running...</h3>
+                    <h3 id="progressMessage" style="text-align: center;">The experiments are running...</h3>
                     <div class="progress-bar progress-bar-striped bg-success" id="theBar">0%</div>
                 </div>
             </div>
@@ -137,9 +136,23 @@
                 </div>
             </div>
             <div id="dependentValues" class="col-md-12" hidden="hidden">
-                <div class="messageBox text-center">
+                <div class="messageBox long text-center">
                     <h2>Please select one or two dependent values to see additional data on each.</h2><br>
-                    <button type="button" class="button" onclick="return showAdditionalChart()">Make Selection(s)</button>
+                    <input type="checkbox" id="inputA" name="A" value="A">
+                    <label for="inputA">Total # of paint drops put on the canvas before the painting halts.</label><br>
+                    <input type="checkbox" id="inputA1" name="A1" value="A1">
+                    <label for="inputA1">The number of paint drops on the canvas of Color 1.</label><br>
+                    <input type="checkbox" id="inputA2" name="A2" value="A2">
+                    <label for="inputA2">The number of paint drops on the canvas of Color 2.</label><br>
+                    <input type="checkbox" id="inputA3" name="A3" value="A3">
+                    <label for="inputA3">The number of paint drops on the canvas of Color 3.</label><br>
+                    <input type="checkbox" id="inputB" name="B" value="B">
+                    <label for="inputB">The maximum # of paint drops on any given square when the painting halts.</label><br>
+                    <input type="checkbox" id="inputC" name="C" value="C">
+                    <label for="inputC">The average # of paint drops over all the squares when the painting for this canvas halts</label><br>
+                    <button type="button" class="button" onclick="return validateDependent()">Make Selection(s)</button>
+                    <br><br>
+                    <span id="dependentError" class="errorMessage"></span>
                 </div>
             </div>
             <div id="inputBoxFirst" class="col-md-12">

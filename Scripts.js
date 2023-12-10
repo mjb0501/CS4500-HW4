@@ -6,7 +6,7 @@ const experimentParameters = {
     stoppingCriteria:null,
     independentVar:null,
     independentVarValues:[],
-    dependentVar:null,
+    dependentVar:[],
     colors: [],
     gridSize:function(){return this.xVal * this.yVal;},
     colorTotalAllowedDrops:function(){return (this.xVal * this.yVal) * 2; }
@@ -152,7 +152,7 @@ function closeExperimentOne() {
     return false;
 }
 
-function PAINT_ONCE(currentExperiment) {
+function PAINT_ONCE() {
     let callTime = 500;
     let speed = 1.0;
     let speedButton = document.getElementById("speedUp");
@@ -188,21 +188,21 @@ function PAINT_ONCE(currentExperiment) {
     PAINT_ONCE.speedUp = speedUp;
     PAINT_ONCE.slowDown = slowDown;
 
-    DrawGrid(currentExperiment.yVal, currentExperiment.xVal);
+    DrawGrid(singleExperiment.yVal, singleExperiment.xVal);
     //build an array of grid size, fill it with the number 0 all the way through
-    let dropTracker = new Array(currentExperiment.gridSize()).fill(0);
+    let dropTracker = new Array(singleExperiment.gridSize()).fill(0);
     let totalDrops = 0; //tracks drops in switch case 2
 
-    switch (currentExperiment.stoppingCriteria) {
+    switch (singleExperiment.stoppingCriteria) {
         case 0:
             function paintLoopCriteria0() {
                 setTimeout(function () {
-                    let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
+                    let randomCoord = Math.floor(Math.random() * (singleExperiment.gridSize() + 1)); //need the +1 to hit max size
                     randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                     let color = Math.floor(Math.random() * 3);
-                    applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
+                    applyAnimationToCell(randomCoord, singleExperiment.colors[color]);
                     dropTracker[randomCoord - 1]++;
-                    if (!stoppingCriteria.isFull(currentExperiment.gridSize())) {
+                    if (!stoppingCriteria.isFull(singleExperiment.gridSize())) {
                         paintLoopCriteria0();
                     } else {
                         setupNextExperiment("All squares have been dripped on!");
@@ -215,11 +215,11 @@ function PAINT_ONCE(currentExperiment) {
             let isDoubleDripped = false;
         function paintLoopCriteria1() {
             setTimeout(function () {
-                let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
+                let randomCoord = Math.floor(Math.random() * (singleExperiment.gridSize() + 1)); //need the +1 to hit max size
                 randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                 let color = Math.floor(Math.random() * 3);
-                applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
-                dropTracker[randomCoord - 1]++; // lets add the drop now before checking for double drips
+                applyAnimationToCell(randomCoord, singleExperiment.colors[color]);
+                dropTracker[randomCoord - 1]++; // let's add the drop now before checking for double drips
                 for (let i = 0; i < dropTracker.length; i++) {
                     if (dropTracker[i - 1] === 2) {
                         isDoubleDripped = true;
@@ -238,24 +238,21 @@ function PAINT_ONCE(currentExperiment) {
         case 2:
         function paintLoopCriteria2() {
             setTimeout(function () {
-                let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
+                let randomCoord = Math.floor(Math.random() * (singleExperiment.gridSize() + 1)); //need the +1 to hit max size
                 randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                 let color = Math.floor(Math.random() * 3);
-                applyAnimationToCell(randomCoord, currentExperiment.colors[color]);
+                applyAnimationToCell(randomCoord, singleExperiment.colors[color]);
                 totalDrops++;
-                console.log(totalDrops);
-                console.log(currentExperiment.colorTotalAllowedDrops());
-                if (totalDrops < currentExperiment.colorTotalAllowedDrops()) {
+                if (totalDrops < singleExperiment.colorTotalAllowedDrops()) {
                     paintLoopCriteria2();
                 } else {
-                    setupNextExperiment(currentExperiment.colorTotalAllowedDrops() + " drops have been painted!");
+                    setupNextExperiment(singleExperiment.colorTotalAllowedDrops() + " drops have been painted!");
                 }
             }, callTime)
         }
             paintLoopCriteria2(); //run at least once, it will stay in loop as needed
             break;
     }
-
 }
 
 let currentPercent = 0;
@@ -583,19 +580,19 @@ function makeFinalSelection() {
             switch (options[i].value) {
                 case "0":
                     //new dependent values and chart
-                    resetInputs();
+                    resetInputs(0);
                     document.getElementById("dependentValues").hidden = false;
                     document.getElementById("finalMessage").hidden = true;
                     break;
                 case "1":
                     //new experiment
-                    resetInputs();
+                    resetInputs(1);
                     document.getElementById("inputBoxSecond").hidden = false;
                     document.getElementById("finalMessage").hidden = true;
                     break;
                 case "2":
                     //they quit
-                    resetInputs();
+                    resetInputs(2);
                     endProgram();
                     break;
             }

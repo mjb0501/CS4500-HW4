@@ -204,14 +204,14 @@ function validateForm() {
     yDimBox.style.border = "";
     let returnVal = true;
 
-    if (xDimBox.value > 50 || xDimBox.value < 1) {
+    if (xDimBox.value > 50 || xDimBox.value < 1 || xDimBox.value % 1 !== 0) {
         xDimBox.style.border ="3px solid red";
-        inputError.innerHTML = "Your X dimension value must be between 1 and 50";
+        inputError.innerHTML = "Your X dimension value must be between 1 and 50, no decimals.";
         returnVal = false;
     }
-    if (yDimBox.value > 50 || yDimBox.value < 1) {
+    if (yDimBox.value > 50 || yDimBox.value < 1 || yDimBox.value % 1 !== 0) {
         yDimBox.style.border ="3px solid red";
-        inputError.innerHTML += inputError.innerHTML !== "" ? "<br>Your Y dimension value must be between 1 and 50" : "Your Y dimension value must be between 1 and 50";
+        inputError.innerHTML += inputError.innerHTML !== "" ? "<br>Your Y dimension value must be between 1 and 50" : "Your Y dimension value must be between 1 and 50, no decimals.";
         returnVal = false;
     }
 
@@ -260,9 +260,9 @@ let reps = 0;
 
 function continueOne() {
     //setup the independent variable with # of independent values
-    if (numIndValues.value > 10 || numIndValues.value < 2) {
+    if (numIndValues.value > 10 || numIndValues.value < 2 || numIndValues.value % 1 !== 0) {
         numIndValues.style.border ="3px solid red";
-        inputErrorSecond.innerHTML = "Please select a valid number between 2 and 10.";
+        inputErrorSecond.innerHTML = "Please select a valid number between 2 and 10, no decimals.";
         return false;
     }
     indValueSelection = independentDropdown.selectedIndex;
@@ -295,6 +295,11 @@ function continueTwo() {
         if (isNaN(currentValue)) {
             indVarValues.style.border = "3px solid red";
             inputErrorSecond.innerHTML = "Your independent values contain something that is not a number.<br>Or, you did not use commas to separate your values.";
+            return false;
+        }
+        if (currentValue % 1 !== 0) {
+            indVarValues.style.border = "3px solid red";
+            inputErrorSecond.innerHTML = "Your independent values cannot contain decimals.";
             return false;
         }
         currentValue = parseInt(currentValue);
@@ -348,9 +353,9 @@ function returnTwo() {
 
 function continueThree() {
     //get the X Dim value
-    if (xDimBoxSecond.value > 50 || xDimBoxSecond.value < 1) {
+    if (xDimBoxSecond.value > 50 || xDimBoxSecond.value < 1 || xDimBoxSecond.value % 1 !== 0) {
         xDimBoxSecond.style.border ="3px solid red";
-        inputErrorSecond.innerHTML = "Please select a valid number between 1 and 50.";
+        inputErrorSecond.innerHTML = "Please select a valid number between 1 and 50, no decimals.";
         return false;
     }
     XVal = parseInt(xDimBoxSecond.value);
@@ -369,9 +374,9 @@ function returnThree() {
 
 function continueFour() {
     //get the Y Dim value
-    if (yDimBoxSecond.value > 50 || yDimBoxSecond.value < 1) {
+    if (yDimBoxSecond.value > 50 || yDimBoxSecond.value < 1 || yDimBoxSecond.value % 1 !== 0) {
         yDimBoxSecond.style.border ="3px solid red";
-        inputErrorSecond.innerHTML = "Please select a valid number between 1 and 50.";
+        inputErrorSecond.innerHTML = "Please select a valid number between 1 and 50, no decimals.";
         return false;
     }
     YVal = parseInt(yDimBoxSecond.value);
@@ -397,9 +402,9 @@ function returnFour() {
 
 function continueFive() {
     //let's validate and send them to the final section
-    if (repetitions.value > 10000 || repetitions.value < 1) {
+    if (repetitions.value > 10000 || repetitions.value < 1 || repetitions.value % 1 !== 0) {
         repetitions.style.border ="3px solid red";
-        inputErrorSecond.innerHTML = "Please select a valid number between 1 and 10000.";
+        inputErrorSecond.innerHTML = "Please select a valid number between 1 and 10000, no decimals.";
         return false;
     }
     reps = parseInt(repetitions.value);

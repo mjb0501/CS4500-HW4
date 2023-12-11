@@ -259,6 +259,8 @@ let YVal = 0;
 let reps = 0;
 
 function continueOne() {
+    numIndValues.style.border = "";
+
     //setup the independent variable with # of independent values
     if (numIndValues.value > 10 || numIndValues.value < 2 || numIndValues.value % 1 !== 0) {
         numIndValues.style.border ="3px solid red";
@@ -282,11 +284,17 @@ function continueTwo() {
     let values = indVarValues.value;
     let valueArray = values.split(',');
     let pastValue = 0;
+    indVarValues.style.border = "";
     indValues = []; //reset
 
     if (valueArray.length !== indValueCount) {
+        let checkForSpaces = values.split(' ');
         indVarValues.style.border = "3px solid red";
-        inputErrorSecond.innerHTML = "You must provide " + indValueCount + " independent values that you indicated in the previous step.";
+        if (checkForSpaces.length > 1) {
+            inputErrorSecond.innerHTML = "Did you forget to add commas between your input numbers?";
+        } else {
+            inputErrorSecond.innerHTML = "You must provide " + indValueCount + " independent values that you indicated in the previous step.";
+        }
         return false;
     }
     for (let i = 0; i < valueArray.length; i++)
@@ -352,6 +360,7 @@ function returnTwo() {
 }
 
 function continueThree() {
+    xDimBoxSecond.style.border = "";
     //get the X Dim value
     if (xDimBoxSecond.value > 50 || xDimBoxSecond.value < 1 || xDimBoxSecond.value % 1 !== 0) {
         xDimBoxSecond.style.border ="3px solid red";
@@ -373,6 +382,7 @@ function returnThree() {
 }
 
 function continueFour() {
+    yDimBoxSecond.style.border = "";
     //get the Y Dim value
     if (yDimBoxSecond.value > 50 || yDimBoxSecond.value < 1 || yDimBoxSecond.value % 1 !== 0) {
         yDimBoxSecond.style.border ="3px solid red";
@@ -401,6 +411,7 @@ function returnFour() {
 }
 
 function continueFive() {
+    repetitions.style.border = "";
     //let's validate and send them to the final section
     if (repetitions.value > 10000 || repetitions.value < 1 || repetitions.value % 1 !== 0) {
         repetitions.style.border ="3px solid red";

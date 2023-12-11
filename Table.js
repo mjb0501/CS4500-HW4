@@ -1,8 +1,10 @@
 let table;
 let tableData = [];
-let tableHeight = 450;
-let tableWidth = 650;
+let tableHeight = 550;
+let tableWidth = 900;
 const exampleTableRowData = {
+    Dimension: "test",
+    Repetitions: "test",
     TotalDrops: "test",
     Color1: "test",
     Color2: "test",
@@ -11,8 +13,12 @@ const exampleTableRowData = {
     AverageDrops: "test",
 };
 
+
 function setTableData(expNum){
+
     const exampleTableRowData = {
+        Dimension: `(X: ${experimentParameters.xVal}, Y: ${experimentParameters.yVal})`,
+        Repetitions: experimentParameters.independentVarValues[expNum],
         TotalDrops: allResults[expNum].totalDrops(),
         Color1: allResults[expNum].c0Drops,
         Color2: allResults[expNum].c1Drops,

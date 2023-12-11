@@ -78,18 +78,59 @@ function createGraphOverlay() {
         }
 */
         const ctx = document.getElementById('graph');
+        var labels = graphIndependentLoader();
+
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: [experimentParameters.colors[0],experimentParameters.colors[1],experimentParameters.colors[2]] , //set colors of graph to the ones the user selected
+                labels: labels, //set colors of graph to the ones the user selected
                 datasets: [{
-                    label: '# of Colors',
+                    label: "Total Drops",
                  //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
-                    data: [4, 3, 2],
+                    data: graphDataLoader(0),
                     backgroundColor: 'gray', // gray bars
                     borderColor: 'white', // White outlines
-                    borderWidth: 1
-                }]
+                    borderWidth: 2
+                }, {
+                    label: "Color 1",
+                    //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
+                    data: graphDataLoader(1),
+                    backgroundColor: experimentParameters.colors[0], // gray bars
+                    borderColor: 'white', // White outlines
+                    borderWidth: 2
+                },{
+                    label: "Color 2",
+                    //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
+                    data: graphDataLoader(2),
+                    backgroundColor: experimentParameters.colors[1], // gray bars
+                    borderColor: 'white', // White outlines
+                    borderWidth: 2
+                },{
+                    label: "color 3",
+                    //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
+                    data: graphDataLoader(3),
+                    backgroundColor: experimentParameters.colors[2], // gray bars
+                    borderColor: 'white', // White outlines
+                    borderWidth: 2
+                },
+                    {
+                        label: "Max 1 Square",
+                        //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
+                        data: graphDataLoader(4),
+                        backgroundColor: 'yellow', // gray bars
+                        borderColor: 'white', // White outlines
+                        borderWidth: 2
+                    },
+                    {
+                        label: "Average Drops",
+                        //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
+                        data: graphDataLoader(5),
+                        backgroundColor: 'orange', // gray bars
+                        borderColor: 'white', // White outlines
+                        borderWidth: 2
+                    },
+                ]
+
             },
             options: {
                 scales: {
@@ -104,6 +145,12 @@ function createGraphOverlay() {
                         },
                     },
                     y: {
+                        min: 0, // Set the minimum value for the Y-axis
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '# of Drops'
+                        },
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)', // White grid lines with 10% transparency
                         },
@@ -195,4 +242,60 @@ function getGridColors(gridSize) {
 
 
 
+function getTableData(){
+    let builtTableData = table.getData();
+    return tableData;
+}
+
+function graphIndependentLoader(){
+    var labels = [];
+    var type= experimentParameters.independentVar;
+    var labelString = "dimension"
+    switch (type){
+        case 0:
+            labelString = "X and Y: "
+            break;
+        case 1:
+            labelString = "X: "
+            break;
+        case 2:
+            labelString = "Repetitions: "
+            break;
+    }
+    for(var i = 0; i < experimentParameters.independentVarValues.length; i++) {
+
+        labels.push(labelString + experimentParameters.independentVarValues[i]);
+    }
+    return labels;
+}
+
+
+function graphDataLoader(dataSet){
+    var data = [];
+
+    for (var i = 0; i < tableData.length;i++)
+    {
+        switch (dataSet){
+            case 0:
+                data.push(tableData[i].TotalDrops)
+                break;
+            case 1:
+                data.push(tableData[i].Color1)
+                break;
+            case 2:
+                data.push(tableData[i].Color2)
+                break;
+            case 3:
+                data.push(tableData[i].Color3)
+                break;
+            case 4:
+                data.push(tableData[i].MaxDrops1Square)
+                break;
+            case 5:
+                data.push(tableData[i].AverageDrops)
+                break;
+        }
+    }
+    return data;
+}
 

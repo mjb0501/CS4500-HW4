@@ -9,7 +9,7 @@ function ShowMessage() {
 }
 
 function GoToGrid() {
-    window.location.href = "../grid.html";
+    window.location.href = "./grid.html";
     return false;
 }
 

@@ -5,12 +5,10 @@ let graphHidden = true; // Set initial state to hidden
 let graphHeight = 450;
 let graphWidth = 650;
 
-
-
 function createGraphOverlay() {
     if (graphCreated === false) {
         // Create a new overlay div element
-        var overlayDiv = document.createElement("div");
+        let overlayDiv = document.createElement("div");
 
         // Set attributes for the overlay div (id, styles, etc.)
         overlayDiv.id = "graphOverlay";
@@ -20,35 +18,30 @@ function createGraphOverlay() {
         overlayDiv.style.transform = "translate(-50%, -50%)";
         overlayDiv.style.width = graphWidth + "px";
         overlayDiv.style.height = graphHeight + "px";
-       // overlayDiv.style.backgroundColor = "black";
-        //overlayDiv.style.border = "1px solid white";
-
-
 
         // Append the overlay div to the body of the document
         document.body.appendChild(overlayDiv);
 
         // Create a new canvas element for the graph
-        var canvas = document.createElement("canvas");
+        let canvas = document.createElement("canvas");
 
         // Set attributes for the canvas (width, height, etc.)
         canvas.width = graphWidth;
         canvas.height = graphHeight;
         canvas.id = "graph";
 
-
         // Append the canvas to the overlay div
         overlayDiv.appendChild(canvas);
 
         // Get the 2D rendering context for the canvas
-        var context = canvas.getContext("2d");
+        let context = canvas.getContext("2d");
 
         // Now you can use the 'context' variable to draw on the canvas
         context.fillStyle = "lightblue";
         context.fillRect(10, 10, 380, 180);
 
         // Create a hide button within the overlay
-        var hideButton = document.createElement("button");
+        let hideButton = document.createElement("button");
         hideButton.innerText = "Continue";
         hideButton.id = "graphHide";
         hideButton.onclick = hideGraph;
@@ -78,7 +71,7 @@ function createGraphOverlay() {
         }
 */
         const ctx = document.getElementById('graph');
-        var labels = graphIndependentLoader();
+        let labels = graphIndependentLoader();
 
         new Chart(ctx, {
             type: 'bar',
@@ -181,39 +174,25 @@ function createGraphOverlay() {
 
 // Update hideGraph function to use the overlay container
 function hideGraph() {
-    // if it's not been created and they want to see it, let's create it now
+    //if first clicked, create graph, if not, move on
     if (!graphCreated) {
         createGraphOverlay();
     } else {
-        document.getElementById("dependentValues").hidden = false;
+        document.getElementById("finalMessage").hidden = false;
     }
 
     // find the overlay element that contains the canvas for the graph
     hideButton = document.getElementById('graphHide')
     overlay = document.getElementById('graphOverlay')
     graph = document.getElementById('graph')
-/*
-    delete graph;
-    delete overlay;
-    delete hideButton;
-*/
 
     // toggle visibility
     overlay.style.display = graphHidden ? "block" : "none";
     hideButton.innerText = graphHidden ? "Continue" : "Show Graph";
     graphHidden = !graphHidden;
-/*
-//bugged dont enable
-    // Manually trigger rendering of the chart after changing visibility
-    if (myChart) {
-        myChart.update();
-    }
-
- */
 }
 
 function getGridColors(gridSize) {
-
     // Create an object to store color counts
     let colorCounts = {};
 
@@ -240,17 +219,10 @@ function getGridColors(gridSize) {
     return colorCounts;
 }
 
-
-
-function getTableData(){
-    let builtTableData = table.getData();
-    return tableData;
-}
-
 function graphIndependentLoader(){
-    var labels = [];
-    var type= experimentParameters.independentVar;
-    var labelString = "dimension"
+    let labels = [];
+    let type= experimentParameters.independentVar;
+    let labelString = "dimension"
     switch (type){
         case 0:
             labelString = "X and Y: "
@@ -262,8 +234,7 @@ function graphIndependentLoader(){
             labelString = "Repetitions: "
             break;
     }
-    for(var i = 0; i < experimentParameters.independentVarValues.length; i++) {
-
+    for(let i = 0; i < experimentParameters.independentVarValues.length; i++) {
         labels.push(labelString + experimentParameters.independentVarValues[i]);
     }
     return labels;
@@ -271,7 +242,7 @@ function graphIndependentLoader(){
 
 
 function graphDataLoader(dataSet){
-    var data = [];
+    let data = [];
 
     for (var i = 0; i < tableData.length;i++)
     {

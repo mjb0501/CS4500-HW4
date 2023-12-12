@@ -1,38 +1,65 @@
 let table;
 let tableData = [];
 let tableHeight = 550;
-let tableWidth = 900;
-const exampleTableRowData = {
-    Dimension: "test",
-    Repetitions: "test",
-    TotalDrops: "test",
-    Color1: "test",
-    Color2: "test",
-    Color3: "test",
-    MaxDrops1Square: "test",
-    AverageDrops: "test",
-};
-
+let firstChart = true;
+let columns;
 
 function setTableData(expNum){
-
-    const exampleTableRowData = {
-        Dimension: `(X: ${experimentParameters.xVal}, Y: ${experimentParameters.yVal})`,
-        Repetitions: experimentParameters.independentVarValues[expNum],
-        TotalDrops: allResults[expNum].totalDrops(),
-        Color1: allResults[expNum].c0Drops,
-        Color2: allResults[expNum].c1Drops,
-        Color3: allResults[expNum].c2Drops,
-        MaxDrops1Square: allResults[expNum].maxDrops1Square,
-        AverageDrops: allResults[expNum].averageDrops,
-    };
+    let exampleTableRowData;
+    if (experimentParameters.independentVar === 0) {
+        exampleTableRowData = {
+            "Ind Value (X & Y)": allResults[expNum].indValue,
+            "Repetitions": experimentParameters.reps,
+            Color1: experimentParameters.colors[0],
+            Color2: experimentParameters.colors[1],
+            Color3: experimentParameters.colors[2],
+            StoppingCriterion: experimentParameters.stoppingCriteria,
+            TotalDrops: allResults[expNum].totalDrops(),
+            TotalColor1: allResults[expNum].c0Drops,
+            TotalColor2: allResults[expNum].c1Drops,
+            TotalColor3: allResults[expNum].c2Drops,
+            MaxDrops1Square: allResults[expNum].maxDrops1Square,
+            AverageDrops: allResults[expNum].averageDrops,
+        };
+    } else if (experimentParameters.independentVar === 1) {
+        exampleTableRowData = {
+            "Ind Value (X)": allResults[expNum].indValue,
+            "Y Dimension": experimentParameters.yVal,
+            "Repetitions": experimentParameters.reps,
+            Color1: experimentParameters.colors[0],
+            Color2: experimentParameters.colors[1],
+            Color3: experimentParameters.colors[2],
+            StoppingCriterion: experimentParameters.stoppingCriteria,
+            TotalDrops: allResults[expNum].totalDrops(),
+            TotalColor1: allResults[expNum].c0Drops,
+            TotalColor2: allResults[expNum].c1Drops,
+            TotalColor3: allResults[expNum].c2Drops,
+            MaxDrops1Square: allResults[expNum].maxDrops1Square,
+            AverageDrops: allResults[expNum].averageDrops,
+        };
+    } else {
+        exampleTableRowData = {
+            "Ind Value (Repetitions)": allResults[expNum].indValue,
+            "X Dimension": experimentParameters.xVal,
+            "Y Dimension": experimentParameters.yVal,
+            Color1: experimentParameters.colors[0],
+            Color2: experimentParameters.colors[1],
+            Color3: experimentParameters.colors[2],
+            StoppingCriterion: experimentParameters.stoppingCriteria,
+            TotalDrops: allResults[expNum].totalDrops(),
+            TotalColor1: allResults[expNum].c0Drops,
+            TotalColor2: allResults[expNum].c1Drops,
+            TotalColor3: allResults[expNum].c2Drops,
+            MaxDrops1Square: allResults[expNum].maxDrops1Square,
+            AverageDrops: allResults[expNum].averageDrops,
+        };
+    }
+    // Extract column names from the keys of exampleTableRowData
+    columns = Object.keys(exampleTableRowData).map(key => ({ title: key, field: key, editor: "input" }));
     tableData.push(exampleTableRowData);
 }
 
 function createTable() {
-    // Extract column names from the keys of exampleTableRowData
-    const columns = Object.keys(exampleTableRowData).map(key => ({ title: key, field: key, editor: "input" }));
-
     // Create a Tabulator table dynamically
     const overlayDiv = document.createElement("div");
     overlayDiv.id = "table-container";
@@ -42,7 +69,6 @@ function createTable() {
     overlayDiv.style.top = "50%";
     overlayDiv.style.left = "50%";
     overlayDiv.style.transform = "translate(-50%, -50%)";
-    overlayDiv.style.width = tableWidth + "px";
     overlayDiv.style.height = tableHeight + "px";
     document.body.appendChild(overlayDiv);
 
@@ -55,7 +81,6 @@ function createTable() {
     hideButton.style.top = "calc(50% + " + (tableHeight / 2 + 40) + "px)"; // Adjusted the top position to be below the first element
     hideButton.style.left = "50%";
     hideButton.style.transform = "translate(-50%, -50%)";
-    hideButton.style.width = tableWidth + "px";
     hideButton.style.height = "40px"; // Adjusted the height as needed
 
     document.body.appendChild(hideButton);
@@ -63,7 +88,6 @@ function createTable() {
     table = new Tabulator("#table-container", {
         columns: columns,
         layout: "fitColumns",
-       // responsiveLayout:"hide",
         autoColumns:true,
         height:tableHeight,
         data: tableData,
@@ -77,38 +101,74 @@ function createTable() {
 function closeTable(){
     document.getElementById("table-container").hidden = true;
     document.getElementById("closeTable").hidden = true;
-    hideGraph();
+    if (firstChart) {
+        document.getElementById("dependentValues").hidden = false;
+    } else {
+        hideGraph();
+    }
 }
 
 function showAdditionalChart() {
     //this needs to show the chart with whatever dependent values were selected
-
-    //for now, lets just call the final message
     document.getElementById("dependentValues").hidden = true;
-    document.getElementById("finalMessage").hidden = false;
+    firstChart = false;
+    CalculateDependentTable();
+    createTable();
 }
 
-//, A1, A2, A3, B, and C
-
-/*
-A: the total number of paint drops put on the canvas before the stopping criterion stops the painting.
-A1. The number of paint drops on the canvas of Color 1.
-A2. The number of paint drops on the canvas of Color 2.
-A3. The number of paint drops on the canvas of Color 3.
-B: the maximum number of paint drops on any given square when the painting halts (that is, looking at all the squares,
-what is the largest number of paint drops that fell on one square?)
-C. the average number of paint drops over all the squares when the painting halts
- D, a single dimension that is used for square canvases. (When you pick a D, you are picking both X and Y)
- X, the x-dimension, with the y-dimension held constant.
- R, the number of repetitions in the experiment
- */
-//define data
-/*
-* can add data to table with array with table.setData();
-*
-* var array{
-*   Dimension: 3, A: "15", A1: "25", A2: "120",n A3: 1.8, B: "green", C: 20, Criterion: 100,Rep: 123,},
-*   Dimension: 4, A: "12, A1: "24", A2: "10",n A3: 1, B: "BLUE", C: 20, Criterion: 100, Rep: 123,
-*  ;}
-* }
-* */
+function CalculateDependentTable() {
+    let exampleTableRowData;
+    let dep1 = experimentParameters.dependentVar[0];
+    let dep2 = experimentParameters.dependentVar[1];
+    if (experimentParameters.independentVar === 0) {
+        for (let i = 0; i < experimentParameters.independentVarValues.length; i++) {
+            if (experimentParameters.dependentVar.length === 1) {
+                exampleTableRowData = {
+                    "Ind Value (X & Y)": experimentParameters.independentVarValues[i],
+                    [dep1]: "Some Value"
+                };
+            } else {
+                exampleTableRowData = {
+                    "Ind Value (X & Y)": experimentParameters.independentVarValues[i],
+                    [dep1]: "Some Value",
+                    [dep2]: "Some Value"
+                };
+            }
+            tableData.push(exampleTableRowData);
+        }
+    } else if (experimentParameters.independentVar === 1) {
+        for (let i = 0; i < experimentParameters.independentVarValues.length; i++) {
+            if (experimentParameters.dependentVar.length === 1) {
+                exampleTableRowData = {
+                    "Ind Value (X)": experimentParameters.independentVarValues[i],
+                    [dep1]: "Some Value"
+                };
+            } else {
+                exampleTableRowData = {
+                    "Ind Value (X)": experimentParameters.independentVarValues[i],
+                    [dep1]: "Some Value",
+                    [dep2]: "Some Value"
+                };
+            }
+            tableData.push(exampleTableRowData);
+        }
+    } else {
+        for (let i = 0; i < experimentParameters.independentVarValues.length; i++) {
+            if (experimentParameters.dependentVar.length === 1) {
+                exampleTableRowData = {
+                    "Ind Value (Repetitions)": experimentParameters.independentVarValues[i],
+                    [dep1]: "Some Value"
+                };
+            } else {
+                exampleTableRowData = {
+                    "Ind Value (Repetitions)": experimentParameters.independentVarValues[i],
+                    [dep1]: "Some Value",
+                    [dep2]: "Some Value"
+                };
+            }
+            tableData.push(exampleTableRowData);
+        }
+    }
+    // Extract column names from the keys of exampleTableRowData
+    columns = Object.keys(exampleTableRowData).map(key => ({title: key, field: key, editor: "input"}));
+}

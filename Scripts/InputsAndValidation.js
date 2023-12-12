@@ -458,17 +458,36 @@ function setTable(){
 }
 
 function resetInputs(type) {
-    if (type === 0) {
-        //just clear the dependent variable
-        experimentParameters.dependentVar = [];
-        document.getElementById("inputA").checked = false;
-        document.getElementById("inputA1").checked = false;
-        document.getElementById("inputA2").checked = false;
-        document.getElementById("inputA3").checked = false;
-        document.getElementById("inputB").checked = false;
-        document.getElementById("inputC").checked = false;
-    } else if (type === 1 || type === 2) {
+    //clear the dependent variable
+    experimentParameters.dependentVar = [];
+    document.getElementById("inputA").checked = false;
+    document.getElementById("inputA1").checked = false;
+    document.getElementById("inputA2").checked = false;
+    document.getElementById("inputA3").checked = false;
+    document.getElementById("inputB").checked = false;
+    document.getElementById("inputC").checked = false;
+    tableData = []; //reset data
+    if (document.contains(document.getElementById("graphHide"))) {
+        document.getElementById("graphHide").remove();
+    }
+    if (document.contains(document.getElementById("graph"))) {
+        document.getElementById("graph").remove();
+    }
+    if (document.contains(document.getElementById("graphOverlay"))) {
+        document.getElementById("graphOverlay").remove();
+    }
+    graphCreated = false;
+    graphHidden = true;
+
+    if (type === 1 || type === 2) {
         //reset second experiment
+        experimentParameters.colors = [];
+        experimentParameters.xVal = null;
+        experimentParameters.yVal = null;
+        experimentParameters.reps = null;
+        experimentParameters.stoppingCriteria = null
+        experimentParameters.independentVar = null;
+        experimentParameters.independentVarValues = [];
         document.getElementsByName('lastOption').forEach(function(value) { value.checked = false; }); //reset it
         xDimBoxSecond.value = "";
         yDimBoxSecond.value = "";
@@ -495,15 +514,13 @@ function resetInputs(type) {
         partSix.hidden = true;
         currentPercent = 0;
 
-        document.getElementById("table-container").remove(); //need to remove the original table
-        document.getElementById("closeTable").remove(); //need to remove the close table button
-        tableData = []; //reset data
-
-        document.getElementById("graphHide").remove();
-        document.getElementById("graph").remove();
-        document.getElementById("graphOverlay").remove();
-        graphCreated = false;
-        graphHidden = true;
+        if (document.contains(document.getElementById("table-container"))) {
+            document.getElementById("table-container").remove(); //need to remove the original table
+        }
+        if (document.contains(document.getElementById("closeTable"))) {
+            document.getElementById("closeTable").remove(); //need to remove the close table button
+        }
+        firstChart = true;
 
         if (type === 2) {
             //also remove first experiment
@@ -522,6 +539,9 @@ function resetInputs(type) {
 function validateDependent() {
     let numberOfChecked = 0;
     experimentParameters.dependentVar = [];
+    tableData = []; //reset data
+    document.getElementById("table-container").remove(); //need to remove the original table
+    document.getElementById("closeTable").remove(); //need to remove the close table button
     document.getElementById("dependentError").innerHTML = "";
 
     if (document.getElementById("inputA").checked) {

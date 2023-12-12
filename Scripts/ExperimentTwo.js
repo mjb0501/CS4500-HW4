@@ -22,6 +22,7 @@ function PAINT_MANY(){
                     }
                     thisExperiment.xVal = experimentParameters.independentVarValues[i];
                     thisExperiment.yVal = experimentParameters.independentVarValues[i];
+                    thisExperiment.currIndValue = experimentParameters.independentVarValues[i];
                     SINGLE_PAINT(thisExperiment);
                     setTableData(runCounter);
                     j++;
@@ -57,6 +58,7 @@ function PAINT_MANY(){
                         break;
                     }
                     thisExperiment.xVal = experimentParameters.independentVarValues[i];
+                    thisExperiment.currIndValue = experimentParameters.independentVarValues[i];
                     SINGLE_PAINT(thisExperiment);
                     setTableData(runCounter);
                     j++;
@@ -94,7 +96,7 @@ function PAINT_MANY(){
                         finished = true;
                         break;
                     }
-
+                    thisExperiment.currIndValue = experimentParameters.independentVarValues[i];
                     SINGLE_PAINT(thisExperiment);
                     setTableData(runCounter);
                     j++;
@@ -147,6 +149,7 @@ function SINGLE_PAINT(currentExperiment) {
                     result.maxDrops1Square = dropTracker[i];
                 }
             }
+            result.indValue = currentExperiment.currIndValue;
             allResults.push(result);
             break;
         case 1:
@@ -155,7 +158,7 @@ function SINGLE_PAINT(currentExperiment) {
                 let randomCoord = Math.floor(Math.random() * (currentExperiment.gridSize() + 1)); //need the +1 to hit max size
                 randomCoord = randomCoord === 0 ? 1 : randomCoord; //don't allow for 0, there is no cell 0
                 let color = Math.floor(Math.random() * 3);
-                dropTracker[randomCoord - 1]++; // lets add the drop now before checking for double drips
+                dropTracker[randomCoord - 1]++; // let's add the drop now before checking for double drips
                 for (let i = 0; i < dropTracker.length; i++) {
                     if (dropTracker[i - 1] === 2) {
                         isDoubleDripped = true;
@@ -175,6 +178,7 @@ function SINGLE_PAINT(currentExperiment) {
                     result.maxDrops1Square = dropTracker[i];
                 }
             }
+            result.indValue = currentExperiment.currIndValue;
             allResults.push(result);
             break;
         case 2:
@@ -185,8 +189,6 @@ function SINGLE_PAINT(currentExperiment) {
                 let color = Math.floor(Math.random() * 3);
                 dropTracker[randomCoord - 1]++;
                 totalDrops++;
-                console.log(totalDrops);
-                console.log(currentExperiment.colorTotalAllowedDrops());
                 if (totalDrops >= currentExperiment.colorTotalAllowedDrops())
                     totalDropsReached = true;
                 if (color === 0)
@@ -203,6 +205,7 @@ function SINGLE_PAINT(currentExperiment) {
                     result.maxDrops1Square = dropTracker[i];
                 }
             }
+            result.indValue = currentExperiment.currIndValue;
             allResults.push(result);
             break;
     }

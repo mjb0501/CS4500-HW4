@@ -1,5 +1,4 @@
 const experimentParameters = {
-    dVal:null,
     xVal:null,
     yVal:null,
     reps:null,
@@ -16,12 +15,14 @@ const singleExperiment = {
     xVal: 0,
     yVal: 0,
     stoppingCriteria: 0,
+    currIndValue: 0,
     gridSize: function() {return this.xVal * this.yVal;},
     colors: [],
     colorTotalAllowedDrops:function(){return (this.xVal * this.yVal) * 2; }
 };
 
 function Results() {
+    this.indValue = 0;
     this.c0Drops = 0;
     this.c1Drops = 0;
     this.c2Drops = 0;

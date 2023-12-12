@@ -4,6 +4,16 @@
     box-sizing: border-box;
     font-family: 'poppins', sans-serif;
 }
+
+body {
+    background: url(/images/background.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+}
+
 /* nav logo format*/
 nav .logo{
     width: 100px;
@@ -40,28 +50,6 @@ nav .logo{
 }
 .content a:hover {
     background-color: rgba(32, 33, 36, 0.75) !important;
-}
-
-video {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -100;
-    -moz-transform: translateX(-50%) translateY(-50%);
-    -ms-transform: translateX(-50%) translateY(-50%);
-    -o-transform: translateX(-50%) translateY(-50%);
-    -webkit-transform: translateX(-50%) translateY(-50%);
-    transform: translateX(-50%) translateY(-50%);
-    background: url('//demosthenes.info/assets/images/polina.jpg') no-repeat;
-    background-size: cover;
-    -moz-transition: 1s opacity;
-    -o-transition: 1s opacity;
-    -webkit-transition: 1s opacity;
-    transition: 1s opacity;
 }
 
 /* placeholders to keep boxes in center of screen*/

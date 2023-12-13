@@ -206,9 +206,7 @@ function graphIndependentLoader(){
 
 
 function graphDataLoader(chart) {
-
-    for (var i in allDependentCalculations) {
-
+    for (let i in allDependentCalculations) {
         let dataSet = {
             label: [],
             //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
@@ -217,24 +215,22 @@ function graphDataLoader(chart) {
             borderColor: 'white', // White outlines
             borderWidth: 2
         }
-        if (i == 0) {
+        if (allDependentCalculations[i].dep1Type !== null) {
             dataSet.label.push(allDependentCalculations[i].dep1Type);
-            dataSet.data.push(allDependentCalculations[0].dep1Value)
-            dataSet.data.push(allDependentCalculations[1].dep1Value);
+            for (let j in allDependentCalculations) {
+                dataSet.data.push(allDependentCalculations[j].dep1Value);
+            }
         }
 
-        if (i == 1) {
+        if (allDependentCalculations[i].dep2Type !== null) {
             dataSet.label.push(allDependentCalculations[i].dep2Type);
-            dataSet.data.push(allDependentCalculations[0].dep2Value);
-
-            dataSet.data.push(allDependentCalculations[1].dep2Value);
+            for (let j in allDependentCalculations) {
+                dataSet.data.push(allDependentCalculations[j].dep2Value);
+            }
             dataSet.backgroundColor = "darkgray";
-
         }
 
         chart.data.datasets.push(dataSet);
         chart.update();
-
-
     }
 }

@@ -5,8 +5,13 @@ let graphHidden = true; // Set initial state to hidden
 let graphHeight = 450;
 let graphWidth = 650;
 
+
+let keys = {};
+let values = [];
+
 function createGraphOverlay() {
     if (graphCreated === false) {
+        // get table data.
         // Create a new overlay div element
         let overlayDiv = document.createElement("div");
 
@@ -72,57 +77,15 @@ function createGraphOverlay() {
 */
         const ctx = document.getElementById('graph');
         let labels = graphIndependentLoader();
+        let myChart;
 
-        new Chart(ctx, {
+// Create the chart and store the instance in the variable
+
+        myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: labels, //set colors of graph to the ones the user selected
-                datasets: [{
-                    label: "Total Drops",
-                 //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
-                    data: graphDataLoader(0),
-                    backgroundColor: 'gray', // gray bars
-                    borderColor: 'white', // White outlines
-                    borderWidth: 2
-                }, {
-                    label: "Color 1",
-                    //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
-                    data: graphDataLoader(1),
-                    backgroundColor: experimentParameters.colors[0], // gray bars
-                    borderColor: 'white', // White outlines
-                    borderWidth: 2
-                },{
-                    label: "Color 2",
-                    //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
-                    data: graphDataLoader(2),
-                    backgroundColor: experimentParameters.colors[1], // gray bars
-                    borderColor: 'white', // White outlines
-                    borderWidth: 2
-                },{
-                    label: "color 3",
-                    //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
-                    data: graphDataLoader(3),
-                    backgroundColor: experimentParameters.colors[2], // gray bars
-                    borderColor: 'white', // White outlines
-                    borderWidth: 2
-                },
-                    {
-                        label: "Max 1 Square",
-                        //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
-                        data: graphDataLoader(4),
-                        backgroundColor: 'yellow', // gray bars
-                        borderColor: 'white', // White outlines
-                        borderWidth: 2
-                    },
-                    {
-                        label: "Average Drops",
-                        //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
-                        data: graphDataLoader(5),
-                        backgroundColor: 'orange', // gray bars
-                        borderColor: 'white', // White outlines
-                        borderWidth: 2
-                    },
-                ]
+
 
             },
             options: {
@@ -169,6 +132,7 @@ function createGraphOverlay() {
         });
         overlayDiv.style.display = graphHidden ? "none" : "block"
         graphCreated = true;
+        graphDataLoader(myChart)
     } else return 0;
 }
 
@@ -241,32 +205,36 @@ function graphIndependentLoader(){
 }
 
 
-function graphDataLoader(dataSet){
-    let data = [];
+function graphDataLoader(chart) {
 
-    for (var i = 0; i < tableData.length;i++)
-    {
-        switch (dataSet){
-            case 0:
-                data.push(tableData[i].TotalDrops)
-                break;
-            case 1:
-                data.push(tableData[i].Color1)
-                break;
-            case 2:
-                data.push(tableData[i].Color2)
-                break;
-            case 3:
-                data.push(tableData[i].Color3)
-                break;
-            case 4:
-                data.push(tableData[i].MaxDrops1Square)
-                break;
-            case 5:
-                data.push(tableData[i].AverageDrops)
-                break;
+    for (var i in allDependentCalculations) {
+
+        let dataSet = {
+            label: [],
+            //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
+            data: [],
+            backgroundColor: 'gray', // gray bars
+            borderColor: 'white', // White outlines
+            borderWidth: 2
         }
-    }
-    return data;
-}
+        if (i == 0) {
+            dataSet.label.push(allDependentCalculations[i].dep1Type);
+            dataSet.data.push(allDependentCalculations[0].dep1Value)
+            dataSet.data.push(allDependentCalculations[1].dep1Value);
+        }
 
+        if (i == 1) {
+            dataSet.label.push(allDependentCalculations[i].dep2Type);
+            dataSet.data.push(allDependentCalculations[0].dep2Value);
+
+            dataSet.data.push(allDependentCalculations[1].dep2Value);
+            dataSet.backgroundColor = "darkgray";
+
+        }
+
+        chart.data.datasets.push(dataSet);
+        chart.update();
+
+
+    }
+}

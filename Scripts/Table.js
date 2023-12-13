@@ -1,6 +1,7 @@
 let table;
 let tableData = [];
 let tableHeight = 550;
+let tableWidth = 950;
 let firstChart = true;
 let columns;
 
@@ -70,6 +71,7 @@ function createTable() {
     overlayDiv.style.left = "50%";
     overlayDiv.style.transform = "translate(-50%, -50%)";
     overlayDiv.style.height = tableHeight + "px";
+    overlayDiv.style.width = tableWidth + "px";
     document.body.appendChild(overlayDiv);
 
     // create button to continue, closes itself then opens graph

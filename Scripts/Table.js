@@ -7,7 +7,9 @@ let columns;
 
 function setTableData(expNum){
     let exampleTableRowData;
+    //console.log("in set table");
     if (experimentParameters.independentVar === 0) {
+        //console.log(1.1);
         exampleTableRowData = {
             "Ind Value (X & Y)": allResults[expNum].indValue,
             "Repetitions": experimentParameters.reps,
@@ -23,6 +25,7 @@ function setTableData(expNum){
             AverageDrops: allResults[expNum].averageDrops,
         };
     } else if (experimentParameters.independentVar === 1) {
+        //console.log(2.2)
         exampleTableRowData = {
             "Ind Value (X)": allResults[expNum].indValue,
             "Y Dimension": experimentParameters.yVal,
@@ -39,6 +42,7 @@ function setTableData(expNum){
             AverageDrops: allResults[expNum].averageDrops,
         };
     } else {
+        //console.log(3.3);
         exampleTableRowData = {
             "Ind Value (Repetitions)": allResults[expNum].indValue,
             "X Dimension": experimentParameters.xVal,

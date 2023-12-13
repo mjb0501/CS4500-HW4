@@ -9,6 +9,7 @@ function PAINT_MANY(){
     let j = 0;
     let finished = false;
     thisExperiment.colors = experimentParameters.colors;
+    //console.log(experimentParameters.independentVar);
     switch (experimentParameters.independentVar){
         case 0:
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
@@ -82,22 +83,29 @@ function PAINT_MANY(){
             loopSecondCriteria();
             break;
         case 2:
+            //console.log("Made it in case 2");
+            //console.log(experimentParameters.independentVarValues.length);
             thisExperiment.xVal = experimentParameters.xVal;
             thisExperiment.yVal = experimentParameters.yVal;
             thisExperiment.stoppingCriteria = experimentParameters.stoppingCriteria;
             totalRuns = 0;
             for (i = 0; i < experimentParameters.independentVarValues.length; i++) {
                 totalRuns += experimentParameters.independentVarValues[i];
+                //console.log("in loop");
             }
+            i = 0;
         function loopThirdCriteria() {
             setTimeout(function () {
+                //console.log(experimentParameters.independentVarValues.length);
                 for (let newBatch = 0; newBatch < 100; newBatch++) {
                     if (i === experimentParameters.independentVarValues.length) {
+                        //console.log("in length thing");
                         finished = true;
                         break;
                     }
                     thisExperiment.currIndValue = experimentParameters.independentVarValues[i];
                     SINGLE_PAINT(thisExperiment);
+                    //console.log("in third criteria");
                     setTableData(runCounter);
                     j++;
                     runCounter++;

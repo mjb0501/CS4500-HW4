@@ -437,9 +437,17 @@ function validateSecondForm() {
     //populate the DTO to send over to scripts
     experimentParameters.xVal = XVal;
     experimentParameters.yVal = YVal;
-    experimentParameters.reps = reps;
+
+    if (indValueSelection !== 2) {
+        experimentParameters.reps = reps;
+    }
+    else {
+        experimentParameters.reps = 0;
+    }
+
     experimentParameters.stoppingCriteria = parseInt(stoppingCDropdownSecond.value);
     experimentParameters.independentVar = indValueSelection;
+
     experimentParameters.independentVarValues = indValues;
     experimentParameters.colors.push(color1DropdownSecond.value);
     experimentParameters.colors.push(color2DropdownSecond.value);

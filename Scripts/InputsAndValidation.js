@@ -540,41 +540,47 @@ function validateDependent() {
     let numberOfChecked = 0;
     experimentParameters.dependentVar = [];
     tableData = []; //reset data
-    document.getElementById("table-container").remove(); //need to remove the original table
-    document.getElementById("closeTable").remove(); //need to remove the close table button
+    if (document.getElementById("table-container")) {
+        document.getElementById("table-container").remove(); //need to remove the original table
+        document.getElementById("closeTable").remove(); //need to remove the close table button
+    }
+
     document.getElementById("dependentError").innerHTML = "";
+
 
     if (document.getElementById("inputA").checked) {
         numberOfChecked++;
-        experimentParameters.dependentVar.push("A");
+        //experimentParameters.dependentVar.push("A");
     }
     if (document.getElementById("inputA1").checked) {
         numberOfChecked++;
-        experimentParameters.dependentVar.push("A1");
+        //experimentParameters.dependentVar.push("A1");
     }
     if (document.getElementById("inputA2").checked) {
         numberOfChecked++;
-        experimentParameters.dependentVar.push("A2");
+        //experimentParameters.dependentVar.push("A2");
     }
     if (document.getElementById("inputA3").checked) {
         numberOfChecked++;
-        experimentParameters.dependentVar.push("A3");
+        //experimentParameters.dependentVar.push("A3");
     }
     if (document.getElementById("inputB").checked) {
         numberOfChecked++;
-        experimentParameters.dependentVar.push("B");
+        //experimentParameters.dependentVar.push("B");
     }
     if (document.getElementById("inputC").checked) {
         numberOfChecked++;
-        experimentParameters.dependentVar.push("C");
+        //experimentParameters.dependentVar.push("C");
     }
 
     if (numberOfChecked === 0) {
         document.getElementById("dependentError").innerHTML = "You must select at least one dependent variable.";
-        return;
+        return false;
     } else if (numberOfChecked > 2) {
         document.getElementById("dependentError").innerHTML = "You cannot have more than 2 dependent variables selected.";
-        return;
+        return false;
+    } else {
+        document.getElementById("dependentError").innerHTML = "";
     }
 
     //all passed, move on to the chart

@@ -67,7 +67,7 @@ nav .logo{
     text-align: center;
 }
 .messageBox{
-    background-color: rgba(32, 33, 36, 0.60);
+    background-color: rgba(32, 33, 36, 1);
     border: 3px solid azure;
     padding: 30px;
     display: block;
@@ -88,7 +88,7 @@ nav .logo{
     font-weight: 700;
 }
 .button {
-    background-color: rgba(32, 33, 36, 0);
+    background-color: rgba(32, 33, 36, 1);
     border-radius: 20px;
     border: 2px solid azure;
     padding: 10px 50px 10px 50px;
@@ -97,7 +97,9 @@ nav .logo{
 }
 
 .button:hover {
-    background-color: rgba(32, 33, 36, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgb(203,128,89);
+    color: rgb(203,128,89);
 }
 .button.speed {
     display: flex;
@@ -165,7 +167,7 @@ td {
 }
 
 #graphOverlay{
-    background-color: rgba(32, 33, 36, 0.80);
+    background-color: rgba(32, 33, 36, 1);
     border: 3px solid azure;
     padding: 30px;
     display: block;
@@ -188,12 +190,14 @@ td {
 }
 
 #graphHide:hover {
-    background-color: rgba(32, 33, 36, 1);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgb(203,128,89);
+    color: rgb(203,128,89);
 }
 
 #closeTable{
-    background-color: rgba(32, 33, 36, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(32, 33, 36, 1);
+    border: 1px solid rgba(255, 255, 255, 1);
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -204,9 +208,43 @@ td {
 }
 
 #closeTable:hover {
-    background-color: rgba(32, 33, 36, 1);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgb(203,128,89);
+    color: rgb(203,128,89);
 }
 
 #progressBar {
     width: 100%;
+}
+
+/*responsive transparency*/
+@media only screen and (max-width: 628px) {
+    .messageBox {
+        background-color: rgba(32, 33, 36, 0.8);
+    }
+    .button {
+        background-color: rgba(32, 33, 36, 0);
+    }
+    .button:hover {
+        background-color: rgba(32, 33, 36, 1);
+        border: 2px solid azure;
+        color: white;
+    }
+    #graphOverlay {
+        background-color: rgba(32, 33, 36, 0.8);
+    }
+    #closeTable {
+        background-color: rgba(32, 33, 36, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    #graphHide:hover {
+        background-color: rgba(32, 33, 36, 1);
+        border: 2px solid azure;
+        color: white;
+    }
+    #closeTable:hover {
+        background-color: rgba(32, 33, 36, 1);
+        border: 2px solid azure;
+        color: white;
+    }
 }

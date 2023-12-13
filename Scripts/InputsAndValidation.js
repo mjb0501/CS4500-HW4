@@ -460,6 +460,8 @@ function setTable(){
 function resetInputs(type) {
     //clear the dependent variable
     experimentParameters.dependentVar = [];
+    allDependentCalculations = [];
+    dependentValues = []
     document.getElementById("inputA").checked = false;
     document.getElementById("inputA1").checked = false;
     document.getElementById("inputA2").checked = false;
@@ -538,7 +540,7 @@ function resetInputs(type) {
 
 function validateDependent() {
     let numberOfChecked = 0;
-    experimentParameters.dependentVar = [];
+    dependentValues = [];
     tableData = []; //reset data
     if (document.getElementById("table-container")) {
         document.getElementById("table-container").remove(); //need to remove the original table
@@ -547,30 +549,29 @@ function validateDependent() {
 
     document.getElementById("dependentError").innerHTML = "";
 
-
     if (document.getElementById("inputA").checked) {
         numberOfChecked++;
-        //experimentParameters.dependentVar.push("A");
+        dependentValues.push("A");
     }
     if (document.getElementById("inputA1").checked) {
         numberOfChecked++;
-        //experimentParameters.dependentVar.push("A1");
+        dependentValues.push("A1");
     }
     if (document.getElementById("inputA2").checked) {
         numberOfChecked++;
-        //experimentParameters.dependentVar.push("A2");
+        dependentValues.push("A2");
     }
     if (document.getElementById("inputA3").checked) {
         numberOfChecked++;
-        //experimentParameters.dependentVar.push("A3");
+        dependentValues.push("A3");
     }
     if (document.getElementById("inputB").checked) {
         numberOfChecked++;
-        //experimentParameters.dependentVar.push("B");
+        dependentValues.push("B");
     }
     if (document.getElementById("inputC").checked) {
         numberOfChecked++;
-        //experimentParameters.dependentVar.push("C");
+        dependentValues.push("C");
     }
 
     if (numberOfChecked === 0) {

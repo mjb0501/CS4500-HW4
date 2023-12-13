@@ -5,7 +5,6 @@ const experimentParameters = {
     stoppingCriteria:null,
     independentVar:null,
     independentVarValues:[],
-    dependentVar:[],
     colors: [],
     gridSize:function(){return this.xVal * this.yVal;},
     colorTotalAllowedDrops:function(){return (this.xVal * this.yVal) * 2; }
@@ -33,5 +32,15 @@ function Results() {
     };
 }
 
+function dependentCalculation() {
+    this.indType = null;
+    this.indValue = null;
+    this.dep1Type = null;
+    this.dep1Value = 0;
+    this.dep2Type = null;
+    this.dep2Value = 0;
+}
+let dependentValues = [];
+let allDependentCalculations = [];
 let allResults = [];
 let currentPercent = 0;

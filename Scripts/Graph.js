@@ -206,8 +206,8 @@ function graphIndependentLoader(){
 
 
 function graphDataLoader(chart) {
-    for (let i in allDependentCalculations) {
-        let dataSet = {
+    if (allDependentCalculations[0].dep1Type !== null) {
+        let dataSet1 = {
             label: [],
             //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
             data: [],
@@ -215,22 +215,29 @@ function graphDataLoader(chart) {
             borderColor: 'white', // White outlines
             borderWidth: 2
         }
-        if (allDependentCalculations[i].dep1Type !== null) {
-            dataSet.label.push(allDependentCalculations[i].dep1Type);
-            for (let j in allDependentCalculations) {
-                dataSet.data.push(allDependentCalculations[j].dep1Value);
-            }
+        dataSet1.label.push(allDependentCalculations[0].dep1Type);
+        for (let j in allDependentCalculations) {
+            dataSet1.data.push(allDependentCalculations[j].dep1Value);
         }
-
-        if (allDependentCalculations[i].dep2Type !== null) {
-            dataSet.label.push(allDependentCalculations[i].dep2Type);
-            for (let j in allDependentCalculations) {
-                dataSet.data.push(allDependentCalculations[j].dep2Value);
-            }
-            dataSet.backgroundColor = "darkgray";
-        }
-
-        chart.data.datasets.push(dataSet);
-        chart.update();
+        chart.data.datasets.push(dataSet1);
     }
+
+    if (allDependentCalculations[0].dep2Type !== null) {
+        let dataSet2 = {
+            label: [],
+            //disabled until paint many is done   data: [allResults[0].c0Drops, 3, 2], // Use the extracted data
+            data: [],
+            backgroundColor: 'gray', // gray bars
+            borderColor: 'white', // White outlines
+            borderWidth: 2
+        }
+        dataSet2.label.push(allDependentCalculations[0].dep2Type);
+        for (let j in allDependentCalculations) {
+            dataSet2.data.push(allDependentCalculations[j].dep2Value);
+        }
+        dataSet2.backgroundColor = "darkgray";
+        chart.data.datasets.push(dataSet2);
+    }
+
+    chart.update();
 }

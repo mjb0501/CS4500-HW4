@@ -124,7 +124,12 @@ function showAdditionalChart() {
 
 function CalculateDependentTable() {
     let exampleTableRowData;
-    let AValue = 0, A1Value= 0, A2Value= 0, A3Value= 0, BValue= 0, CValue= 0;
+    let AValueMin = 9999999999999, AValueMax = 0, AValueAvg = 0;
+    let A1ValueMin= 9999999999999, A1ValueMax = 0, A1ValueAvg = 0;
+    let A2ValueMin= 9999999999999, A2ValueMax = 0, A2ValueAvg = 0;
+    let A3ValueMin= 9999999999999, A3ValueMax = 0, A3ValueAvg = 0;
+    let BValueMin= 9999999999999, BValueMax = 0, BValueAvg = 0;
+    let CValueMin= 9999999999999, CValueMax = 0, CValueAvg = 0;
     let dep1 = dependentValues[0];
     let dep2 = dependentValues[1];
 
@@ -132,72 +137,191 @@ function CalculateDependentTable() {
         let counter = 0;
         for (let j = 0; j < allResults.length; j++) {
             if (allResults[j].indValue === experimentParameters.independentVarValues[i]) {
-                AValue = AValue + allResults[j].totalDrops();
-                A1Value = A1Value + allResults[j].c0Drops;
-                A2Value = A2Value + allResults[j].c1Drops;
-                A3Value = A3Value + allResults[j].c2Drops;
-                BValue = allResults[j].maxDrops1Square > BValue ? allResults[j].maxDrops1Square : BValue;
                 counter++;
-                CValue = CValue + allResults[j].totalDrops();
+                //minimums
+                AValueMin = allResults[i].totalDrops() < AValueMin ? allResults[i].totalDrops() : AValueMin;
+                A1ValueMin = allResults[i].totalDrops() < A1ValueMin ? allResults[i].totalDrops() : A1ValueMin;
+                A2ValueMin = allResults[i].totalDrops() < A2ValueMin ? allResults[i].totalDrops() : A2ValueMin;
+                A3ValueMin = allResults[i].totalDrops() < A3ValueMin ? allResults[i].totalDrops() : A3ValueMin;
+                BValueMin = allResults[i].totalDrops() < BValueMin ? allResults[i].totalDrops() : BValueMin;
+                CValueMin = allResults[i].totalDrops() < CValueMin ? allResults[i].totalDrops() : CValueMin;
+
+                //maximums
+                AValueMax = allResults[i].maxDrops1Square > AValueMax ? allResults[i].maxDrops1Square : AValueMax;
+                A1ValueMax = allResults[i].maxDrops1Square > A1ValueMax ? allResults[i].maxDrops1Square : A1ValueMax;
+                A2ValueMax = allResults[i].maxDrops1Square > A2ValueMax ? allResults[i].maxDrops1Square : A2ValueMax;
+                A3ValueMax = allResults[i].maxDrops1Square > A3ValueMax ? allResults[i].maxDrops1Square : A3ValueMax;
+                BValueMax = allResults[i].maxDrops1Square > BValueMax ? allResults[i].maxDrops1Square : BValueMax;
+                CValueMax = allResults[i].maxDrops1Square > CValueMax ? allResults[i].maxDrops1Square : CValueMax;
+
+                //averages
+                AValueAvg = AValueAvg + allResults[j].totalDrops();
+                A1ValueAvg = A1ValueAvg + allResults[j].totalDrops();
+                A2ValueAvg = A2ValueAvg + allResults[j].totalDrops();
+                A3ValueAvg = A3ValueAvg + allResults[j].totalDrops();
+                BValueAvg = BValueAvg + allResults[j].totalDrops();
+                CValueAvg = CValueAvg + allResults[j].totalDrops();
             }
         }
-        CValue = CValue / counter;
+        AValueAvg = AValueAvg / counter;
+        A1ValueAvg = A1ValueAvg / counter;
+        A2ValueAvg = A2ValueAvg / counter;
+        A3ValueAvg = A3ValueAvg / counter;
+        BValueAvg = BValueAvg / counter;
+        CValueAvg = CValueAvg / counter;
+
         let newCalc = new dependentCalculation;
         newCalc.indType = experimentParameters.independentVar;
         newCalc.indValue = experimentParameters.independentVarValues[i];
         if (dep1 !== undefined) {
             switch (dep1) {
-                case "A":
-                    newCalc.dep1Type = "A";
-                    newCalc.dep1Value = AValue;
+                case "AMax":
+                    newCalc.dep1Type = "AMax";
+                    newCalc.dep1Value = AValueMax;
                     break;
-                case "A1":
-                    newCalc.dep1Type = "A1";
-                    newCalc.dep1Value = A1Value;
+                case "AMin":
+                    newCalc.dep1Type = "AMin";
+                    newCalc.dep1Value = AValueMin;
                     break;
-                case "A2":
-                    newCalc.dep1Type = "A2";
-                    newCalc.dep1Value = A2Value;
+                case "AAvg":
+                    newCalc.dep1Type = "AAvg";
+                    newCalc.dep1Value = AValueAvg;
                     break;
-                case "A3":
-                    newCalc.dep1Type = "A3";
-                    newCalc.dep1Value = A3Value;
+                case "A1Max":
+                    newCalc.dep1Type = "A1Max";
+                    newCalc.dep1Value = A1ValueMax;
                     break;
-                case "B":
-                    newCalc.dep1Type = "B";
-                    newCalc.dep1Value = BValue;
+                case "A1Min":
+                    newCalc.dep1Type = "A1Min";
+                    newCalc.dep1Value = A1ValueMin;
                     break;
-                case "C":
-                    newCalc.dep1Type = "C";
-                    newCalc.dep1Value = CValue;
+                case "A1Avg":
+                    newCalc.dep1Type = "A1Avg";
+                    newCalc.dep1Value = A1ValueAvg;
+                    break;
+                case "A2Max":
+                    newCalc.dep1Type = "A2Max";
+                    newCalc.dep1Value = A2ValueMax;
+                    break;
+                case "A2Min":
+                    newCalc.dep1Type = "A2Min";
+                    newCalc.dep1Value = A2ValueMin;
+                    break;
+                case "A2Avg":
+                    newCalc.dep1Type = "A2Avg";
+                    newCalc.dep1Value = A2ValueAvg;
+                    break;
+                case "A3Max":
+                    newCalc.dep1Type = "A3Max";
+                    newCalc.dep1Value = A3ValueMax;
+                    break;
+                case "A3Min":
+                    newCalc.dep1Type = "A3Min";
+                    newCalc.dep1Value = A3ValueMin;
+                    break;
+                case "A3Avg":
+                    newCalc.dep1Type = "A3Avg";
+                    newCalc.dep1Value = A3ValueAvg;
+                    break;
+                case "BMax":
+                    newCalc.dep1Type = "BMax";
+                    newCalc.dep1Value = BValueMax;
+                    break;
+                case "BMin":
+                    newCalc.dep1Type = "BMin";
+                    newCalc.dep1Value = BValueMin;
+                    break;
+                case "BAvg":
+                    newCalc.dep1Type = "BAvg";
+                    newCalc.dep1Value = BValueAvg;
+                    break;
+                case "CMax":
+                    newCalc.dep1Type = "CMax";
+                    newCalc.dep1Value = CValueMax;
+                    break;
+                case "CMin":
+                    newCalc.dep1Type = "CMin";
+                    newCalc.dep1Value = CValueMin;
+                    break;
+                case "CAvg":
+                    newCalc.dep1Type = "CAvg";
+                    newCalc.dep1Value = CValueAvg;
                     break;
             }
         }
         if (dep2 !== undefined) {
             switch (dep2) {
-                case "A":
-                    newCalc.dep2Type = "A";
-                    newCalc.dep2Value = AValue;
+                case "AMax":
+                    newCalc.dep2Type = "AMax";
+                    newCalc.dep2Value = AValueMax;
                     break;
-                case "A1":
-                    newCalc.dep2Type = "A1";
-                    newCalc.dep2Value = A1Value;
+                case "AMin":
+                    newCalc.dep2Type = "AMin";
+                    newCalc.dep2Value = AValueMin;
                     break;
-                case "A2":
-                    newCalc.dep2Type = "A2";
-                    newCalc.dep2Value = A2Value;
+                case "AAvg":
+                    newCalc.dep2Type = "AAvg";
+                    newCalc.dep2Value = AValueAvg;
                     break;
-                case "A3":
-                    newCalc.dep2Type = "A3";
-                    newCalc.dep2Value = A3Value;
+                case "A1Max":
+                    newCalc.dep2Type = "A1Max";
+                    newCalc.dep2Value = A1ValueMax;
                     break;
-                case "B":
-                    newCalc.dep2Type = "B";
-                    newCalc.dep2Value = BValue;
+                case "A1Min":
+                    newCalc.dep2Type = "A1Min";
+                    newCalc.dep2Value = A1ValueMin;
                     break;
-                case "C":
-                    newCalc.dep2Type = "C";
-                    newCalc.dep2Value = CValue;
+                case "A1Avg":
+                    newCalc.dep2Type = "A1Avg";
+                    newCalc.dep2Value = A1ValueAvg;
+                    break;
+                case "A2Max":
+                    newCalc.dep2Type = "A2Max";
+                    newCalc.dep2Value = A2ValueMax;
+                    break;
+                case "A2Min":
+                    newCalc.dep2Type = "A2Min";
+                    newCalc.dep2Value = A2ValueMin;
+                    break;
+                case "A2Avg":
+                    newCalc.dep2Type = "A2Avg";
+                    newCalc.dep2Value = A2ValueAvg;
+                    break;
+                case "A3Max":
+                    newCalc.dep2Type = "A3Max";
+                    newCalc.dep2Value = A3ValueMax;
+                    break;
+                case "A3Min":
+                    newCalc.dep2Type = "A3Min";
+                    newCalc.dep2Value = A3ValueMin;
+                    break;
+                case "A3Avg":
+                    newCalc.dep2Type = "A3Avg";
+                    newCalc.dep2Value = A3ValueAvg;
+                    break;
+                case "BMax":
+                    newCalc.dep2Type = "BMax";
+                    newCalc.dep2Value = BValueMax;
+                    break;
+                case "BMin":
+                    newCalc.dep2Type = "BMin";
+                    newCalc.dep2Value = BValueMin;
+                    break;
+                case "BAvg":
+                    newCalc.dep2Type = "BAvg";
+                    newCalc.dep2Value = BValueAvg;
+                    break;
+                case "CMax":
+                    newCalc.dep2Type = "CMax";
+                    newCalc.dep2Value = CValueMax;
+                    break;
+                case "CMin":
+                    newCalc.dep2Type = "CMin";
+                    newCalc.dep2Value = CValueMin;
+                    break;
+                case "CAvg":
+                    newCalc.dep2Type = "CAvg";
+                    newCalc.dep2Value = CValueAvg;
                     break;
             }
         }

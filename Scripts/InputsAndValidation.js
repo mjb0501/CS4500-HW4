@@ -470,12 +470,24 @@ function resetInputs(type) {
     experimentParameters.dependentVar = [];
     allDependentCalculations = [];
     dependentValues = []
-    document.getElementById("inputA").checked = false;
-    document.getElementById("inputA1").checked = false;
-    document.getElementById("inputA2").checked = false;
-    document.getElementById("inputA3").checked = false;
-    document.getElementById("inputB").checked = false;
-    document.getElementById("inputC").checked = false;
+    document.getElementById("inputAMax").checked = false;
+    document.getElementById("inputAMin").checked = false;
+    document.getElementById("inputAAvg").checked = false;
+    document.getElementById("inputA1Max").checked = false;
+    document.getElementById("inputA1Min").checked = false;
+    document.getElementById("inputA1Avg").checked = false;
+    document.getElementById("inputA2Max").checked = false;
+    document.getElementById("inputA2Min").checked = false;
+    document.getElementById("inputA2Avg").checked = false;
+    document.getElementById("inputA3Max").checked = false;
+    document.getElementById("inputA3Min").checked = false;
+    document.getElementById("inputA3Avg").checked = false;
+    document.getElementById("inputBMax").checked = false;
+    document.getElementById("inputBMin").checked = false;
+    document.getElementById("inputBAvg").checked = false;
+    document.getElementById("inputCMax").checked = false;
+    document.getElementById("inputCMin").checked = false;
+    document.getElementById("inputCAvg").checked = false;
     tableData = []; //reset data
     if (document.contains(document.getElementById("graphHide"))) {
         document.getElementById("graphHide").remove();
@@ -557,29 +569,77 @@ function validateDependent() {
 
     document.getElementById("dependentError").innerHTML = "";
 
-    if (document.getElementById("inputA").checked) {
+    if (document.getElementById("inputAMax").checked) {
         numberOfChecked++;
-        dependentValues.push("A");
+        dependentValues.push("AMax");
     }
-    if (document.getElementById("inputA1").checked) {
+    if (document.getElementById("inputAMin").checked) {
         numberOfChecked++;
-        dependentValues.push("A1");
+        dependentValues.push("AMin");
     }
-    if (document.getElementById("inputA2").checked) {
+    if (document.getElementById("inputAAvg").checked) {
         numberOfChecked++;
-        dependentValues.push("A2");
+        dependentValues.push("AAvg");
     }
-    if (document.getElementById("inputA3").checked) {
+    if (document.getElementById("inputA1Max").checked) {
         numberOfChecked++;
-        dependentValues.push("A3");
+        dependentValues.push("A1Max");
     }
-    if (document.getElementById("inputB").checked) {
+    if (document.getElementById("inputA1Min").checked) {
         numberOfChecked++;
-        dependentValues.push("B");
+        dependentValues.push("A1Min");
     }
-    if (document.getElementById("inputC").checked) {
+    if (document.getElementById("inputA1Avg").checked) {
         numberOfChecked++;
-        dependentValues.push("C");
+        dependentValues.push("A1Avg");
+    }
+    if (document.getElementById("inputA2Max").checked) {
+        numberOfChecked++;
+        dependentValues.push("A2Max");
+    }
+    if (document.getElementById("inputA2Min").checked) {
+        numberOfChecked++;
+        dependentValues.push("A2Min");
+    }
+    if (document.getElementById("inputA2Avg").checked) {
+        numberOfChecked++;
+        dependentValues.push("A2Avg");
+    }
+    if (document.getElementById("inputA3Max").checked) {
+        numberOfChecked++;
+        dependentValues.push("A3Max");
+    }
+    if (document.getElementById("inputA3Min").checked) {
+        numberOfChecked++;
+        dependentValues.push("A3Min");
+    }
+    if (document.getElementById("inputA3Avg").checked) {
+        numberOfChecked++;
+        dependentValues.push("A3Avg");
+    }
+    if (document.getElementById("inputBMax").checked) {
+        numberOfChecked++;
+        dependentValues.push("BMax");
+    }
+    if (document.getElementById("inputBMin").checked) {
+        numberOfChecked++;
+        dependentValues.push("BMin");
+    }
+    if (document.getElementById("inputBAvg").checked) {
+        numberOfChecked++;
+        dependentValues.push("BAvg");
+    }
+    if (document.getElementById("inputCMax").checked) {
+        numberOfChecked++;
+        dependentValues.push("CMax");
+    }
+    if (document.getElementById("inputCMin").checked) {
+        numberOfChecked++;
+        dependentValues.push("CMin");
+    }
+    if (document.getElementById("inputCAvg").checked) {
+        numberOfChecked++;
+        dependentValues.push("CAvg");
     }
 
     if (numberOfChecked === 0) {

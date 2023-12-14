@@ -33,7 +33,6 @@ function Results() {
 }
 
 function dependentCalculation() {
-    this.indType = null;
     this.indValue = null;
     this.dep1Type = null;
     this.dep1Value = 0;

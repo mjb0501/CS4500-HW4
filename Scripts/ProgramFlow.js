@@ -72,25 +72,25 @@ function secondAnimation() {
             decrement.hidden = true;
             //remove this line of code before submission
             submit.hidden = false;
-            text.innerHTML = "Now you can conduct experiments based on the paintings by choosing independent and dependent variables.";
+            text.innerHTML = "You can now conduct experiments based on a painting by choosing independent and dependent variables.";
         }
         if (page2 === 2) {
             decrement.hidden = false;
             //remove this line of code before submission
             submit.hidden = true;
-            text.innerHTML = "First you will be asked to choose an independent variable They are as follows:<br>1. Single Dimension for X and Y axis<br>2. X Dimension<br>3. Number of Repetitions";
+            text.innerHTML = "First, you will be asked to choose an independent variable. They are as follows:<br>1. Single Dimension for X and Y axis<br>2. X Dimension<br>3. Number of Repetitions";
         }
         if (page2 === 3) {
-            text.innerHTML = "After that you will be asked to provide the values of the independent variables in a comma seperated list like this: 3, 4, 5, 6";
+            text.innerHTML = "After that, you will be asked to provide the values of the independent variables in a comma seperated list. For example: 3, 4, 5, 6";
         }
         if (page2 === 4) {
-            text.innerHTML = "After that you will be asked to provide values for either <br>1. repetitions<br>2. x and y dimensions<br>3. y dimension and repetitions";
+            text.innerHTML = "Then, you will be asked to provide values for either <br>1. Repetitions<br>2. X and Y Dimensions<br>3. Y Dimension and Repetitions";
         }
         if (page2 === 5) {
-            text.innerHTML = "After providing those values you will be prompted for colors and stopping criteria like you just did for the painting.";
+            text.innerHTML = "After providing those values, you will be prompted for colors and stopping criteria like you were for the painting.";
         }
         if (page2 === 6) {
-            text.innerHTML = "After submitting colors and stopping criteria the experiment will run after which a variety of dependent variable values gathered from the experiments will be shown in a table format and you will have to choose one or two dependent variables.";
+            text.innerHTML = "Following submitting colors and stopping criteria, the experiment will run. Afterwards, a variety of dependent variable values gathered from the experiments will be shown in a table format, and you will have to choose one or two dependent variables.";
         }
         if (page2 === 7) {
             text.innerHTML = "After choosing dependent variables, graphs will be shown corresponding to the dependent variables you have chosen.";
@@ -98,7 +98,7 @@ function secondAnimation() {
         if (page2 === 8) {
             increment.hidden = false;
             submit.hidden = true;
-            text.innerHTML = "After this the experiment is complete and you will be able to make another graph based on the experiment data, make a new experiment or quit the program.";
+            text.innerHTML = "After this, the experiment is complete, and you will be able to make another graph based on the experiment data, make a new experiment or quit the program.";
         }
         if (page2 === 9) {
             increment.hidden = true;
@@ -110,7 +110,7 @@ function secondAnimation() {
 }
 
 function endProgram() {
-    document.getElementById("finalMessageHeader").innerHTML = "Thank you for using our program. Come back anytime.";
+    document.getElementById("finalMessageHeader").innerHTML = "Thank you for using our program. Come back anytime!";
     document.getElementById("newGraph").hidden = true;
     document.getElementById("newGraphLabel").hidden = true;
     document.getElementById("newExperiment").hidden = true;

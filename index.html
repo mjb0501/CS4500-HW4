@@ -21,12 +21,12 @@
         <div id="placeholderIndex" class="row"></div>
         <div class="content">
             <div id="initialButton">
-                <h1>Paint Canvas</h1>
+                <h1>Chroma Canvas</h1>
                 <a onclick="ShowMessage();introAnimation();">Get Started</a>
             </div>
             <div id="welcomeMessage" class="messageBox welcomeMessage" hidden="hidden">
                 <form onsubmit="return GoToGrid()">
-                    <h2>Welcome to Paint Canvas</h2><br><br>
+                    <h2>Welcome to Chroma Canvas</h2><br><br>
                      <div id="animationStaging">
                          <h2 id="animationText" class="animationText">This website paints grid-based images like so: </h2>
                          <table id="animationTable" class="animationContent">
@@ -74,8 +74,8 @@
                      </div>
                     <br><br>
                     <button id="decrement" class="button" type="button" onclick=introAnimation.decrementPage() hidden="hidden">Previous Page</button>
-                    <button id="increment" class="button" type="button" onclick="introAnimation.incrementPage()">Next Page</button>
                     <button id="submit" class="button" hidden="hidden" type="submit">Try It!</button>
+                    <button id="increment" class="button" type="button" onclick="introAnimation.incrementPage()">Next Page</button>
                 </form>
             </div>
         </div>

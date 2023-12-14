@@ -135,32 +135,38 @@ function CalculateDependentTable() {
 
     for (let i = 0; i < experimentParameters.independentVarValues.length; i++) {
         let counter = 0;
+        AValueMin = 9999999999999, AValueMax = 0, AValueAvg = 0;
+        A1ValueMin= 9999999999999, A1ValueMax = 0, A1ValueAvg = 0;
+        A2ValueMin= 9999999999999, A2ValueMax = 0, A2ValueAvg = 0;
+        A3ValueMin= 9999999999999, A3ValueMax = 0, A3ValueAvg = 0;
+        BValueMin= 9999999999999, BValueMax = 0, BValueAvg = 0;
+        CValueMin= 9999999999999, CValueMax = 0, CValueAvg = 0;
         for (let j = 0; j < allResults.length; j++) {
             if (allResults[j].indValue === experimentParameters.independentVarValues[i]) {
                 counter++;
                 //minimums
-                AValueMin = allResults[i].totalDrops() < AValueMin ? allResults[i].totalDrops() : AValueMin;
-                A1ValueMin = allResults[i].totalDrops() < A1ValueMin ? allResults[i].totalDrops() : A1ValueMin;
-                A2ValueMin = allResults[i].totalDrops() < A2ValueMin ? allResults[i].totalDrops() : A2ValueMin;
-                A3ValueMin = allResults[i].totalDrops() < A3ValueMin ? allResults[i].totalDrops() : A3ValueMin;
-                BValueMin = allResults[i].totalDrops() < BValueMin ? allResults[i].totalDrops() : BValueMin;
-                CValueMin = allResults[i].totalDrops() < CValueMin ? allResults[i].totalDrops() : CValueMin;
+                AValueMin = allResults[j].totalDrops() < AValueMin ? allResults[j].totalDrops() : AValueMin;
+                A1ValueMin = allResults[j].c0Drops < A1ValueMin ? allResults[j].c0Drops : A1ValueMin;
+                A2ValueMin = allResults[j].c1Drops < A2ValueMin ? allResults[j].c1Drops : A2ValueMin;
+                A3ValueMin = allResults[j].c2Drops < A3ValueMin ? allResults[j].c2Drops : A3ValueMin;
+                BValueMin = allResults[j].maxDrops1Square < BValueMin ? allResults[j].maxDrops1Square : BValueMin;
+                CValueMin = allResults[j].averageDrops < CValueMin ? allResults[j].averageDrops : CValueMin;
 
                 //maximums
-                AValueMax = allResults[i].maxDrops1Square > AValueMax ? allResults[i].maxDrops1Square : AValueMax;
-                A1ValueMax = allResults[i].maxDrops1Square > A1ValueMax ? allResults[i].maxDrops1Square : A1ValueMax;
-                A2ValueMax = allResults[i].maxDrops1Square > A2ValueMax ? allResults[i].maxDrops1Square : A2ValueMax;
-                A3ValueMax = allResults[i].maxDrops1Square > A3ValueMax ? allResults[i].maxDrops1Square : A3ValueMax;
-                BValueMax = allResults[i].maxDrops1Square > BValueMax ? allResults[i].maxDrops1Square : BValueMax;
-                CValueMax = allResults[i].maxDrops1Square > CValueMax ? allResults[i].maxDrops1Square : CValueMax;
+                AValueMax = allResults[j].totalDrops() > AValueMax ? allResults[j].totalDrops() : AValueMax;
+                A1ValueMax = allResults[j].c0Drops > A1ValueMax ? allResults[j].c0Drops : A1ValueMax;
+                A2ValueMax = allResults[j].c1Drops > A2ValueMax ? allResults[j].c1Drops : A2ValueMax;
+                A3ValueMax = allResults[j].c2Drops > A3ValueMax ? allResults[j].c2Drops : A3ValueMax;
+                BValueMax = allResults[j].maxDrops1Square > BValueMax ? allResults[j].maxDrops1Square : BValueMax;
+                CValueMax = allResults[j].averageDrops > CValueMax ? allResults[j].averageDrops : CValueMax;
 
                 //averages
                 AValueAvg = AValueAvg + allResults[j].totalDrops();
-                A1ValueAvg = A1ValueAvg + allResults[j].totalDrops();
-                A2ValueAvg = A2ValueAvg + allResults[j].totalDrops();
-                A3ValueAvg = A3ValueAvg + allResults[j].totalDrops();
-                BValueAvg = BValueAvg + allResults[j].totalDrops();
-                CValueAvg = CValueAvg + allResults[j].totalDrops();
+                A1ValueAvg = A1ValueAvg + allResults[j].c0Drops;
+                A2ValueAvg = A2ValueAvg + allResults[j].c1Drops;
+                A3ValueAvg = A3ValueAvg + allResults[j].c2Drops;
+                BValueAvg = BValueAvg + allResults[j].maxDrops1Square;
+                CValueAvg = CValueAvg + allResults[j].averageDrops;
             }
         }
         AValueAvg = AValueAvg / counter;

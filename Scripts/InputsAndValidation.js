@@ -466,7 +466,7 @@ function setTable(){
 }
 
 function resetInputs(type) {
-    //clear the dependent variable
+    //resets the dependent variable
     experimentParameters.dependentVar = [];
     allDependentCalculations = [];
     dependentValues = []

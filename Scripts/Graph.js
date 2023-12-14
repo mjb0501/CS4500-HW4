@@ -1,4 +1,3 @@
-
 let graphCreated = false;
 let graphHidden = true; // Set initial state to hidden
 
@@ -62,19 +61,19 @@ function createGraphOverlay() {
 
         // get the grid
         const theGrid = document.getElementById('theGrid');
-/*
-// old code to get colors from the grid
-        let colorCounts = getGridColors(singleExperiment.gridSize());
+        /*
+        // old code to get colors from the grid
+                let colorCounts = getGridColors(singleExperiment.gridSize());
 
-        // Extracting labels and data from colorCounts
-        let labels = Object.keys(colorCounts);
-        let data = Object.values(colorCounts);
+                // Extracting labels and data from colorCounts
+                let labels = Object.keys(colorCounts);
+                let data = Object.values(colorCounts);
 
-        // Log colors and counts
-        for (let i = 0; i < labels.length; i++) {
-            console.log(`Color: ${labels[i]}, Count: ${data[i]}`);
-        }
-*/
+                // Log colors and counts
+                for (let i = 0; i < labels.length; i++) {
+                    console.log(`Color: ${labels[i]}, Count: ${data[i]}`);
+                }
+        */
         const ctx = document.getElementById('graph');
         let labels = graphIndependentLoader();
         let myChart;

@@ -70,14 +70,10 @@ function secondAnimation() {
     function animate() {
         if (page2 === 1) {
             decrement.hidden = true;
-            //remove this line of code before submission
-            submit.hidden = false;
             text.innerHTML = "You can now conduct experiments based on a painting by choosing independent and dependent variables.";
         }
         if (page2 === 2) {
             decrement.hidden = false;
-            //remove this line of code before submission
-            submit.hidden = true;
             text.innerHTML = "First, you will be asked to choose an independent variable. They are as follows:<br>1. Single Dimension for X and Y axis<br>2. X Dimension<br>3. Number of Repetitions";
         }
         if (page2 === 3) {

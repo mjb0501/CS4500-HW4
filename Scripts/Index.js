@@ -51,8 +51,6 @@ function introAnimation() {
     introAnimation.decrementPage = decrementPage;
     function animate() {
         if (frames <= 50 && page == 1) {
-            //remove this line of code before submission
-            submit.hidden = false;
             decrement.hidden = true;
             text.innerHTML = "This website paints grid-based images like so: ";
             table.style.opacity = 0;
@@ -77,8 +75,6 @@ function introAnimation() {
             frames++
         }
         if (frames <= 20 && page == 2) {
-            //remove this line of code before submission
-            submit.hidden = true;
             decrement.hidden = false;
             xTable.hidden = true;
             xTable.style.opacity = 0;

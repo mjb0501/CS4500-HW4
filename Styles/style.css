@@ -97,7 +97,7 @@ nav .logo{
 }
 
 .button:hover {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(16, 16, 18, 1);
     border: 2px solid rgb(203,128,89);
     color: rgb(203,128,89);
 }
@@ -190,7 +190,7 @@ td {
 }
 
 #graphHide:hover {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(16, 16, 18, 1);
     border: 2px solid rgb(203,128,89);
     color: rgb(203,128,89);
 }
@@ -208,7 +208,7 @@ td {
 }
 
 #closeTable:hover {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(16, 16, 18, 1);
     border: 2px solid rgb(203,128,89);
     color: rgb(203,128,89);
 }

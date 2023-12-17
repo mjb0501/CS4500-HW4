@@ -69,7 +69,7 @@ function PAINT_ONCE() {
                 applyAnimationToCell(randomCoord, singleExperiment.colors[color]);
                 dropTracker[randomCoord - 1]++; // let's add the drop now before checking for double drips
                 for (let i = 0; i < dropTracker.length; i++) {
-                    if (dropTracker[i - 1] === 2) {
+                    if (dropTracker[i] === 2) {
                         isDoubleDripped = true;
                         break;
                     }

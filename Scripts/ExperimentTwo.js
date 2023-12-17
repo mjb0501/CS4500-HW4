@@ -168,7 +168,7 @@ function SINGLE_PAINT(currentExperiment) {
                 let color = Math.floor(Math.random() * 3);
                 dropTracker[randomCoord - 1]++; // let's add the drop now before checking for double drips
                 for (let i = 0; i < dropTracker.length; i++) {
-                    if (dropTracker[i - 1] === 2) {
+                    if (dropTracker[i] === 2) {
                         isDoubleDripped = true;
                         break;
                     }
